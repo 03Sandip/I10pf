@@ -1,0 +1,94 @@
+<header class="site-header header--clean" role="banner">
+  <div class="container header-bar">
+
+    <!-- Left: logo -->
+    <div class="header-left">
+      <a href="/" class="brand-link" aria-label="Gonotes home">
+        <img id="appLogo" data-logo="images/gonotes.png" alt="Gonotes Logo" class="logo-img">
+      </a>
+    </div>
+
+    <!-- Center: nav -->
+    <nav class="header-nav" role="navigation" aria-label="Main navigation">
+      <ul class="nav-list">
+
+        <li class="nav-item nav-has-sub">
+          <button class="nav-link" aria-expanded="false">
+            Product <span class="caret">▾</span>
+          </button>
+          <ul class="sub-menu" aria-hidden="true">
+            <li><a href="#" class="sub-link">Overview</a></li>
+            <li><a href="#" class="sub-link">Features</a></li>
+            <li><a href="#" class="sub-link">Books</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item nav-has-sub">
+          <button class="nav-link" aria-expanded="false">
+            Solutions <span class="caret">▾</span>
+          </button>
+          <ul class="sub-menu" aria-hidden="true">
+            <li><a href="#" class="sub-link">Students</a></li>
+            <li><a href="#" class="sub-link">Teachers</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item"><a href="#" class="nav-link">Resources</a></li>
+        <li class="nav-item"><a href="#" class="nav-link">Pricing</a></li>
+
+      </ul>
+    </nav>
+
+    <!-- Right -->
+    <div class="header-right">
+
+      <!-- 🔥 CLICKABLE CART BUTTON -->
+      <button id="cartBtn" class="icon-btn cart-btn" aria-label="View cart" onclick="window.location.href='/pages/cart.html'">
+        <span class="cart-icon">
+          <svg width="22" height="22" stroke="currentColor" fill="none" stroke-width="2">
+            <circle cx="9" cy="19" r="1"></circle>
+            <circle cx="17" cy="19" r="1"></circle>
+            <path d="M1 1h3l3 12h12l3-9H6"></path>
+          </svg>
+        </span>
+        <span id="cartCount" class="cart-badge">0</span>
+      </button>
+
+      <a href="/login" class="text-link">Log In</a>
+      <a href="/pages/shop.html" class="btn cta">Get Started</a>
+
+      <button id="mobileToggle" class="hamburger" aria-label="Open menu" aria-expanded="false">
+        <span class="hamburger-box"><span class="hamburger-inner"></span></span>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Mobile -->
+  <div id="mobileMenu" class="mobile-menu" aria-hidden="true">
+    <ul class="mobile-nav">
+      <li><a href="#">Product</a></li>
+      <li><a href="#">Solutions</a></li>
+      <li><a href="#">Resources</a></li>
+      <li><a href="#">Pricing</a></li>
+
+      <!-- 🔥 Mobile Cart Button -->
+      <li>
+        <button id="cartBtnMobile" class="icon-btn cart-btn" aria-label="View cart" onclick="window.location.href='/pages/cart.html'">
+          <span class="cart-icon">
+            <svg width="22" height="22" stroke="currentColor" fill="none" stroke-width="2">
+              <circle cx="9" cy="19" r="1"></circle>
+              <circle cx="17" cy="19" r="1"></circle>
+              <path d="M1 1h3l3 12h12l3-9H6"></path>
+            </svg>
+          </span>
+          <span id="cartCountMobile" class="cart-badge">0</span>
+        </button>
+      </li>
+
+      <li><a href="/login">Log In</a></li>
+      <li><a href="/pages/shop.html" class="btn cta full">Get Started</a></li>
+    </ul>
+  </div>
+
+</header>

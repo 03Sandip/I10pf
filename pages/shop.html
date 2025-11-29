@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gonotes — Shop</title>
+
+  <!-- main site styles (reuse existing styles.css) -->
+  <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../css/pages/header.css" />
+    <link rel="stylesheet" href="../css/pages/shop.css" />
+</head>
+<body>
+
+  <!-- header partial (loads via loadPartials.js) -->
+  <div id="header"></div>
+
+  <main class="container">
+    <section class="shop-hero">
+      <div class="container shop-header">
+        <div>
+          <h2 style="margin:0 0 6px">All Notes</h2>
+          <div style="color:#666;font-size:14px">Browse notes by stream and semester — preview before buying.</div>
+        </div>
+
+        <div class="shop-controls">
+          <label class="filter-label">Stream</label>
+          <select id="streamSelect" class="select">
+            <option value="">All Streams</option>
+          </select>
+
+          <label class="filter-label">Semester</label>
+          <select id="semesterSelect" class="select">
+            <option value="">All Semesters</option>
+          </select>
+
+          <input id="shopSearch" class="search" placeholder="Search title or description..." />
+          <button id="resetFilters" class="btn" style="background:#fff;color:var(--accent);border:1px solid #e5e7eb">Reset</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="notesContainer">
+      <div id="notesGrid" class="grid" aria-live="polite"></div>
+      <div id="emptyMessage" class="empty" style="display:none">No notes match your filters.</div>
+    </section>
+  </main>
+
+  <!-- preview modal (re-uses modal structure) -->
+  <div id="previewModal" class="modal" aria-hidden="true">
+    <div class="modal-content">
+      <button class="modal-close" id="closePreview">&times;</button>
+      <div id="previewBody"></div>
+      <div style="margin-top:12px; display:flex; gap:8px; justify-content:flex-end">
+        <button id="buyFromPreview" class="btn primary">Add to cart</button>
+        <button id="downloadPreview" class="btn">Download Sample</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- cart modal -->
+  <div id="cartModal" class="modal" aria-hidden="true">
+    <div class="modal-content">
+      <button class="modal-close" id="closeCart">&times;</button>
+      <h2>Your Cart</h2>
+      <div id="cartItems"></div>
+      <div class="cart-footer">
+        <div>Total: ₹<span id="cartTotal">0.00</span></div>
+        <button id="checkoutBtn" class="btn primary">Checkout (Mock)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- footer partial -->
+  <div id="footer"></div>
+
+  <!-- scripts -->
+  <script src="../js/loadPartials.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/components.js"></script>
+  <script src="../js/shop.js"></script>
+</body>
+</html>

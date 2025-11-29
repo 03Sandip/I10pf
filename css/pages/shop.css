@@ -1,0 +1,201 @@
+/* css/pages/shop.css
+   Page-specific styles for pages/shop.html (Gonotes)
+   Works with global styles.css variables and components
+*/
+
+/* ---------- Page hero / header area inside shop ---------- */
+.shop-hero {
+  padding: 28px 0;
+  background: #fff;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(16,24,40,0.03);
+}
+
+/* shop header container */
+.shop-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+/* title block */
+.shop-header h2 { 
+  margin: 0 0 6px;
+  font-family: Georgia, serif;
+  font-size: 26px;
+  color: #1f1b18;
+}
+.shop-header p { margin: 0; color: var(--muted); font-size: 14px; }
+
+/* ---------- Controls (filters + search) ---------- */
+.shop-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* label styling */
+.filter-label {
+  display: inline-block;
+  font-weight: 700;
+  font-size: 13px;
+  color: #444;
+  margin-right: 6px;
+}
+
+/* selects and search */
+.select, .search {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #ebe6df;
+  background: #fff;
+  font-size: 14px;
+  min-height: 40px;
+}
+
+.select {
+  min-width: 160px;
+}
+
+/* search field in shop */
+#shopSearch.search {
+  min-width: 240px;
+  width: 280px;
+}
+
+/* reset button */
+#resetFilters.btn {
+  background: #fff;
+  color: var(--accent);
+  border: 1px solid #e5e7eb;
+  padding: 9px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+}
+#resetFilters.btn:hover { background: #faf9f7; }
+
+/* small helper row beneath controls (optional) */
+.shop-controls-meta {
+  width:100%;
+  margin-top:8px;
+  color:var(--muted);
+  font-size:13px;
+}
+
+/* ---------- Grid / cards ---------- */
+.grid {
+  display: grid;
+  gap: 22px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  margin-top: 22px;
+}
+
+/* card tweaks to match shop look */
+.card {
+  background: var(--card);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 260px;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.06); }
+
+/* thumbnail */
+.card .thumb {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+  background: linear-gradient(180deg,#f6f4f2,#efebe6);
+}
+
+/* card title & meta */
+.card h3 { margin: 0; font-size: 16px; font-weight: 700; font-family: Georgia, serif; color: #1f1b18; }
+.card .meta { color: var(--muted); font-size: 13px; margin-top: 4px; }
+.card .desc { color: #58524a; font-size: 13px; margin-top: 8px; line-height:1.4; }
+
+/* price and action row */
+.card .price { font-weight: 800; color: #115e59; font-size: 16px; }
+.card .card-actions { display:flex; gap:8px; align-items:center; justify-content:space-between; margin-top:auto; }
+
+/* small action buttons */
+.small {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #e9e2d9;
+  background: #fff;
+  cursor: pointer;
+  font-size: 13px;
+}
+.small:hover { background: var(--accent-2); color: #fff; border-color: var(--accent-2); }
+
+/* Add-to-cart primary button style (if you want) */
+.add-primary {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-weight: 700;
+}
+
+/* empty state */
+.empty {
+  color: var(--muted);
+  padding: 36px 0;
+  text-align: center;
+  font-size: 16px;
+}
+
+/* ---------- Pagination (optional) ---------- */
+.shop-pagination {
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  margin: 26px 0;
+}
+.shop-pagination .page-btn {
+  padding:8px 12px;
+  border-radius:8px;
+  border:1px solid #eee;
+  background:#fff;
+  cursor:pointer;
+}
+.shop-pagination .page-btn.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+
+/* ---------- Preview modal tweaks ---------- */
+.modal-content { max-width: 880px; padding: 20px; }
+.preview-embed { width:100%; height:480px; border-radius:8px; border:1px solid #eee; }
+
+/* ---------- Cart modal tweaks ---------- */
+.cart-item { display:flex; justify-content:space-between; gap:12px; padding:12px 0; border-bottom:1px dashed #efefef; }
+.cart-item .meta { font-size:13px; color:var(--muted); }
+
+/* ---------- Utilities ---------- */
+.visually-hidden { position:absolute !important; height:1px; width:1px; overflow:hidden; clip:rect(1px,1px,1px,1px); white-space:nowrap; }
+
+/* ---------- Responsive adjustments ---------- */
+@media (max-width: 900px) {
+  #shopSearch.search { width: 100%; min-width: 0; }
+  .select { min-width: 140px; }
+  .shop-header h2 { font-size: 22px; }
+  .grid { gap: 16px; }
+  .card .thumb { height: 140px; }
+}
+
+@media (max-width: 600px) {
+  .shop-header { flex-direction: column; align-items: flex-start; gap:12px; }
+  .shop-controls { width:100%; display:flex; flex-direction:column; gap:10px; }
+  .shop-controls .select, .shop-controls .search, #resetFilters { width: 100%; }
+  .card { min-height: auto; padding: 14px; }
+}
