@@ -127,13 +127,23 @@
 }
 .icon-btn:hover { background: rgba(0,0,0,0.03); }
 
+/* ===== UNIFIED TEXT LINK STYLE (Log In + My Notes) ===== */
 .text-link {
-  color: #333;
+  color: #3f3429;                 /* matches your palette */
   text-decoration: none;
   padding: 6px 8px;
   font-size: 14px;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: background 0.18s ease, color 0.18s ease;
 }
 
+.text-link:hover {
+  background: rgba(0, 0, 0, 0.03);
+  color: #1f2933;
+}
+
+/* CTA button */
 .btn.cta {
   background: linear-gradient(90deg,#1e88ff,#5a5df5);
   color: #fff;
@@ -186,7 +196,12 @@
   flex-direction: column;
   gap: 8px;
 }
-.mobile-nav a { text-decoration: none; color: #111; padding: 10px 12px; border-radius: 8px; }
+.mobile-nav a {
+  text-decoration: none;
+  color: #111;
+  padding: 10px 12px;
+  border-radius: 8px;
+}
 .mobile-nav a.full { display: block; text-align: center; margin-top: 8px; }
 
 /* -------- Responsive adjustments -------- */
@@ -201,7 +216,7 @@
   /* reduce logo on mobile */
   .logo-img { max-height: 40px; }
 
-  /* hide textual login on small screens, keep CTA */
+  /* hide textual login & my notes on small screens, keep CTA */
   .header-right .text-link { display: none; }
 }
 
@@ -239,4 +254,141 @@
   border-radius: 50%;
   min-width: 18px;
   text-align: center;
+}
+
+/* ====== USER MENU (DESKTOP) ====== */
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* keep text links aligned nicely */
+.header-right .text-link {
+  font-size: 14px;
+  color: #3f3429;
+}
+
+/* container around avatar + dropdown */
+.user-menu {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* round avatar button */
+.user-icon-btn {
+  border: none;
+  background: #f4e7d7;
+  border-radius: 999px;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.03);
+}
+
+.user-icon-btn:hover {
+  background: #ebdcc8;
+}
+
+.user-initial {
+  font-weight: 600;
+  font-size: 14px;
+  color: #4b2f1b;
+}
+
+/* dropdown panel */
+.user-dropdown {
+  position: absolute;
+  top: 115%;
+  right: 0;
+  min-width: 220px;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 12px 25px rgba(15, 23, 42, 0.18);
+  padding: 8px 0;
+  z-index: 100;
+  overflow: hidden;
+}
+
+/* header inside dropdown (name + email) */
+.user-dropdown-header {
+  padding: 10px 14px 8px;
+  border-bottom: 1px solid #f1ece6;
+}
+
+.user-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2933;
+  margin-bottom: 2px;
+}
+
+.user-email {
+  font-size: 12px;
+  color: #6c727f;
+}
+
+/* each item (Profile, Logout) */
+.user-dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 8px 14px;
+  font-size: 14px;
+  text-align: left;
+  color: #374151;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.user-dropdown-item:hover {
+  background: #f8f3ec;
+}
+
+.user-logout-btn {
+  color: #b91c1c;
+}
+
+/* My Notes – pill style button */
+#myNotesLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 6px 14px;
+  margin-right: 4px;            /* space before avatar */
+  border-radius: 1000px;
+  background: #f4e7d7;          /* light brown */
+  color: #4b2f1b;               /* dark brown text */
+  text-decoration: none;
+  border: 1px solid rgba(0,0,0,0.02);
+}
+
+#myNotesLink:hover {
+  background: #ebdcc8;
+  color: #4b2f1b;
+}
+
+/* keep CTA button tight next to user menu */
+.header-right .btn.cta {
+  margin-left: 4px;
+}
+
+/* ====== MOBILE SMALL TWEAKS ====== */
+@media (max-width: 768px) {
+  .header-right {
+    gap: 8px;
+  }
+
+  .user-dropdown {
+    right: 8px;
+  }
 }

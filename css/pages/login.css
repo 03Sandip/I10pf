@@ -1,0 +1,103 @@
+/* Login page layout */
+body {
+  background: #f9f5f1;
+}
+
+.login-page {
+  min-height: calc(100vh - 80px); /* leave space for header */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+}
+
+.login-container {
+  width: 100%;
+  max-width: 420px;
+  padding: 28px 24px;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+}
+
+/* Typography */
+.login-title {
+  font-size: 26px;
+  font-weight: 700;
+  margin: 0 0 6px;
+  text-align: center;
+}
+
+.login-subtitle {
+  margin: 0 0 22px;
+  text-align: center;
+  font-size: 14px;
+  color: #666666;
+}
+
+/* Form */
+.login-form {
+  margin-bottom: 14px;
+}
+
+.input-group {
+  margin-bottom: 16px;
+}
+
+.input-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: #444444;
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #dddddd;
+  font-size: 15px;
+  outline: none;
+  background: #ffffff;
+}
+
+.input-field:focus {
+  border-color: #b38754;
+  box-shadow: 0 0 0 1px rgba(179, 135, 84, 0.18);
+}
+
+/* Buttons (reusing .btn + .primary from global if you have it) */
+.login-btn {
+  width: 100%;
+  margin-top: 4px;
+}
+
+/* Footer */
+.login-footer {
+  text-align: center;
+  font-size: 14px;
+  color: #555555;
+}
+
+.login-link {
+  margin-left: 4px;
+  color: #b38754;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.login-link:hover {
+  text-decoration: underline;
+}
+
+/* Small screens */
+@media (max-width: 480px) {
+  .login-container {
+    padding: 22px 18px;
+    border-radius: 16px;
+  }
+
+  .login-title {
+    font-size: 22px;
+  }
+}

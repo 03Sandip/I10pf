@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gonotes — Signup</title>
+
+  <!-- global styles -->
+  <link rel="stylesheet" href="../css/styles.css" />
+  <link rel="stylesheet" href="../css/pages/header.css" />
+
+  <!-- page-specific styles -->
+  <link rel="stylesheet" href="../css/pages/signup.css" />
+</head>
+
+<body>
+  <!-- header partial -->
+  <div id="header" aria-hidden="true"></div>
+
+  <main class="signup-page">
+    <section class="signup-container" aria-labelledby="signupTitle">
+      <h1 id="signupTitle" class="signup-title">Create your account</h1>
+      <p class="signup-subtitle">Sign up to access Gonotes.</p>
+
+      <form id="signupForm" class="signup-form" novalidate>
+        <div class="input-group">
+          <label for="name" class="input-label">Full name</label>
+          <input
+            id="name"
+            type="text"
+            class="input-field"
+            placeholder="Your name"
+            required
+          />
+        </div>
+
+        <div class="input-group">
+          <label for="email" class="input-label">Email</label>
+          <input
+            id="email"
+            type="email"
+            class="input-field"
+            placeholder="you@example.com"
+            required
+          />
+        </div>
+
+        <div class="input-group">
+          <label for="phone" class="input-label">Phone number</label>
+          <input
+            id="phone"
+            type="tel"
+            class="input-field"
+            placeholder="1234567890"
+            required
+          />
+        </div>
+
+        <div class="input-group">
+          <label for="college" class="input-label">College / University</label>
+          <input
+            id="college"
+            type="text"
+            class="input-field"
+            placeholder="Your college name"
+            required
+          />
+        </div>
+
+        <!-- Password -->
+        <div class="input-group">
+          <label for="password" class="input-label">Password</label>
+          <div class="password-wrapper">
+            <input
+              id="password"
+              type="password"
+              class="input-field"
+              placeholder="••••••••"
+              required
+            />
+            <button
+              type="button"
+              class="toggle-password-btn"
+              data-target="password"
+              aria-label="Toggle password visibility"
+            >
+              Show
+            </button>
+          </div>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="input-group">
+          <label for="confirmPassword" class="input-label">Confirm password</label>
+          <div class="password-wrapper">
+            <input
+              id="confirmPassword"
+              type="password"
+              class="input-field"
+              placeholder="••••••••"
+              required
+            />
+            <button
+              type="button"
+              class="toggle-password-btn"
+              data-target="confirmPassword"
+              aria-label="Toggle confirm password visibility"
+            >
+              Show
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn primary signup-btn">
+          Sign up
+        </button>
+      </form>
+
+      <div class="signup-footer">
+        <span>Already have an account?</span>
+        <a href="./login.html" class="signup-link">Log in</a>
+      </div>
+    </section>
+  </main>
+  
+  <script src="js/server.js"></script>
+  <script src="../js/loadPartials.js" defer></script>
+  <script src="../js/signup.js" defer></script>
+</body>
+</html>

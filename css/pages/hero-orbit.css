@@ -1,0 +1,133 @@
+/* ---------- HERO ORBIT SYSTEM — TUNED SPACING ---------- */
+
+/* Outer wrapper */
+.hero-orbit {
+  position: relative;
+  width: 580px;   /* bigger container */
+  height: 580px;
+}
+
+/* Central book */
+.hero-center-img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -52%) rotate(-8deg); /* -52% = tiny visual lift */
+  width: 360px;   /* slightly smaller so rings don't hug it */
+  height: auto;
+
+  border-radius: 0 !important;
+  box-shadow: none !important;
+
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Base orbit style */
+.orbit {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px dashed rgba(148, 163, 184, 0.55);
+  transform-origin: 50% 50%;
+}
+
+/* Orbits – all share same center as book */
+.orbit-1 {
+  width: 430px;
+  height: 430px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: orbit-spin 22s linear infinite;
+}
+
+.orbit-2 {
+  width: 510px;
+  height: 510px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: orbit-spin 32s linear infinite reverse;
+}
+
+.orbit-3 {
+  width: 580px;
+  height: 580px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: orbit-spin 42s linear infinite;
+}
+
+/* Orbiting icons */
+.planet {
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  transform: translate(-50%, -50%);
+  
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 15px 35px rgba(15, 23, 42, 0.25);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.planet img {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+}
+
+/* Colors */
+.planet-1 {
+  background: radial-gradient(circle at 30% 30%, #fef9c3, #facc15);
+}
+.planet-2 {
+  background: radial-gradient(circle at 30% 30%, #e0f2fe, #3b82f6);
+}
+.planet-3 {
+  background: radial-gradient(circle at 30% 30%, #dcfce7, #22c55e);
+}
+
+/* Spin */
+@keyframes orbit-spin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* ---------- MOBILE ---------- */
+@media (max-width: 768px) {
+  .hero-orbit {
+    width: 320px;
+    height: 320px;
+  }
+
+  .orbit-1 {
+    width: 220px;
+    height: 220px;
+  }
+  .orbit-2 {
+    width: 280px;
+    height: 280px;
+  }
+  .orbit-3 {
+    width: 320px;
+    height: 320px;
+  }
+
+  .hero-center-img {
+    width: 210px;
+    transform: translate(-50%, -52%) rotate(-8deg);
+  }
+
+  .planet {
+    width: 34px;
+    height: 34px;
+  }
+}

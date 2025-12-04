@@ -22,7 +22,7 @@
 }
 
 /* title block */
-.shop-header h2 { 
+.shop-header h2 {
   margin: 0 0 6px;
   font-family: Georgia, serif;
   font-size: 26px;
@@ -57,9 +57,7 @@
   min-height: 40px;
 }
 
-.select {
-  min-width: 160px;
-}
+.select { min-width: 160px; }
 
 /* search field in shop */
 #shopSearch.search {
@@ -87,7 +85,7 @@
   font-size:13px;
 }
 
-/* ---------- Grid / cards ---------- */
+/* ---------- Grid / cards (generic .card) ---------- */
 .grid {
   display: grid;
   gap: 22px;
@@ -95,7 +93,7 @@
   margin-top: 22px;
 }
 
-/* card tweaks to match shop look */
+/* Original .card layout (fallback) */
 .card {
   background: var(--card);
   border-radius: 12px;
@@ -109,7 +107,6 @@
 }
 .card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.06); }
 
-/* thumbnail */
 .card .thumb {
   width: 100%;
   height: 150px;
@@ -119,16 +116,13 @@
   background: linear-gradient(180deg,#f6f4f2,#efebe6);
 }
 
-/* card title & meta */
 .card h3 { margin: 0; font-size: 16px; font-weight: 700; font-family: Georgia, serif; color: #1f1b18; }
 .card .meta { color: var(--muted); font-size: 13px; margin-top: 4px; }
 .card .desc { color: #58524a; font-size: 13px; margin-top: 8px; line-height:1.4; }
 
-/* price and action row */
 .card .price { font-weight: 800; color: #115e59; font-size: 16px; }
 .card .card-actions { display:flex; gap:8px; align-items:center; justify-content:space-between; margin-top:auto; }
 
-/* small action buttons */
 .small {
   padding: 8px 10px;
   border-radius: 8px;
@@ -139,7 +133,6 @@
 }
 .small:hover { background: var(--accent-2); color: #fff; border-color: var(--accent-2); }
 
-/* Add-to-cart primary button style (if you want) */
 .add-primary {
   background: var(--accent);
   color: #fff;
@@ -157,29 +150,166 @@
   font-size: 16px;
 }
 
-/* ---------- Pagination (optional) ---------- */
-.shop-pagination {
-  display:flex;
-  justify-content:center;
-  gap:8px;
-  margin: 26px 0;
+/* ---------- Template-driven note-card (new) ---------- */
+/* note-card - a cleaner, image-first card (matches provided HTML template) */
+.note-card {
+  background: var(--card, #fff);
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: var(--shadow, 0 6px 18px rgba(0,0,0,0.04));
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  font-family: "Georgia", "Times New Roman", serif;
+  transition: transform .18s ease, box-shadow .18s ease;
+  min-height: 320px;
 }
-.shop-pagination .page-btn {
-  padding:8px 12px;
-  border-radius:8px;
-  border:1px solid #eee;
-  background:#fff;
-  cursor:pointer;
-}
-.shop-pagination .page-btn.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+.note-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.06); }
 
-/* ---------- Preview modal tweaks ---------- */
+.card-media {
+  position: relative;
+  padding: 8px;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #f6f5f3, #fff);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 240px;
+  margin-bottom: 14px;
+}
+.card-image {
+  max-width: 100%;
+  max-height: 220px;
+  object-fit: contain;
+  border-radius: 4px;
+  background: #fff;
+}
+
+/* discount badge (top-left) */
+.discount-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  font-size: 12px;
+  padding: 6px 8px;
+  border-radius: 20px;
+  box-shadow: 0 1px 0 rgba(0,0,0,.06);
+}
+
+/* preview button overlay (bottom-right) */
+.preview-btn {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  background: rgba(255,255,255,0.96);
+  border: 1px solid #eee;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+/* card body & typography */
+.card-body .card-title,
+.note-card .card-body .card-title {
+  font-size: 18px;
+  margin: 0 0 8px;
+  color: var(--accent, #6b5b2e);
+  letter-spacing: 0.2px;
+}
+.card-subtitle {
+  font-size: 13px;
+  color: #8b8b8b;
+  margin-bottom: 12px;
+}
+
+/* price row for note-card */
+.price-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.original-price {
+  color: #9b9b9b;
+  text-decoration: line-through;
+  font-size: 14px;
+}
+.discounted-price {
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 16px;
+}
+
+/* actions for note-card */
+.card-actions, .note-card .card-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: auto;
+}
+.btn {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:38px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #e9e2d9;
+  background: #fff;
+  cursor: pointer;
+  font-weight: 700;
+}
+.btn.primary, .btn.add-primary {
+  background: var(--accent);
+  color: #fff;
+  border-color: transparent;
+}
+
+/* ---------- Preview & Cart modal tweaks ---------- */
 .modal-content { max-width: 880px; padding: 20px; }
 .preview-embed { width:100%; height:480px; border-radius:8px; border:1px solid #eee; }
 
-/* ---------- Cart modal tweaks ---------- */
 .cart-item { display:flex; justify-content:space-between; gap:12px; padding:12px 0; border-bottom:1px dashed #efefef; }
 .cart-item .meta { font-size:13px; color:var(--muted); }
+
+/* ---------- Floating cart button badge ---------- */
+/* The openCartBtn will get a data-count attribute (JS sets it). We show it using ::after */
+#openCartBtn {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 1100;
+  border-radius: 999px;
+  width: 54px;
+  height: 54px;
+  display:flex;align-items:center;justify-content:center;
+  background: var(--accent); color:#fff; border:none; box-shadow:0 6px 18px rgba(0,0,0,0.12);
+  font-size: 20px;
+}
+#openCartBtn::after {
+  content: attr(data-count);
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: #ff4b4b;
+  color: #fff;
+  min-width: 20px;
+  height: 20px;
+  font-size: 12px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+  transform: translate(0, 0);
+  /* hide when no data-count */
+  opacity: 1;
+}
+#openCartBtn:not([data-count])::after { display: none; }
 
 /* ---------- Utilities ---------- */
 .visually-hidden { position:absolute !important; height:1px; width:1px; overflow:hidden; clip:rect(1px,1px,1px,1px); white-space:nowrap; }
@@ -191,6 +321,8 @@
   .shop-header h2 { font-size: 22px; }
   .grid { gap: 16px; }
   .card .thumb { height: 140px; }
+  .note-card { min-height: 280px; }
+  .card-media { min-height: 200px; }
 }
 
 @media (max-width: 600px) {
@@ -198,4 +330,7 @@
   .shop-controls { width:100%; display:flex; flex-direction:column; gap:10px; }
   .shop-controls .select, .shop-controls .search, #resetFilters { width: 100%; }
   .card { min-height: auto; padding: 14px; }
+  .note-card { min-height: auto; padding: 14px; }
+  #openCartBtn { right: 12px; bottom: 12px; width:48px; height:48px; }
+  #openCartBtn::after { top: -4px; right: -4px; min-width:18px; height:18px; font-size:11px; }
 }

@@ -7,49 +7,82 @@
 
   <!-- main site styles (reuse existing styles.css) -->
   <link rel="stylesheet" href="../css/styles.css" />
-    <link rel="stylesheet" href="../css/pages/header.css" />
-    <link rel="stylesheet" href="../css/pages/shop.css" />
+  <link rel="stylesheet" href="../css/pages/header.css" />
+  <link rel="stylesheet" href="../css/pages/shop.css" />
 </head>
 <body>
 
   <!-- header partial (loads via loadPartials.js) -->
-  <div id="header"></div>
+  <div id="header" aria-hidden="true"></div>
 
-  <main class="container">
-    <section class="shop-hero">
-      <div class="container shop-header">
+  <main class="container" id="main">
+    <section class="shop-hero" aria-labelledby="shopTitle">
+      <div class="container shop-header" style="display:flex;gap:18px;align-items:center;justify-content:space-between;">
         <div>
-          <h2 style="margin:0 0 6px">All Notes</h2>
+          <h2 id="shopTitle" style="margin:0 0 6px">All Notes</h2>
           <div style="color:#666;font-size:14px">Browse notes by stream and semester — preview before buying.</div>
         </div>
 
-        <div class="shop-controls">
-          <label class="filter-label">Stream</label>
-          <select id="streamSelect" class="select">
+        <div class="shop-controls" style="display:flex;gap:10px;align-items:center;">
+          <label class="filter-label" for="streamSelect" style="font-size:13px;color:#444">Stream</label>
+          <select id="streamSelect" class="select" aria-label="Stream filter">
             <option value="">All Streams</option>
           </select>
 
-          <label class="filter-label">Semester</label>
-          <select id="semesterSelect" class="select">
+          <label class="filter-label" for="semesterSelect" style="font-size:13px;color:#444">Semester</label>
+          <select id="semesterSelect" class="select" aria-label="Semester filter">
             <option value="">All Semesters</option>
           </select>
 
-          <input id="shopSearch" class="search" placeholder="Search title or description..." />
+          <input id="shopSearch" class="search" placeholder="Search title or description..." aria-label="Search notes" />
           <button id="resetFilters" class="btn" style="background:#fff;color:var(--accent);border:1px solid #e5e7eb">Reset</button>
         </div>
       </div>
     </section>
 
-    <section id="notesContainer">
-      <div id="notesGrid" class="grid" aria-live="polite"></div>
+    <!-- Template used by JS to clone each note card -->
+    <template id="noteCardTemplate">
+      <article class="note-card" role="article" aria-label="note card">
+        <div class="card-media">
+          <img class="card-image" alt="Note cover" src="" />
+          <div class="discount-badge" aria-hidden="true"></div>
+          <button class="preview-btn" title="Preview sample" aria-label="Preview sample">Preview</button>
+        </div>
+
+        <div class="card-body">
+          <h3 class="card-title"></h3>
+          <div class="card-subtitle"></div>
+          <div class="price-row" aria-hidden="true">
+            <div class="original-price"></div>
+            <div class="discounted-price"></div>
+          </div>
+
+          <div class="card-actions">
+            <button class="btn add-to-cart" type="button">Add to cart</button>
+            <button class="btn buy-now primary" type="button">Buy now</button>
+          </div>
+        </div>
+      </article>
+    </template>
+
+    <section id="notesContainer" aria-live="polite">
+      <div id="notesGrid" class="grid" aria-label="notes grid"></div>
       <div id="emptyMessage" class="empty" style="display:none">No notes match your filters.</div>
+
+      <!-- Load more / pagination area -->
+      <div id="loadMoreWrap" style="text-align:center;margin-top:18px;">
+        <button id="loadMoreBtn" class="btn" style="padding:10px 18px;border-radius:10px;display:none">Load more</button>
+        <div id="noMore" style="display:none;color:var(--muted);margin-top:10px">No more items.</div>
+      </div>
     </section>
   </main>
 
-  <!-- preview modal (re-uses modal structure) -->
+
+
+  <!-- preview modal -->
   <div id="previewModal" class="modal" aria-hidden="true">
-    <div class="modal-content">
-      <button class="modal-close" id="closePreview">&times;</button>
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="previewTitle">
+      <button class="modal-close" id="closePreview" aria-label="Close preview">&times;</button>
       <div id="previewBody"></div>
       <div style="margin-top:12px; display:flex; gap:8px; justify-content:flex-end">
         <button id="buyFromPreview" class="btn primary">Add to cart</button>
@@ -60,10 +93,10 @@
 
   <!-- cart modal -->
   <div id="cartModal" class="modal" aria-hidden="true">
-    <div class="modal-content">
-      <button class="modal-close" id="closeCart">&times;</button>
-      <h2>Your Cart</h2>
-      <div id="cartItems"></div>
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="cartTitle">
+      <button class="modal-close" id="closeCart" aria-label="Close cart">&times;</button>
+      <h2 id="cartTitle" style="margin-top:6px">Your Cart</h2>
+      <div id="cartItems" style="margin-top:8px"></div>
       <div class="cart-footer">
         <div>Total: ₹<span id="cartTotal">0.00</span></div>
         <button id="checkoutBtn" class="btn primary">Checkout (Mock)</button>
@@ -72,12 +105,35 @@
   </div>
 
   <!-- footer partial -->
-  <div id="footer"></div>
+  <div id="footer" aria-hidden="true"></div>
 
   <!-- scripts -->
-  <script src="../js/loadPartials.js"></script>
-  <script src="../js/api.js"></script>
-  <script src="../js/components.js"></script>
-  <script src="../js/shop.js"></script>
+  <script src="js/server.js"></script>
+  <script src="../js/loadPartials.js" defer></script>
+  <script src="../js/components.js" defer></script>
+  <script src="../js/shop.js" defer></script>
+
+  <!-- small inline wiring: open floating cart button -->
+  <script>
+    (function(){
+      const openCartBtn = document.getElementById('openCartBtn');
+      const cartModal = document.getElementById('cartModal');
+      const closeCart = document.getElementById('closeCart');
+
+      openCartBtn?.addEventListener?.('click', () => {
+        if (cartModal) cartModal.setAttribute('aria-hidden','false');
+      });
+      closeCart?.addEventListener?.('click', () => {
+        if (cartModal) cartModal.setAttribute('aria-hidden','true');
+      });
+
+      // close modals on ESC
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          document.querySelectorAll('.modal[aria-hidden="false"]').forEach(m => m.setAttribute('aria-hidden','true'));
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
