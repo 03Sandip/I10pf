@@ -1,0 +1,141 @@
+<!-- pages/syllabus.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>GoNotes – Syllabus</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- global + header + page styles -->
+  <link rel="stylesheet" href="../css/styles.css" />
+  <link rel="stylesheet" href="../css/pages/header.css" />
+  <link rel="stylesheet" href="../css/pages/syllabus.css" />
+</head>
+<body>
+
+  <!-- shared header partial (loaded by loadPartials.js) -->
+  <div id="header" aria-hidden="true"></div>
+
+  <!-- MAIN CONTENT -->
+  <main class="sy-page">
+    <div class="sy-container">
+      <section class="sy-page-header">
+        <h1>All Syllabus</h1>
+        <p>Browse syllabus by stream and semester — click download to get the PDF.</p>
+      </section>
+
+      <!-- FILTER BAR -->
+      <section class="sy-filters">
+        <div class="sy-filter-group">
+          <span class="sy-filter-label">Stream</span>
+          <select class="sy-filter-select" name="stream" id="sy-stream">
+            <option>All Streams</option>
+            <option>CSE</option>
+            <option>IT</option>
+            <option>ECE</option>
+            <!-- add more -->
+          </select>
+        </div>
+
+        <div class="sy-filter-group">
+          <span class="sy-filter-label">Semester</span>
+          <select class="sy-filter-select" name="semester" id="sy-semester">
+            <option>All Semesters</option>
+            <option>Sem 1</option>
+            <option>Sem 2</option>
+            <option>Sem 3</option>
+            <option>Sem 4</option>
+            <!-- etc -->
+          </select>
+        </div>
+
+        <input
+          class="sy-filter-input"
+          type="text"
+          id="sy-search"
+          placeholder="Search subject or code..."
+          name="q"
+        />
+
+        <button class="sy-reset-btn" type="button" id="sy-reset-btn">Reset</button>
+      </section>
+
+      <!-- GRID OF SYLLABUS CARDS -->
+      <section class="sy-grid">
+        <!-- CARD 1 -->
+        <article class="sy-card">
+          <span class="sy-card-badge">CSE · Sem 1</span>
+          <div class="sy-card-image">
+            <span>📘</span>
+          </div>
+          <h2 class="sy-card-title">Physics – Syllabus</h2>
+          <p class="sy-card-meta">Code: PH101 · University syllabus PDF</p>
+          <div class="sy-card-actions">
+            <button class="sy-small-link" type="button">Preview</button>
+            <a href="/syllabus/PH101.pdf" class="sy-btn-download" download>
+              Download
+            </a>
+          </div>
+        </article>
+
+        <!-- CARD 2 -->
+        <article class="sy-card">
+          <span class="sy-card-badge">CSE · Sem 3</span>
+          <div class="sy-card-image">
+            <span>📗</span>
+          </div>
+          <h2 class="sy-card-title">AIML – Syllabus</h2>
+          <p class="sy-card-meta">Code: CS305 · Updated 2025</p>
+          <div class="sy-card-actions">
+            <button class="sy-small-link" type="button">Preview</button>
+            <a href="/syllabus/CS305.pdf" class="sy-btn-download" download>
+              Download
+            </a>
+          </div>
+        </article>
+
+        <!-- CARD 3 -->
+        <article class="sy-card">
+          <span class="sy-card-badge">IT · Sem 4</span>
+          <div class="sy-card-image">
+            <span>📙</span>
+          </div>
+          <h2 class="sy-card-title">Operating Systems – Syllabus</h2>
+          <p class="sy-card-meta">Code: IT402 · JNTU pattern</p>
+          <div class="sy-card-actions">
+            <button class="sy-small-link" type="button">Preview</button>
+            <a href="/syllabus/IT402.pdf" class="sy-btn-download" download>
+              Download
+            </a>
+          </div>
+        </article>
+
+        <!-- CARD 4 (EXAMPLE WHEN NOT AVAILABLE YET) -->
+        <article class="sy-card">
+          <span class="sy-card-badge">CSE · Sem 6</span>
+          <div class="sy-card-image">
+            <span>📒</span>
+          </div>
+          <h2 class="sy-card-title">Cloud Lab – Syllabus</h2>
+          <p class="sy-card-meta">Coming soon</p>
+          <div class="sy-card-actions">
+            <span class="sy-small-link">Not uploaded yet</span>
+            <button class="sy-btn-download" disabled>
+              Download
+            </button>
+          </div>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <!-- shared footer (optional, same pattern as shop) -->
+  <div id="footer" aria-hidden="true"></div>
+
+  <!-- scripts: same loader pattern as shop page -->
+  <script src="js/server.js"></script>
+  <script src="../js/loadPartials.js" defer></script>
+  <script src="../js/components.js" defer></script>
+  <script src="../js/syllabus.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,212 @@
+:root {
+  --bg-main: #a7f3d0;      /* light green background */
+  --bg-panel: #bbf7d0;
+  --bg-pdf: #dbeafe;       /* light blue pdf area */
+  --text-main: #022c22;
+  --accent: #059669;
+  --accent-soft: #6ee7b7;
+  --border-soft: rgba(15, 23, 42, 0.2);
+  --timer-bg: #ecfdf5;
+  --timer-accent: #10b981;
+  --danger: #ef4444;
+  --font-main: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-main);
+  background: var(--bg-main);
+  color: var(--text-main);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ------------ TOP BAR ------------ */
+
+.viewer-topbar {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  background: #047857;
+  color: #ecfdf5;
+  font-size: 12px;
+}
+
+.viewer-title {
+  font-weight: 600;
+}
+
+.viewer-warning {
+  opacity: 0.85;
+}
+
+/* ------------ LAYOUT ------------ */
+
+.viewer-root {
+  flex: 1;
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+}
+
+/* left: pdf area */
+.pdf-shell {
+  flex: 1;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* status text */
+.status-msg {
+  font-size: 13px;
+  color: rgba(15, 23, 42, 0.8);
+}
+
+.status-msg.error-msg {
+  color: #b91c1c;
+}
+
+/* scrollable pdf window */
+.pdf-viewport {
+  position: relative;
+  height: 70vh;          /* fixed window size */
+  max-height: 70vh;
+  overflow-y: auto;
+  border-radius: 14px;
+  background: var(--bg-pdf);
+  padding: 12px;
+  box-shadow: 0 12px 40px rgba(15, 23, 42, 0.35);
+}
+
+/* PDF pages container */
+.pdf-container {
+  position: relative;
+  margin: 0 auto;
+}
+
+/* each canvas wrapper */
+.pdf-page {
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.pdf-page canvas {
+  display: block;
+  background: white;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.2);
+}
+
+/* watermark in the middle */
+.watermark {
+  position: fixed; /* stays in viewport */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 40px;
+  font-weight: 700;
+  color: rgba(15, 118, 110, 0.18);
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+}
+
+/* ------------ TIMER CARD ------------ */
+
+.timer-card {
+  width: 260px;
+  min-width: 260px;
+  background: var(--timer-bg);
+  border-radius: 18px;
+  box-shadow: 0 12px 40px rgba(15, 23, 42, 0.3);
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-self: flex-start;
+}
+
+.timer-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.timer-display {
+  font-size: 32px;
+  font-weight: 700;
+  text-align: center;
+  padding: 10px 0;
+  border-radius: 12px;
+  background: white;
+  border: 1px solid var(--border-soft);
+}
+
+.timer-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.btn {
+  border: none;
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: transform 0.08s ease, box-shadow 0.08s ease,
+    background-color 0.12s ease;
+}
+
+.btn-primary {
+  background: var(--timer-accent);
+  color: white;
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 22px rgba(16, 185, 129, 0.5);
+}
+
+.btn-secondary {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.btn-secondary:hover {
+  background: #d1d5db;
+}
+
+.timer-hint {
+  font-size: 12px;
+  color: rgba(31, 41, 55, 0.85);
+}
+
+/* small screens: stack vertically */
+@media (max-width: 900px) {
+  .viewer-root {
+    flex-direction: column;
+  }
+
+  .timer-card {
+    width: 100%;
+    max-width: 360px;
+  }
+}

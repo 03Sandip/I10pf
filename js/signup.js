@@ -9,8 +9,17 @@
   const passwordInput = document.getElementById("password");
   const confirmPasswordInput = document.getElementById("confirmPassword");
 
-  // 🔥 Centralized URL – comes from server.js
-  const API_BASE = window.API_BASE;
+  /* =====================================================
+     BACKEND BASE URL (from server.js)
+     ===================================================== */
+
+  if (!window.SERVER_URL) {
+    alert("SERVER_URL missing — load js/server.js before signup.js");
+    throw new Error("SERVER_URL missing");
+  }
+
+  const ROOT_URL = window.SERVER_URL.replace(/\/+$/, "");
+  const API_BASE = ROOT_URL + "/api"; // → e.g. http://3.110.219.41:5000/api
 
   /* =====================================================
      TOAST SYSTEM (same as login.js)
@@ -145,7 +154,7 @@
     }
 
     try {
-      const res = await fetch(`${API_BASE}/api/auth/signup`, {
+      const res = await fetch(`${API_BASE}/auth/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -159,7 +168,7 @@
         }),
       });
 
-      const data = await res.json();
+      const data = await res.json().catch(() => ({}));
 
       if (!res.ok) {
         toast(data.message || "Signup failed", "error");

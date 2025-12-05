@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Notes - GoNotes</title>
+
+  <!-- Optional page stylesheet -->
+  <link rel="stylesheet" href="../css/pages/mynotes.css" />
+
+  <style>
+    /* Simple fallback styling if CSS file not ready */
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 30px auto;
+      background: #fff;
+      padding: 20px 24px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+      margin-top: 0;
+      text-align: center;
+    }
+
+    .notes-grid {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .note-card {
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 12px 14px;
+      background: #fafafa;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .note-title {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .note-meta {
+      font-size: 13px;
+      color: #6b7280;
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+
+    .note-price {
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .note-price .old {
+      text-decoration: line-through;
+      color: #9ca3af;
+      margin-right: 4px;
+    }
+
+    .note-price .new {
+      font-weight: 600;
+      color: #111827;
+    }
+
+    .note-price .tag {
+      font-size: 11px;
+      background: #dcfce7;
+      color: #166534;
+      padding: 2px 6px;
+      border-radius: 999px;
+      margin-left: 6px;
+    }
+
+    .note-actions {
+      margin-top: auto;
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 8px 10px;
+      font-size: 13px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: #4CAF50;
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: #43a047;
+    }
+
+    .btn-secondary {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    .empty-msg {
+      margin-top: 12px;
+      font-size: 14px;
+      color: #6b7280;
+      text-align: center;
+    }
+
+    .top-actions {
+      margin-top: 14px;
+      display: flex;
+      justify-content: flex-end;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>My Notes</h2>
+    <p style="text-align:center; font-size:13px; color:#6b7280;">
+      All notes you’ve purchased are listed here. Click “Read Note” to open the PDF.
+    </p>
+
+    <div class="top-actions">
+      <button class="btn btn-secondary" onclick="window.location.href='shop.html'">
+        Back to Shop
+      </button>
+    </div>
+
+    <div id="notesContainer" class="notes-grid"></div>
+    <p id="emptyMsg" class="empty-msg" style="display:none;">
+      You haven’t purchased any notes yet.
+    </p>
+  </div>
+
+  <!-- JS: config first, then page logic -->
+  <script src="../js/server.js"></script>
+  <script src="../js/mynotes.js"></script>
+  <script src="../js/note-viewer.js"></script>
+</body>
+</html>

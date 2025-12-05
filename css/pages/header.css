@@ -129,7 +129,7 @@
 
 /* ===== UNIFIED TEXT LINK STYLE (Log In + My Notes) ===== */
 .text-link {
-  color: #3f3429;                 /* matches your palette */
+  color: #3f3429;
   text-decoration: none;
   padding: 6px 8px;
   font-size: 14px;
@@ -206,27 +206,18 @@
 
 /* -------- Responsive adjustments -------- */
 @media (max-width: 980px) {
-  /* keep header height but change grid layout for mobile */
   .header--clean { height: 64px; grid-template-columns: auto 1fr auto; }
-
-  /* hide center nav, show hamburger */
   .header-nav { display: none; }
   .hamburger { display: inline-block; }
-
-  /* reduce logo on mobile */
   .logo-img { max-height: 40px; }
-
-  /* hide textual login & my notes on small screens, keep CTA */
   .header-right .text-link { display: none; }
 }
 
-/* small tweak for very narrow screens */
 @media (max-width: 480px) {
   .header--clean { height: 60px; }
   .logo-img { max-height: 36px; }
   .btn.cta { padding: 6px 12px; font-size: 14px; }
 }
-
 
 /* Cart Button */
 .cart-btn {
@@ -242,18 +233,16 @@
   height: 22px;
 }
 
+/* ========================================= */
+/* 🔥 REMOVE CART COUNT BADGE COMPLETELY HERE */
+/* ========================================= */
+#cartCount,
+#cartCountMobile,
 .cart-badge {
-  position: absolute;
-  top: -4px;
-  right: -4px;
-  background: #ff4d4d;
-  color: #fff;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 2px 5px;
-  border-radius: 50%;
-  min-width: 18px;
-  text-align: center;
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 /* ====== USER MENU (DESKTOP) ====== */
@@ -264,20 +253,17 @@
   gap: 14px;
 }
 
-/* keep text links aligned nicely */
 .header-right .text-link {
   font-size: 14px;
   color: #3f3429;
 }
 
-/* container around avatar + dropdown */
 .user-menu {
   position: relative;
   display: flex;
   align-items: center;
 }
 
-/* round avatar button */
 .user-icon-btn {
   border: none;
   background: #f4e7d7;
@@ -302,7 +288,6 @@
   color: #4b2f1b;
 }
 
-/* dropdown panel */
 .user-dropdown {
   position: absolute;
   top: 115%;
@@ -316,7 +301,6 @@
   overflow: hidden;
 }
 
-/* header inside dropdown (name + email) */
 .user-dropdown-header {
   padding: 10px 14px 8px;
   border-bottom: 1px solid #f1ece6;
@@ -334,7 +318,6 @@
   color: #6c727f;
 }
 
-/* each item (Profile, Logout) */
 .user-dropdown-item {
   display: block;
   width: 100%;
@@ -356,7 +339,6 @@
   color: #b91c1c;
 }
 
-/* My Notes – pill style button */
 #myNotesLink {
   display: inline-flex;
   align-items: center;
@@ -364,10 +346,10 @@
   font-size: 14px;
   font-weight: 600;
   padding: 6px 14px;
-  margin-right: 4px;            /* space before avatar */
+  margin-right: 4px;
   border-radius: 1000px;
-  background: #f4e7d7;          /* light brown */
-  color: #4b2f1b;               /* dark brown text */
+  background: #f4e7d7;
+  color: #4b2f1b;
   text-decoration: none;
   border: 1px solid rgba(0,0,0,0.02);
 }
@@ -377,17 +359,14 @@
   color: #4b2f1b;
 }
 
-/* keep CTA button tight next to user menu */
 .header-right .btn.cta {
   margin-left: 4px;
 }
 
-/* ====== MOBILE SMALL TWEAKS ====== */
 @media (max-width: 768px) {
   .header-right {
     gap: 8px;
   }
-
   .user-dropdown {
     right: 8px;
   }

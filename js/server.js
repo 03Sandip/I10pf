@@ -1,27 +1,29 @@
 // server.js
-// Central place to define your backend URL.
-// Change ONLY here when you move from localhost to production.
+// Central place to define your backend ROOT URL (without /api).
+// Your new api.js generates BASE_URL = ROOT_URL + "/api"
 
 (function (root) {
-  // 👇 Set your backend URL here
-  const SERVER_URL = "http://localhost:5000"; 
-  // e.g. "https://api.mygonotes.com" in production
 
-  // Expose for browser (front-end)
+  // 👇 Backend root URL
+  const SERVER_URL = "http://65.0.183.96:5000";
+  // const SERVER_URL = "http://localhost:5000";
+  
+  // Example production: "https://api.mygonotes.com"
+
+  // Expose for browser (frontend)
   if (typeof window !== "undefined") {
+    // Make ONLY the root URL available globally
     window.SERVER_URL = SERVER_URL;
 
-    // For your existing code that already uses these:
-    window.API_BASE = SERVER_URL;          // e.g. used by signup/login: `${API_BASE}/api/auth/...`
-    window.GN_API_BASE = SERVER_URL + "/api"; // e.g. used by shop.js: NOTES_BASE, etc.
+    // ❌ DO NOT set window.API_BASE or window.GN_API_BASE here
+    // api.js now handles BASE_URL = ROOT_URL + "/api"
   }
 
-  // Optional: expose for Node.js (backend) if needed
+  // Optional: expose for Node.js if needed
   if (typeof module !== "undefined" && module.exports) {
     module.exports = {
       SERVER_URL,
-      API_BASE: SERVER_URL,
-      GN_API_BASE: SERVER_URL + "/api",
     };
   }
+
 })(typeof globalThis !== "undefined" ? globalThis : this);

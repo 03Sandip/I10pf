@@ -1,24 +1,23 @@
+// js/shop.js — list + filters + cart for client website
+
 (function () {
   // --- CONFIG ---
-  // Prefer SERVER_URL from server.js, then API_BASE, then fallback to localhost
-  const HOST =
-    typeof window !== "undefined" && (window.SERVER_URL || window.API_BASE)
-      ? String(window.SERVER_URL || window.API_BASE).replace(/\/+$/, "")
-      : "http://localhost:5000";
+  // Expect server.js to set window.SERVER_URL
+  if (!window.SERVER_URL) {
+    alert("SERVER_URL missing — load js/server.js before js/shop.js");
+    throw new Error("SERVER_URL missing");
+  }
 
-  // Prefer GN_API_BASE from server.js, else derive from HOST
-  const API_BASE =
-    typeof window !== "undefined" && window.GN_API_BASE
-      ? String(window.GN_API_BASE).replace(/\/+$/, "")
-      : HOST + "/api";
-
+  const ROOT_URL = window.SERVER_URL.replace(/\/+$/, "");
+  const API_BASE = ROOT_URL + "/api";
   const NOTES_BASE = API_BASE + "/notes";
+
   const PAGE_SIZE = 20;
   const PLACEHOLDER_IMG = "/images/note-placeholder.png";
   const PLACEHOLDER_SVG =
     "data:image/svg+xml;utf8," +
     encodeURIComponent(
-      '<svg xmlns="http://www.w3.org/2000/svg" width="600" height="420"><rect width="100%" height="100%" fill="#f6f2ef"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#bbb" font-size="20">No cover</text></svg>',
+      '<svg xmlns="http://www.w3.org/2000/svg" width="600" height="420"><rect width="100%" height="100%" fill="#f6f2ef"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#bbb" font-size="20">No cover</text></svg>'
     );
 
   // --- DOM REFS ---
@@ -107,9 +106,9 @@
     if (!notesGrid) return;
     if (isLoadingNow) {
       notesGrid.innerHTML = `<div class="empty">Loading notes…</div>`;
-      loadMoreBtn.style.display = "none";
-      noMoreEl.style.display = "none";
-      emptyMessage.style.display = "none";
+      if (loadMoreBtn) loadMoreBtn.style.display = "none";
+      if (noMoreEl) noMoreEl.style.display = "none";
+      if (emptyMessage) emptyMessage.style.display = "none";
     }
   }
 
@@ -141,7 +140,7 @@
       discountPrice < originalPrice
     ) {
       discountPercent = Math.round(
-        ((originalPrice - discountPrice) / originalPrice) * 100,
+        ((originalPrice - discountPrice) / originalPrice) * 100
       );
       price = discountPrice;
     } else if (discountPrice && discountPrice < originalPrice) {
@@ -179,11 +178,12 @@
   // --- DEPARTMENTS & SEMESTERS ---
 
   async function loadDepartments() {
+    if (!streamSelect) return;
     try {
       const data = await safeGet(buildUrl("/departments"));
       if (!Array.isArray(data)) return;
 
-      // keep "All Streams" option
+      // keep "All Streams" option (assumed first)
       while (streamSelect.options.length > 1) streamSelect.remove(1);
 
       data.forEach((d) => {
@@ -199,6 +199,7 @@
   }
 
   function populateSemestersFromOption(deptId) {
+    if (!semesterSelect) return;
     while (semesterSelect.options.length > 1) semesterSelect.remove(1);
     if (!deptId) return;
     const opt = streamSelect.querySelector(`option[value="${deptId}"]`);
@@ -219,6 +220,8 @@
   }
 
   async function loadSemestersForDept(deptId) {
+    if (!semesterSelect) return;
+
     // first try from data attribute
     populateSemestersFromOption(deptId);
     if (semesterSelect.options.length > 1) return;
@@ -226,7 +229,7 @@
     // fallback: fetch from backend
     try {
       const res = await safeGet(
-        buildUrl(`/semesters/${encodeURIComponent(deptId)}`),
+        buildUrl(`/semesters/${encodeURIComponent(deptId)}`)
       );
       const sems = Array.isArray(res) ? res : res.semesters || [];
       while (semesterSelect.options.length > 1) semesterSelect.remove(1);
@@ -267,13 +270,15 @@
 
       if (!append) {
         currentNotes = [];
-        notesGrid.innerHTML = "";
+        if (notesGrid) notesGrid.innerHTML = "";
       }
 
       currentNotes = currentNotes.concat(normalized);
       renderNotes(normalized, { append });
 
       const loadedCount = currentNotes.length;
+
+      if (!emptyMessage || !loadMoreBtn || !noMoreEl) return;
 
       if (loadedCount === 0) {
         emptyMessage.style.display = "block";
@@ -291,20 +296,24 @@
       }
     } catch (err) {
       console.error("Failed to fetch notes", err);
-      notesGrid.innerHTML = `<div class="empty">Failed to load notes.</div>`;
-      loadMoreBtn.style.display = "none";
-      noMoreEl.style.display = "none";
+      if (notesGrid)
+        notesGrid.innerHTML = `<div class="empty">Failed to load notes.</div>`;
+      if (loadMoreBtn) loadMoreBtn.style.display = "none";
+      if (noMoreEl) noMoreEl.style.display = "none";
     } finally {
       showLoadingState(false);
     }
   }
 
   function renderNotes(notes, { append = false } = {}) {
+    if (!notesGrid) return;
     if (!append) notesGrid.innerHTML = "";
     notes.forEach(renderNoteCard);
   }
 
   function renderNoteCard(note) {
+    if (!noteCardTemplate || !notesGrid) return;
+
     const tpl = noteCardTemplate.content.cloneNode(true);
 
     const img = tpl.querySelector(".card-image");
@@ -317,128 +326,95 @@
     const addToCartBtn = tpl.querySelector(".add-to-cart");
     const buyNowBtn = tpl.querySelector(".buy-now");
 
-    titleEl.textContent = note.title || "Untitled";
+    if (titleEl) titleEl.textContent = note.title || "Untitled";
     const semText = note.sem ? `Sem ${note.sem}` : "";
-    subtitleEl.textContent = `${note.dept || "Department"}${
-      semText ? " · " + semText : ""
-    }`;
+    if (subtitleEl)
+      subtitleEl.textContent = `${note.dept || "Department"}${
+        semText ? " · " + semText : ""
+      }`;
 
-    if (note.coverImage) {
-      img.src = note.coverImage;
-      img.alt = `${note.title} cover`;
-    } else {
-      img.src = PLACEHOLDER_IMG;
-      img.alt = `${note.title} (no cover)`;
+    if (img) {
+      if (note.coverImage) {
+        img.src = note.coverImage;
+        img.alt = `${note.title} cover`;
+      } else {
+        img.src = PLACEHOLDER_IMG;
+        img.alt = `${note.title} (no cover)`;
+      }
+      img.onerror = () => {
+        img.onerror = null;
+        img.src = PLACEHOLDER_SVG;
+      };
     }
-    img.onerror = () => {
-      img.onerror = null;
-      img.src = PLACEHOLDER_SVG;
-    };
 
     const price = Number(note.price || 0);
     const discountPercent = Number(note.discountPercent || 0);
 
     if (discountPercent > 0 && note.originalPrice) {
-      originalPriceEl.textContent = `₹${formatPrice(note.originalPrice)}`;
-      originalPriceEl.style.textDecoration = "line-through";
-      discountedPriceEl.textContent = `₹${formatPrice(price)}`;
-      discountBadge.textContent = `-${discountPercent}%`;
-      discountBadge.style.display = "inline-block";
+      if (originalPriceEl) {
+        originalPriceEl.textContent = `₹${formatPrice(note.originalPrice)}`;
+        originalPriceEl.style.textDecoration = "line-through";
+      }
+      if (discountedPriceEl)
+        discountedPriceEl.textContent = `₹${formatPrice(price)}`;
+      if (discountBadge) {
+        discountBadge.textContent = `-${discountPercent}%`;
+        discountBadge.style.display = "inline-block";
+      }
     } else if (price > 0) {
-      originalPriceEl.textContent = `₹${formatPrice(price)}`;
-      discountedPriceEl.textContent = "";
-      discountBadge.style.display = "none";
+      if (originalPriceEl)
+        originalPriceEl.textContent = `₹${formatPrice(price)}`;
+      if (discountedPriceEl) discountedPriceEl.textContent = "";
+      if (discountBadge) discountBadge.style.display = "none";
     } else {
-      originalPriceEl.textContent = "Free";
-      discountedPriceEl.textContent = "";
-      discountBadge.style.display = "none";
+      if (originalPriceEl) originalPriceEl.textContent = "Free";
+      if (discountedPriceEl) discountedPriceEl.textContent = "";
+      if (discountBadge) discountBadge.style.display = "none";
     }
 
     // PREVIEW: open previewLink in new tab
-    if (note.previewLink) {
-      previewBtn.addEventListener("click", () => {
-        window.open(note.previewLink, "_blank", "noopener");
-      });
-    } else {
-      previewBtn.disabled = true;
-      previewBtn.textContent = "No preview";
+    if (previewBtn) {
+      if (note.previewLink) {
+        previewBtn.addEventListener("click", () => {
+          window.open(note.previewLink, "_blank", "noopener");
+        });
+      } else {
+        previewBtn.disabled = true;
+        previewBtn.textContent = "No preview";
+      }
     }
 
-    addToCartBtn.addEventListener("click", () => {
-      addToCart(note);
-      addToCartBtn.textContent = "Added";
-      setTimeout(() => (addToCartBtn.textContent = "Add to cart"), 900);
-    });
+    if (addToCartBtn) {
+      addToCartBtn.addEventListener("click", () => {
+        addToCart(note);
+        addToCartBtn.textContent = "Added";
+        setTimeout(() => (addToCartBtn.textContent = "Add to cart"), 900);
+      });
+    }
 
-    buyNowBtn.addEventListener("click", () => {
-      addToCart(note);
-      toggleModal(cartModal, true);
-    });
+    // BUY NOW (single item): send only this note to buynow.html
+    if (buyNowBtn) {
+      buyNowBtn.addEventListener("click", () => {
+        const checkoutItems = [
+          {
+            id: note.id,
+            title: note.title,
+            price: Number(note.price || 0),
+            qty: 1,
+          },
+        ];
+        saveCheckoutItems(checkoutItems);
+        window.location.href = "buynow.html";
+      });
+    }
 
     notesGrid.appendChild(tpl);
   }
 
-  // --- PREVIEW MODAL (kept for future use) ---
-
-  function openPreview(note) {
-    previewBody.innerHTML = "";
-
-    const h3 = document.createElement("h3");
-    h3.id = "previewTitle";
-    h3.textContent = note.title;
-
-    const meta = document.createElement("p");
-    meta.style.margin = "4px 0";
-    meta.style.color = "#555";
-    const semText = note.sem ? ` • Sem ${note.sem}` : "";
-    meta.textContent = `${note.dept || "Department"}${semText}`;
-
-    const desc = document.createElement("p");
-    desc.style.marginTop = "10px";
-    desc.style.fontSize = "14px";
-    desc.style.color = "#666";
-    desc.textContent = note.description || "No description provided.";
-
-    previewBody.appendChild(h3);
-    previewBody.appendChild(meta);
-    previewBody.appendChild(desc);
-
-    const sample = note.sampleUrl;
-
-    if (sample) {
-      const frameWrap = document.createElement("div");
-      frameWrap.style.marginTop = "12px";
-      frameWrap.style.height = "360px";
-      frameWrap.style.border = "1px solid #e5e7eb";
-      frameWrap.style.borderRadius = "8px";
-      frameWrap.style.overflow = "hidden";
-
-      const iframe = document.createElement("iframe");
-      iframe.src = sample;
-      iframe.style.width = "100%";
-      iframe.style.height = "100%";
-      iframe.setAttribute("aria-label", "Note sample preview");
-      iframe.setAttribute("title", note.title + " preview");
-      frameWrap.appendChild(iframe);
-
-      previewBody.appendChild(frameWrap);
-
-      downloadPreview.dataset.url = sample;
-      downloadPreview.disabled = false;
-    } else {
-      const msg = document.createElement("div");
-      msg.className = "empty";
-      msg.textContent = "No sample available for this note.";
-      previewBody.appendChild(msg);
-      downloadPreview.dataset.url = "";
-      downloadPreview.disabled = true;
-    }
-
-    buyFromPreview.dataset.noteId = note.id;
-    toggleModal(previewModal, true);
-  }
+  // --- PREVIEW MODAL (optional) ---
 
   function downloadPreviewSample() {
+    if (!downloadPreview) return;
     const url = downloadPreview.dataset.url;
     if (!url) return;
     window.open(url, "_blank");
@@ -466,15 +442,22 @@
     }
   }
 
+  function saveCheckoutItems(items) {
+    try {
+      localStorage.setItem("gonotes_checkout", JSON.stringify(items || []));
+    } catch (e) {
+      console.warn("Failed saving checkout items", e);
+    }
+  }
+
   function updateHeaderCartCount() {
     const badge = document.getElementById("cartCount");
     if (!badge) return;
     const totalItems = cart.reduce(
       (sum, item) => sum + (Number(item.qty) || 0),
-      0,
+      0
     );
     badge.textContent = String(totalItems);
-    // hide badge if 0 (optional)
     badge.style.display = totalItems > 0 ? "inline-flex" : "none";
   }
 
@@ -557,7 +540,7 @@
       qtyInput.value = String(it.qty);
       qtyInput.style.width = "56px";
       qtyInput.addEventListener("change", (e) =>
-        updateCartQty(it.id, e.target.value),
+        updateCartQty(it.id, e.target.value)
       );
 
       const removeBtn = document.createElement("button");
@@ -578,7 +561,6 @@
     cartItemsWrap.appendChild(list);
     if (cartTotalEl) cartTotalEl.textContent = formatPrice(total);
 
-    // 🔴 update the number in the header every time cart changes
     updateHeaderCartCount();
   }
 
@@ -586,18 +568,18 @@
 
   const debouncedFilterChange = debounce(() => {
     currentFilters = {
-      departmentId: (streamSelect.value || "").trim(),
-      semester: (semesterSelect.value || "").trim(),
-      q: (shopSearch.value || "").trim(),
+      departmentId: (streamSelect?.value || "").trim(),
+      semester: (semesterSelect?.value || "").trim(),
+      q: (shopSearch?.value || "").trim(),
     };
     currentPage = 1;
     fetchNotes({ append: false });
   }, 300);
 
   function resetFilters() {
-    streamSelect.value = "";
-    semesterSelect.value = "";
-    shopSearch.value = "";
+    if (streamSelect) streamSelect.value = "";
+    if (semesterSelect) semesterSelect.value = "";
+    if (shopSearch) shopSearch.value = "";
     currentFilters = { departmentId: "", semester: "", q: "" };
     currentPage = 1;
     fetchNotes({ append: false });
@@ -607,7 +589,10 @@
     streamSelect?.addEventListener("change", async () => {
       const deptId = streamSelect.value || "";
       if (deptId) await loadSemestersForDept(deptId);
-      else while (semesterSelect.options.length > 1) semesterSelect.remove(1);
+      else if (semesterSelect) {
+        while (semesterSelect.options.length > 1)
+          semesterSelect.remove(1);
+      }
       debouncedFilterChange();
     });
 
@@ -624,7 +609,7 @@
     });
 
     closePreview?.addEventListener("click", () =>
-      toggleModal(previewModal, false),
+      toggleModal(previewModal, false)
     );
     previewModal?.addEventListener("click", (e) => {
       if (e.target === previewModal) toggleModal(previewModal, false);
@@ -633,7 +618,7 @@
     downloadPreview?.addEventListener("click", downloadPreviewSample);
 
     buyFromPreview?.addEventListener("click", () => {
-      const noteId = buyFromPreview.dataset.noteId;
+      const noteId = buyFromPreview?.dataset.noteId;
       if (!noteId) return;
       const note = currentNotes.find((n) => n.id === noteId);
       if (!note) return;
@@ -643,20 +628,23 @@
     });
 
     document.getElementById("closeCart")?.addEventListener("click", () =>
-      toggleModal(cartModal, false),
+      toggleModal(cartModal, false)
     );
     cartModal?.addEventListener("click", (e) => {
       if (e.target === cartModal) toggleModal(cartModal, false);
     });
 
     checkoutBtn?.addEventListener("click", () => {
-      alert(
-        "Checkout is a mock — integrate a payment gateway to complete purchases.",
-      );
+      if (!cart.length) {
+        alert("Your cart is empty.");
+        return;
+      }
+      saveCheckoutItems(cart);
+      window.location.href = "buynow.html";
     });
 
-    openCartBtn?.addEventListener?.("click", () =>
-      toggleModal(cartModal, true),
+    openCartBtn?.addEventListener("click", () =>
+      toggleModal(cartModal, true)
     );
   }
 
@@ -664,14 +652,13 @@
 
   document.addEventListener("DOMContentLoaded", async () => {
     wireEvents();
-    renderCart(); // this will also set the header badge from localStorage
+    renderCart();
     await loadDepartments();
     currentFilters = { departmentId: "", semester: "", q: "" };
     currentPage = 1;
-    fetchNotes({ append: false }); // initial load: all notes
+    fetchNotes({ append: false });
   });
 
-  // small debug hook
   window.gonotes_reloadNotes = () => {
     currentPage = 1;
     fetchNotes({ append: false });

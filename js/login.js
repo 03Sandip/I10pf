@@ -46,7 +46,8 @@
     toastEl.style.fontWeight = "500";
     toastEl.style.opacity = "0";
     toastEl.style.transform = "translateX(20px)";
-    toastEl.style.transition = "opacity 0.25s ease-out, transform 0.25s ease-out";
+    toastEl.style.transition =
+      "opacity 0.25s ease-out, transform 0.25s ease-out";
 
     // background & icon per type
     let bg = "#1f2937"; // default dark
@@ -107,14 +108,16 @@
   }
 
   /* =====================================================
-     LOGIN LOGIC
+     LOGIN LOGIC (uses SERVER_URL from server.js)
      ===================================================== */
 
-  // ✅ Centralized & safe: uses server.js if present, else localhost
-  const API_BASE =
-    (window.SERVER_URL && String(window.SERVER_URL).replace(/\/+$/, "")) ||
-    (window.API_BASE && String(window.API_BASE).replace(/\/+$/, "")) ||
-    "http://localhost:5000";
+  if (!window.SERVER_URL) {
+    alert("SERVER_URL missing — load js/server.js before login.js");
+    throw new Error("SERVER_URL missing");
+  }
+
+  const ROOT_URL = window.SERVER_URL.replace(/\/+$/, "");
+  const API_BASE = ROOT_URL + "/api"; // we call `${API_BASE}/auth/login`
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -128,22 +131,23 @@
     }
 
     try {
-      const res = await fetch(`${API_BASE}/api/auth/login`, {
+      const res = await fetch(`${API_BASE}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
 
-      const data = await res.json();
+      const data = await res.json().catch(() => ({}));
 
-      if (!res.ok) {
+      if (!res.ok || !data.success) {
         toast(data.message || "Invalid credentials", "error");
         return;
       }
 
-      // save session
-      localStorage.setItem("gn_token", data.token || "");
-      localStorage.setItem("gn_user", JSON.stringify(data.user || {}));
+      // ⭐⭐⭐ SAVE TOKEN + USER DATA WITH CONSISTENT KEYS ⭐⭐⭐
+      // these MUST match what buynow.js and mynotes.js read
+      localStorage.setItem("gonotes_token", data.token || "");
+      localStorage.setItem("gonotes_user", JSON.stringify(data.user || {}));
 
       // green tick toast
       toast("Login successful!", "success");

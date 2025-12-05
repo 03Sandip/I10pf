@@ -18,12 +18,9 @@ async function loadPartial(targetId, fileName) {
     const html = await response.text();
     container.innerHTML = html;
 
-    const computedPrefix = (() => {
-      if (siteBase) {
-        return siteBase.endsWith('/') ? siteBase : siteBase + '/';
-      }
-      return inPagesFolder ? '../' : '';
-    })();
+    const computedPrefix = siteBase
+      ? (siteBase.endsWith('/') ? siteBase : siteBase + '/')
+      : (inPagesFolder ? '../' : '');
 
     const shouldPrefix = (url) => {
       if (!url) return false;
@@ -36,89 +33,81 @@ async function loadPartial(targetId, fileName) {
       );
     };
 
-    // images
+    // Fix <img>
     container.querySelectorAll('img').forEach((img) => {
       const src = img.getAttribute('src') || img.getAttribute('data-src');
-      if (!src) return;
-      if (shouldPrefix(src)) img.setAttribute('src', computedPrefix + src);
+      if (src && shouldPrefix(src)) img.src = computedPrefix + src;
     });
 
-    // anchors
+    // Fix <a>
     container.querySelectorAll('a').forEach((a) => {
       const href = a.getAttribute('href');
-      if (!href) return;
-      if (shouldPrefix(href)) a.setAttribute('href', computedPrefix + href);
+      if (href && shouldPrefix(href)) a.href = computedPrefix + href;
     });
 
-    // css links
+    // Fix CSS
     container.querySelectorAll('link[rel="stylesheet"]').forEach((link) => {
       const href = link.getAttribute('href');
-      if (!href) return;
-      if (shouldPrefix(href)) link.setAttribute('href', computedPrefix + href);
+      if (href && shouldPrefix(href)) link.href = computedPrefix + href;
     });
 
-    // scripts
+    // Fix scripts
     container.querySelectorAll('script').forEach((s) => {
       const src = s.getAttribute('src');
-      if (!src) return;
-      if (shouldPrefix(src)) {
-        const newSrc = computedPrefix + src;
+      if (src && shouldPrefix(src)) {
         const newScript = document.createElement('script');
         Array.from(s.attributes).forEach((attr) => {
-          if (attr.name === 'src') return;
-          newScript.setAttribute(attr.name, attr.value);
+          if (attr.name !== 'src') newScript.setAttribute(attr.name, attr.value);
         });
-        newScript.src = newSrc;
+        newScript.src = computedPrefix + src;
         s.parentNode.replaceChild(newScript, s);
       }
     });
 
-    // dynamic logo
+    // Fix logo
     const logo = container.querySelector('#appLogo');
     if (logo) {
       const dataLogo = logo.getAttribute('data-logo') || 'images/gonotes.png';
       let resolved;
-      if (dataLogo.startsWith('/')) {
-        resolved = siteBase
-          ? (siteBase.endsWith('/') ? siteBase.slice(0, -1) : siteBase) +
-            dataLogo
-          : dataLogo;
-      } else if (/^(?:[a-z]+:)?\/\//i.test(dataLogo)) {
-        resolved = dataLogo;
-      } else {
-        resolved = computedPrefix + dataLogo;
-      }
-      logo.setAttribute('src', resolved);
+
+      if (dataLogo.startsWith('/')) resolved = dataLogo;
+      else if (/^(?:[a-z]+:)?\/\//i.test(dataLogo)) resolved = dataLogo;
+      else resolved = computedPrefix + dataLogo;
+
+      logo.src = resolved;
     }
 
-    // optional data-init hooks
+    // Hooks: data-init
     container.querySelectorAll('[data-init]').forEach((el) => {
       const fnName = el.getAttribute('data-init');
-      try {
-        if (fnName && typeof window[fnName] === 'function') window[fnName](el);
-      } catch (e) {
-        console.warn('data-init callback error', fnName, e);
+      if (fnName && typeof window[fnName] === 'function') {
+        try {
+          window[fnName](el);
+        } catch (e) {}
       }
     });
+
   } catch (err) {
     console.error('Error loading partial:', partialPath, err);
   }
 }
 
-// Load partials
+// Load all partials
 window.addEventListener('DOMContentLoaded', () => {
-  loadPartial('header', 'header.html');
-  loadPartial('hero', 'hero.html');
-  loadPartial('benefits', 'benefits.html');
-  loadPartial('other_product', 'other_product.html');
-  loadPartial('featured', 'featured.html');
-  loadPartial('spotlight', 'spotlight.html');
-  loadPartial('popular', 'popular.html');
-  loadPartial('quote', 'quote.html');
-  loadPartial('offers', 'offers.html');
-  loadPartial('newsletter', 'newsletter.html');
-  loadPartial('articles', 'articles.html');
-  loadPartial('footer', 'footer.html');
+  [
+    ['header', 'header.html'],
+    ['hero', 'hero.html'],
+    ['benefits', 'benefits.html'],
+    ['other_product', 'other_product.html'],
+    ['featured', 'featured.html'],
+    ['spotlight', 'spotlight.html'],
+    ['popular', 'popular.html'],
+    ['quote', 'quote.html'],
+    ['offers', 'offers.html'],
+    ['newsletter', 'newsletter.html'],
+    ['articles', 'articles.html'],
+    ['footer', 'footer.html'],
+  ].forEach(([id, file]) => loadPartial(id, file));
 });
 
 /* =========================
@@ -126,31 +115,37 @@ window.addEventListener('DOMContentLoaded', () => {
    ========================= */
 
 function setupAuthAndHeaderUI() {
-  const token = localStorage.getItem('gn_token');
+  // ✅ use the same keys as login.js / buynow.js / mynotes.js
+  const token = localStorage.getItem('gonotes_token');
   let user = null;
-  const rawUser = localStorage.getItem('gn_user');
-  if (rawUser) {
-    try {
-      user = JSON.parse(rawUser);
-    } catch {
-      user = null;
-    }
+
+  try {
+    user = JSON.parse(localStorage.getItem('gonotes_user') || '{}');
+  } catch {
+    user = null;
   }
 
   const currentPage = window.location.pathname.toLowerCase();
   const isInPages = currentPage.includes('/pages/');
-  const publicPages = ['login.html', 'signup.html', 'index.html'];
-  const isPublic = publicPages.some((p) => currentPage.includes(p));
 
-  // Protect non-public pages (optional)
+  const publicPages = [
+    'index.html',
+    'login.html',
+    'signup.html',
+    'shop.html',
+    'cart.html'
+  ];
+
+  const isRoot = currentPage === '/' || currentPage === '';
+  const isPublic = isRoot || publicPages.some((p) => currentPage.includes(p));
+
+  // If not logged in and page is not public → redirect to login
   if (!token && !isPublic) {
-    console.log('Redirecting to login (no token)');
     const target = isInPages ? './login.html' : '/pages/login.html';
     window.location.href = target;
     return;
   }
 
-  // Desktop header elements
   const loginLink = document.getElementById('loginLink');
   const myNotesLink = document.getElementById('myNotesLink');
   const userMenu = document.getElementById('userMenu');
@@ -161,12 +156,13 @@ function setupAuthAndHeaderUI() {
   const userEmailDisplay = document.getElementById('userEmailDisplay');
   const logoutBtn = document.getElementById('logoutBtn');
 
-  // Mobile header elements
   const myNotesItemMobile = document.getElementById('myNotesItemMobile');
   const loginItemMobile = document.getElementById('loginItemMobile');
 
   if (token && user) {
-    // ---- LOGGED IN STATE ----
+    // ===== LOGGED IN STATE =====
+
+    // Hide login, show My Notes + user menu
     if (loginLink) loginLink.style.display = 'none';
     if (loginItemMobile) loginItemMobile.style.display = 'none';
 
@@ -176,53 +172,53 @@ function setupAuthAndHeaderUI() {
 
     const name = user.name || user.email || 'User';
     const email = user.email || '';
-    const initial = name.trim().charAt(0).toUpperCase() || 'U';
+    const initial = name.charAt(0).toUpperCase();
 
     if (userInitial) userInitial.textContent = initial;
     if (userNameDisplay) userNameDisplay.textContent = name;
     if (userEmailDisplay) userEmailDisplay.textContent = email;
 
-    // Dropdown toggle
+    // Toggle dropdown menu
     if (userMenuToggle && userDropdown) {
-      userMenuToggle.addEventListener('click', (e) => {
+      userMenuToggle.onclick = (e) => {
         e.stopPropagation();
         userDropdown.style.display =
           userDropdown.style.display === 'block' ? 'none' : 'block';
-      });
-
+      };
       document.addEventListener('click', () => {
         userDropdown.style.display = 'none';
       });
     }
 
-    // Logout logic
+    // ===== LOGOUT =====
     if (logoutBtn) {
-      const API_BASE =
-        (window.SERVER_URL && String(window.SERVER_URL).replace(/\/+$/, '')) ||
-        (window.API_BASE && String(window.API_BASE).replace(/\/+$/, '')) ||
-        'http://localhost:5000';
-
-      logoutBtn.addEventListener('click', async () => {
-        try {
-          await fetch(`${API_BASE}/api/auth/logout`, {
-            method: 'POST',
-            headers: {
-              Authorization: 'Bearer ' + token,
-            },
-          });
-        } catch (e) {
-          console.warn('Logout request failed, clearing token anyway.');
+      logoutBtn.onclick = async () => {
+        // Build API base from SERVER_URL (used everywhere else)
+        let AUTH_BASE = '/api';
+        if (window.SERVER_URL) {
+          const root = window.SERVER_URL.replace(/\/+$/, '');
+          AUTH_BASE = root + '/api';
         }
 
-        localStorage.removeItem('gn_token');
-        localStorage.removeItem('gn_user');
+        try {
+          await fetch(`${AUTH_BASE}/auth/logout`, {
+            method: 'POST',
+            headers: { Authorization: 'Bearer ' + token },
+          });
+        } catch (e) {
+          // ignore network errors, we'll still clear localStorage
+        }
+
+        // Clear new keys
+        localStorage.removeItem('gonotes_token');
+        localStorage.removeItem('gonotes_user');
 
         const target = isInPages ? './login.html' : '/pages/login.html';
         window.location.href = target;
-      });
+      };
     }
   } else {
-    // ---- LOGGED OUT STATE ----
+    // ===== LOGGED OUT STATE =====
     if (loginLink) loginLink.style.display = 'inline-flex';
     if (loginItemMobile) loginItemMobile.style.display = 'block';
 
@@ -232,5 +228,5 @@ function setupAuthAndHeaderUI() {
   }
 }
 
-// Execute auth + header logic after partials have (likely) loaded
+// Run after partials & header HTML are injected
 setTimeout(setupAuthAndHeaderUI, 600);

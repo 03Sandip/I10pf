@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Buy Now</title>
+
+  <!-- Razorpay Checkout Script -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+  <!-- Page CSS -->
+  <link rel="stylesheet" href="../css/pages/buynow.css" />
+</head>
+<body>
+  <div class="container">
+    <h2>Buy Now</h2>
+
+    <!-- ORDER SUMMARY -->
+    <h3>Order Summary</h3>
+    <div class="order-summary" id="orderSummary">
+      <div class="empty-cart" id="emptyCartMsg">
+        Your cart is empty. Please go back to the shop and add notes.
+      </div>
+      <div id="orderItems"></div>
+
+      <div class="order-total-row">
+        <span>Subtotal</span>
+        <span>₹<span id="subtotalAmount">0.00</span></span>
+      </div>
+      <div class="order-total-row" id="discountRow">
+        <span>Discount</span>
+        <span>-₹<span id="discountAmount">0.00</span></span>
+      </div>
+      <div class="order-total-row order-payable">
+        <span>Payable</span>
+        <span>₹<span id="payableAmount">0.00</span></span>
+      </div>
+    </div>
+
+    <!-- COUPON -->
+    <h3>Apply Coupon</h3>
+    <div class="coupon-box">
+      <input
+        type="text"
+        id="couponInput"
+        placeholder="Enter coupon code (e.g. GONOTES10)"
+      />
+      <button id="applyCouponBtn" class="btn small-btn">Apply</button>
+    </div>
+    <p class="msg" id="couponMsg"></p>
+
+    <!-- ACTIONS -->
+    <button id="payBtn" class="btn primary-btn">Proceed to Pay</button>
+    <div class="back-wrap">
+      <button id="backBtn" class="btn btn-secondary">Back to Shop</button>
+    </div>
+  </div>
+
+  <!-- JS: first backend URL config, then page logic -->
+  <script src="../js/server.js"></script>
+  <script src="../js/toasst.js"></script>
+  <script src="../js/buynow.js"></script>
+</body>
+</html>

@@ -107,8 +107,10 @@
   <!-- footer partial -->
   <div id="footer" aria-hidden="true"></div>
 
-  <!-- scripts -->
-  <script src="js/server.js"></script>
+  <!-- 1️⃣ Load server.js from parent /js folder -->
+  <script src="../js/server.js"></script>
+
+  <!-- 2️⃣ Then other scripts (defer is fine) -->
   <script src="../js/loadPartials.js" defer></script>
   <script src="../js/components.js" defer></script>
   <script src="../js/shop.js" defer></script>

@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gonotes — Question Papers</title>
+
+  <!-- global + header + page styles -->
+  <link rel="stylesheet" href="../css/styles.css" />
+  <link rel="stylesheet" href="../css/pages/header.css" />
+  <link rel="stylesheet" href="../css/pages/qp.css" />
+</head>
+<body>
+
+  <!-- header partial (same as shop) -->
+  <div id="header" aria-hidden="true"></div>
+
+  <!-- MAIN -->
+  <main class="qp-container">
+    <section class="qp-page-header">
+      <h1>All Question Papers</h1>
+      <p>Browse previous year question papers by stream, semester and exam year.</p>
+    </section>
+
+    <!-- FILTERS -->
+    <section class="qp-filters">
+      <div class="qp-filter-group">
+        <span class="qp-filter-label">Stream</span>
+        <select class="qp-filter-select" name="stream" id="qp-stream">
+          <option>All Streams</option>
+          <option>CSE</option>
+          <option>IT</option>
+          <option>ECE</option>
+        </select>
+      </div>
+
+      <div class="qp-filter-group">
+        <span class="qp-filter-label">Semester</span>
+        <select class="qp-filter-select" name="semester" id="qp-semester">
+          <option>All Semesters</option>
+          <option>Sem 1</option>
+          <option>Sem 2</option>
+          <option>Sem 3</option>
+          <option>Sem 4</option>
+          <option>Sem 5</option>
+          <option>Sem 6</option>
+        </select>
+      </div>
+
+      <div class="qp-filter-group">
+        <span class="qp-filter-label">Year</span>
+        <select class="qp-filter-select" name="year" id="qp-year">
+          <option>All Years</option>
+          <option>2025</option>
+          <option>2024</option>
+          <option>2023</option>
+          <option>2022</option>
+        </select>
+      </div>
+
+      <input
+        class="qp-filter-input"
+        type="text"
+        name="q"
+        id="qp-search"
+        placeholder="Search subject, code or exam type..."
+      />
+
+      <button class="qp-reset-btn" type="button" id="qp-reset-btn">Reset</button>
+    </section>
+
+    <!-- GRID (same as before) -->
+    <section class="qp-grid">
+      <!-- cards ... unchanged ... -->
+    </section>
+  </main>
+
+  <!-- footer if you want, same pattern -->
+  <div id="footer" aria-hidden="true"></div>
+
+  <!-- scripts: SAME loaders as shop + qp-specific JS -->
+  <script src="js/server.js"></script>
+  <script src="../js/loadPartials.js" defer></script>
+  <script src="../js/components.js" defer></script>
+  <script src="../js/qp.js" defer></script>
+</body>
+</html>
