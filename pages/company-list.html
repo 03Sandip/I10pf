@@ -379,7 +379,7 @@
     try {
       companyListEl.innerHTML = '<div class="loading">Loading companies…</div>';
       sectionTitle.textContent = 'Loading…';
-      const companies = await fetchCompanyData('/js/data/A.txt'); // expected array [{title, rows: [...] }]
+      const companies = await fetchCompanyData('../js/data/A.txt'); // expected array [{title, rows: [...] }]
       rawData = {};
       (companies||[]).forEach(c => rawData[c.title || 'Unknown'] = c.rows || []);
       companyKeys = Object.keys(rawData).sort((a,b)=> a.localeCompare(b, undefined, {sensitivity:'base'}));
