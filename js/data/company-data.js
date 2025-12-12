@@ -3,7 +3,7 @@
 // Returns: Promise<Array<{ title: string, rows: Array<{title,link}> }>>
 
 /* eslint-disable no-console */
-export async function fetchCompanyData(txtUrl = '../js/data/A.txt') {
+export async function fetchCompanyData(txtUrl = './js/data/A.txt') {
   // fetch text file
   const res = await fetch(txtUrl, { cache: 'no-store' });
   if (!res.ok) throw new Error(`Failed to fetch ${txtUrl}: ${res.status} ${res.statusText}`);
