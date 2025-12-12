@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gonotes — About · Privacy · Contact</title>
+
+  <meta name="description" content="About Gonotes — notes marketplace for students. Contact details and privacy policy." />
+  <link rel="stylesheet" href="../css/styles.css" />
+  <link rel="stylesheet" href="../css/pages/header.css" />
+
+  <style>
+    /* Page-local lightweight styles (keeps global theme intact) */
+    .info-container{max-width:980px;margin:28px auto;padding:18px}
+    .info-nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+    .info-nav a{padding:8px 12px;border-radius:8px;border:1px solid transparent;background:#fff;color:var(--accent);text-decoration:none}
+    .info-nav a[aria-current="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
+    .info-section{background:#fff;border:1px solid #ece7e1;border-radius:10px;padding:18px;box-shadow:0 8px 24px rgba(16,24,40,0.04)}
+    .info-section h2{margin-top:0}
+    .muted{color:var(--muted)}
+    .contact-grid{display:grid;grid-template-columns:1fr 320px;gap:18px;align-items:start}
+    .contact-card{background:#fbf9f7;padding:12px;border-radius:8px;border:1px solid rgba(0,0,0,0.03)}
+    .form-row{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
+    .form-row input,.form-row textarea{padding:10px;border-radius:8px;border:1px solid #e7ded3;font-family:inherit}
+    .btn-primary{padding:10px 14px;border-radius:8px;background:var(--accent);color:#fff;border:none;cursor:pointer}
+    .small-muted{font-size:13px;color:var(--muted)}
+    @media (max-width:880px){ .contact-grid{grid-template-columns:1fr} }
+  </style>
+</head>
+<body>
+  <!-- site header partial -->
+  <div id="header" aria-hidden="true"></div>
+
+  <main class="info-container" id="main">
+    <nav class="info-nav" aria-label="Info navigation">
+      <a href="#about" data-target="about" id="link-about">About</a>
+      <a href="#privacy" data-target="privacy" id="link-privacy">Privacy Policy</a>
+      <a href="#contact" data-target="contact" id="link-contact">Contact</a>
+    </nav>
+
+    <!-- Sections: only one visible at a time -->
+    <section id="about" class="info-section info-view" role="region" aria-labelledby="aboutTitle" hidden>
+      <h2 id="aboutTitle">About Gonotes</h2>
+      <p class="small-muted">Notes marketplace for students — curated, searchable, and preview-first.</p>
+
+      <p>
+        Gonotes is built for students who want high-quality, peer-created study notes and summaries.
+        Our mission is to make learning efficient by helping students find trustworthy notes, preview them,
+        and buy only what they need. We value quality, transparency, and a friendly student-first experience.
+      </p>
+
+      <h3>What you'll find on Gonotes</h3>
+      <ul>
+        <li>Curated notes for college courses and entrance exams.</li>
+        <li>Preview samples so you can check quality before buying.</li>
+        <li>Search and filter by subject, semester, and stream.</li>
+      </ul>
+
+      <h3>Who we are</h3>
+      <p>
+        A small team of students and engineers focused on building tools for learning. Want to help or collaborate?
+        Email us at <a href="mailto:hello@gonotes.shop">hello@gonotes.shop</a>.
+      </p>
+    </section>
+
+    <section id="privacy" class="info-section info-view" role="region" aria-labelledby="privacyTitle" hidden>
+      <h2 id="privacyTitle">Privacy Policy</h2>
+      <p class="small-muted">Last updated: December 12, 2025</p>
+
+      <p>
+        At Gonotes, we respect your privacy. This page summarizes the core points; link to a full page from here when you're ready.
+      </p>
+
+      <h3>Data we collect</h3>
+      <ul>
+        <li><strong>Account info:</strong> Email and display name when you sign up.</li>
+        <li><strong>Purchase records:</strong> Order history for receipts and support.</li>
+        <li><strong>Usage data:</strong> Anonymous analytics to improve the site.</li>
+      </ul>
+
+      <h3>How we use it</h3>
+      <ul>
+        <li>To process purchases and send receipts.</li>
+        <li>To personalize content and search results.</li>
+        <li>To prevent fraud and enforce our terms.</li>
+      </ul>
+
+      <h3>Third-parties & Cookies</h3>
+      <p>
+        We may use payment processors and analytics providers — useful cookies and necessary cookies are used for site function.
+        We do not sell your personal data. For full details, maintain a separate <a href="/pages/privacy-policy.html">full privacy policy</a>.
+      </p>
+
+      <h3>Data removal & contact</h3>
+      <p>
+        To request deletion of your account or data, email <a href="mailto:privacy@gonotes.shop">privacy@gonotes.shop</a> with the subject "Data deletion request".
+      </p>
+    </section>
+
+    <section id="contact" class="info-section info-view" role="region" aria-labelledby="contactTitle" hidden>
+      <h2 id="contactTitle">Contact Us</h2>
+      <p class="small-muted">We’re here to help — reach out and we’ll reply within 1–2 business days.</p>
+
+      <div class="contact-grid" role="group" aria-label="Contact details and form">
+        <div>
+          <div class="contact-card">
+            <h3>Support</h3>
+            <p><strong>Email:</strong> <a href="mailto:support@gonotes.shop">support@gonotes.shop</a></p>
+            <p><strong>Phone:</strong> +91 98765 43210</p>
+            <p><strong>Address:</strong> Hyderabad, Telangana, India</p>
+            <p class="small-muted">Business hours: Mon–Fri, 10:00–18:00 IST</p>
+          </div>
+
+          <div style="margin-top:14px" class="contact-card">
+            <h3>Report abuse / copyright</h3>
+            <p>
+              If you believe content violates copyright, email <a href="mailto:legal@gonotes.shop">legal@gonotes.shop</a> with details and a DMCA notice.
+            </p>
+          </div>
+        </div>
+
+        <aside class="contact-card" aria-label="Contact form">
+          <h3>Send us a message</h3>
+
+          <form id="contactForm" novalidate>
+            <div class="form-row">
+              <label for="name">Name</label>
+              <input id="name" name="name" type="text" required />
+            </div>
+
+            <div class="form-row">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" required />
+            </div>
+
+            <div class="form-row">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="5" required></textarea>
+            </div>
+
+            <div style="display:flex;gap:8px;align-items:center">
+              <button type="submit" class="btn-primary">Send message</button>
+              <div id="contactStatus" class="small-muted" aria-live="polite"></div>
+            </div>
+          </form>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <!-- footer (you can place this markup into your site's footer partial) -->
+  <footer class="site-footer" style="margin-top:28px">
+    <div class="container footer-grid">
+      <div>
+        <h4>Gonotes</h4>
+        <p>Your trusted marketplace for student notes and study materials.</p>
+      </div>
+
+      <div class="footer-links" aria-label="Footer links">
+        <a href="/pages/info.html#about">About Us</a>
+        <a href="/pages/info.html#privacy">Privacy Policy</a>
+        <a href="/pages/info.html#contact">Contact</a>
+      </div>
+
+      <div>
+        <small>© 2025 Gonotes — All rights reserved.</small>
+      </div>
+    </div>
+  </footer>
+
+  <!-- optional: existing partial loader scripts -->
+  <script src="../js/loadPartials.js" defer></script>
+  <script src="../js/components.js" defer></script>
+
+  <!-- page script: show/hide views + contact form (client-only, no backend) -->
+  <script>
+    (function(){
+      const sections = ['about','privacy','contact'];
+      const getTargetFromHash = () => {
+        const h = (location.hash || '').replace('#','').toLowerCase();
+        return sections.includes(h) ? h : 'about';
+      };
+
+      const showView = (name, push=true) => {
+        sections.forEach(s => {
+          const el = document.getElementById(s);
+          const link = document.getElementById('link-' + s);
+          if (!el || !link) return;
+          if (s === name) {
+            el.hidden = false;
+            link.setAttribute('aria-current','true');
+            // focus the section heading for accessibility
+            el.querySelector('h2')?.focus?.();
+          } else {
+            el.hidden = true;
+            link.removeAttribute('aria-current');
+          }
+        });
+        if (push) {
+          // update hash without creating extra history entries when already same
+          if (location.hash.replace('#','') !== name) history.pushState(null, '', '#' + name);
+        }
+      };
+
+      // initialize from hash
+      showView(getTargetFromHash(), false);
+
+      // handle nav clicks
+      document.querySelectorAll('.info-nav a, .footer-links a').forEach(a => {
+        a.addEventListener('click', (e) => {
+          const target = (a.getAttribute('href') || a.dataset.target || '').replace('#','');
+          if (sections.includes(target)) {
+            e.preventDefault();
+            showView(target);
+          }
+        });
+      });
+
+      // support back/forward
+      window.addEventListener('popstate', () => showView(getTargetFromHash(), false));
+
+      // simple contact form handler (demo only)
+      const form = document.getElementById('contactForm');
+      const status = document.getElementById('contactStatus');
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        // basic validation
+        const data = new FormData(form);
+        const name = data.get('name').trim();
+        const email = data.get('email').trim();
+        const message = data.get('message').trim();
+        if (!name || !email || !message) {
+          status.textContent = 'Please fill all fields.';
+          return;
+        }
+
+        // cleaner UX: pretend to send, then clear
+        status.textContent = 'Sending...';
+        setTimeout(() => {
+          status.textContent = 'Thanks — we received your message.';
+          form.reset();
+        }, 900);
+      });
+
+    })();
+  </script>
+</body>
+</html>

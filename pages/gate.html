@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GONOTES — Gate Notes</title>
+
+  <!-- global + header styles -->
+  <link rel="stylesheet" href="../css/styles.css" />
+  <link rel="stylesheet" href="../css/pages/header.css" />
+
+  <!-- PAGE CSS (combined here) -->
+  <style>
+    :root{
+      --bg: #fbf3ea;
+      --card: #fff;
+      --accent: #b8793a;
+      --muted: #6e5b4b;
+      --pill: #f6e9d9;
+      --shadow: 0 8px 24px rgba(40,30,20,0.06);
+      font-family: Georgia, serif;
+    }
+
+    body { background: var(--bg); }
+
+    .container{
+      max-width:1200px;
+      margin:28px auto;
+      padding:0 18px;
+    }
+
+    h1{ font-size:44px; margin:8px 0 6px; }
+    p.lead{ color:var(--muted); margin-bottom:22px; }
+
+    /* filters */
+    .controls{ display:flex; gap:12px; flex-wrap:wrap; margin:20px 0 28px; }
+    .select, .search, .btn{
+      background:white;
+      border-radius:999px;
+      padding:10px 14px;
+      box-shadow:var(--shadow);
+      border:none;
+      font-size:15px;
+    }
+    .search{ flex:1; min-width:260px; }
+    .select{ min-width:170px; }
+    .btn{ border:1px solid #e6d9c9; cursor:pointer; }
+
+    /* card grid */
+    .cards-grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap:22px;
+    }
+
+    .card{
+      background:white;
+      border-radius:16px;
+      box-shadow:var(--shadow);
+      padding:18px 20px 22px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      transition:.2s;
+    }
+    .card:hover{ transform:translateY(-6px); }
+
+    .meta{
+      background:var(--pill);
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:13px;
+      color:var(--muted);
+      width:fit-content;
+    }
+
+    h3.title{ font-size:20px; margin:6px 0; }
+    .desc{ font-size:14px; color:#6b5a49; }
+
+    .card-footer{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-top:10px;
+    }
+
+    .read-btn{
+      background:var(--accent);
+      padding:10px 18px;
+      border-radius:999px;
+      color:white;
+      text-decoration:none;
+      font-weight:600;
+    }
+    .read-btn[disabled]{ opacity:0.5; pointer-events:none; }
+
+    .coming{ color:#b56d1f; font-weight:600; }
+
+    /* disclaimer */
+    .disclaimer{
+      margin-top:48px;
+      background:#f2e6d8;
+      padding:20px;
+      border-radius:12px;
+      color:#4a3b2f;
+      font-size:15px;
+      line-height:1.55;
+    }
+
+    .no-items{ padding:20px; color:var(--muted); }
+  </style>
+</head>
+
+<body>
+
+  <!-- Header Partial -->
+  <div id="header"></div>
+
+  <main>
+    <div class="container">
+
+      <h1>Gate Notes for CS/IT</h1>
+      <p class="lead">Download or open notes.</p>
+
+      <!-- filters -->
+      <div class="controls">
+        <select id="subjectFilter" class="select">
+          <option value="All">All Subjects</option>
+        </select>
+
+        <input id="searchBox" class="search" placeholder="Search by subject name..." />
+
+        <button id="resetBtn" class="btn">Reset</button>
+      </div>
+
+      <!-- Notes list -->
+      <div id="content"></div>
+
+      <!-- disclaimer -->
+      <div class="disclaimer">
+        <strong>NOTE:</strong> These GATE CSE handwritten notes are not designed by us.  
+        They are publicly available online.  
+        We have organized them for easy access.
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer Partial -->
+  <div id="footer"></div>
+
+  <!-- LOAD PARTIALS -->
+  <script src="../js/loadPartials.js" defer></script>
+
+  <!-- NOTES DATA -->
+  <script src="../js/links.js"></script>
+
+  <!-- PAGE JS (combined here) -->
+  <script>
+    const SUBJECTS = [
+      "Algorithm","C Programming","Data Structure","Computer Network",
+      "Computer Organization and Architecture","Compiler Design",
+      "Database Management System","Digital Logic","Discrete Mathematics",
+      "Engineering Mathematics","Operating System","Theory of Computation"
+    ];
+
+    const subjectFilter = document.getElementById("subjectFilter");
+    const searchBox = document.getElementById("searchBox");
+    const resetBtn = document.getElementById("resetBtn");
+    const content = document.getElementById("content");
+
+    function populateSubjects(){
+      SUBJECTS.forEach(s=>{
+        const o=document.createElement("option");
+        o.value=s; o.textContent=s;
+        subjectFilter.appendChild(o);
+      });
+    }
+
+    function createCard(note){
+      return `
+        <div class="card">
+          <div class="meta">${note.subject}${note.semester ? " · "+note.semester : ""}</div>
+          <h3 class="title">${note.title}</h3>
+          <div class="desc">${note.description || ""}</div>
+
+          <div class="card-footer">
+            ${
+              note.comingSoon
+                ? `<span class="coming">Coming soon</span>`
+                : note.link
+                  ? `<a href="${note.link}" target="_blank" class="read-btn">Read Now</a>`
+                  : `<a class="read-btn" disabled>Read Now</a>`
+            }
+            <span style="color:#6e5b4b;font-size:13px">${note.id || ""}</span>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderGrouped(notes){
+      content.innerHTML = "";
+
+      SUBJECTS.forEach(sub=>{
+        const items = notes.filter(n => n.subject === sub);
+        if(!items.length) return;
+
+        content.innerHTML += `
+          <h2>${sub}</h2>
+          <div class="cards-grid">
+            ${items.map(createCard).join("")}
+          </div>
+        `;
+      });
+
+      if(!content.innerHTML.trim()){
+        content.innerHTML = `<div class="no-items">No notes found.</div>`;
+      }
+    }
+
+    function applyFilters(){
+      const subjectValue = subjectFilter.value;
+      const query = searchBox.value.toLowerCase();
+
+      const result = window.NOTES.filter(n=>{
+        if(subjectValue !== "All" && n.subject !== subjectValue) return false;
+        if(query && !`${n.title} ${n.subject}`.toLowerCase().includes(query)) return false;
+        return true;
+      });
+
+      renderGrouped(result);
+    }
+
+    resetBtn.onclick = ()=>{
+      subjectFilter.value="All";
+      searchBox.value="";
+      applyFilters();
+    };
+
+    populateSubjects();
+    renderGrouped(window.NOTES);
+    subjectFilter.onchange = applyFilters;
+    searchBox.oninput = ()=> setTimeout(applyFilters, 200);
+  </script>
+
+</body>
+</html>

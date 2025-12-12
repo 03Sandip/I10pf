@@ -5,8 +5,8 @@
 (function (root) {
 
   // 👇 Backend root URL
-  const SERVER_URL = "http://65.0.183.96:5000";
-  // const SERVER_URL = "http://localhost:5000";
+  //const SERVER_URL = "http://65.0.183.96:5000";
+  const SERVER_URL = "http://localhost:5000";
   
   // Example production: "https://api.mygonotes.com"
 

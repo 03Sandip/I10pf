@@ -1,18 +1,84 @@
+<!-- ===========================
+        FOOTER
+=========================== -->
+<style>
+/* Footer Styling (inline for this page) */
+.site-footer {
+  background: var(--bg);
+  padding: 40px 0 25px;
+  margin-top: 40px;
+  border-top: 1px solid rgba(0,0,0,0.08);
+  font-family: Georgia, serif;
+}
+
+.footer-grid {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-links a {
+  text-decoration: none;
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 15px;
+  transition: all .2s ease;
+}
+
+.footer-links a:hover {
+  color: var(--accent-2);
+  text-decoration: underline;
+}
+
+.footer-contact p {
+  margin: 0 0 6px;
+  font-size: 15px;
+  color: var(--muted);
+}
+
+/* Responsive footer */
+@media (max-width: 800px) {
+  .footer-grid {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+
+  .footer-links {
+    align-items: center;
+  }
+}
+</style>
+
 <footer class="site-footer">
   <div class="container footer-grid">
+
+    <!-- Brand Section -->
     <div>
       <h4>Gonotes</h4>
-      <p>Notes marketplace for students</p>
+      <p>Your trusted marketplace for student notes and study materials.</p>
     </div>
 
+    <!-- Footer Navigation -->
     <div class="footer-links">
-      <a href="#">About</a>
-      <a href="#">Contact</a>
-      <a href="#">Privacy</a>
+      <a href="/pages/info.html#about">About Us</a>
+      <a href="/pages/info.html#privacy">Privacy Policy</a>
+      <a href="/pages/info.html#contact">Contact</a>
     </div>
 
-    <div>
-      <small>© Gonotes — All rights reserved</small>
-    </div>
+    <!-- Contact Details -->
+    
+
+  </div>
+
+  <div class="container" style="margin-top: 10px; text-align:center;">
+    <small>© 2025 Gonotes — All rights reserved.</small>
   </div>
 </footer>

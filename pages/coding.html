@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gonotes — Most Important Coding Problems for SDE (SDE Sheet)</title>
+
+  <!-- SEO / Social meta -->
+  <meta name="description" content="Curated SDE Sheet: the most important coding problems (Arrays, Linked List, Trees, Graphs, DP) with quick links to LeetCode. Practice day-by-day, track progress, and prepare for interviews." />
+  <meta name="keywords" content="SDE sheet, LeetCode problems, coding interview, data structures, algorithms, arrays, linked list, graphs, dynamic programming" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://gonotes.shop/pages/coding.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Gonotes — Most Important Coding Problems for SDE" />
+  <meta property="og:description" content="A curated 30/31-day SDE practice sheet. Quick links to LeetCode problems and day-by-day tracking." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://gonotes.shop/pages/coding.html" />
+  <meta property="og:image" content="/images/sde-sheet-og.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Gonotes — SDE Sheet" />
+  <meta name="twitter:description" content="The most important coding problems for SDE — day-by-day practice with quick links and progress tracking." />
+
+  <!-- global + header + page styles -->
+  <link rel="stylesheet" href="../css/styles.css" />
+  <link rel="stylesheet" href="../css/pages/header.css" />
+  <link rel="stylesheet" href="../css/pages/qp.css" />
+
+  <!-- lightweight inline UI improvements (keeps site theme) -->
+  <style>
+    :root{--accent:#2563eb;--muted:#6b7280}
+    /* keep typography and spacing but DO NOT override the global background from styles.css */
+    body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;padding:20px;margin:0;color:#111}
+
+    .qp-container{max-width:1100px;margin:18px auto;padding:0 12px}
+    .qp-page-header{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:18px;margin-bottom:14px;box-shadow:0 4px 14px rgba(16,24,40,0.03)}
+    .qp-page-header h1{margin:0 0 6px;font-size:22px}
+    .qp-page-header p{margin:0;color:var(--muted)}
+
+    .controls{display:flex;gap:10px;align-items:center;margin-bottom:12px}
+    .search-wrap{position:relative;flex:1}
+    .controls input{width:100%;padding:10px 12px 10px 40px;border-radius:8px;border:1px solid #e6e6e6;background:#fff}
+    .search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:14px}
+    .btn{padding:8px 12px;border-radius:8px;border:1px solid #ddd;background:#fff;color:#444;cursor:pointer}
+    .small-muted{color:var(--muted);font-size:13px}
+
+    .accordion{margin-top:6px}
+    .day{background:#fff;border:1px solid #eaeaea;border-radius:8px;margin-bottom:10px;overflow:hidden;transition:box-shadow .12s}
+    .day:hover{box-shadow:0 6px 18px rgba(16,24,40,0.04)}
+    .day-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;cursor:pointer}
+    .day-left{display:flex;gap:12px;align-items:center}
+    .day-title{font-weight:700}
+    .day-sub{color:var(--muted);font-size:13px}
+
+    .table{border-top:1px solid #f2f2f2}
+    .row{display:grid;grid-template-columns:48px 1fr 120px 40px 40px 84px;align-items:center;padding:12px 16px;border-top:1px solid #f7f7f7;transition:background .12s}
+    .row:hover{background:#fbfdff}
+    .row:first-child{border-top:0}
+    .muted{color:var(--muted)}
+
+    .chip{padding:6px 10px;border-radius:999px;border:1px solid #eee;font-size:12px;background:#fafafa;color:#444}
+    .chip.easy{background:#ecfdf5;color:#065f46;border-color:#d1fae5}
+    .chip.medium{background:#fffbeb;color:#92400e;border-color:#fef3c7}
+    .chip.hard{background:#fff7f7;color:#7f1d1d;border-color:#fee2e2}
+
+    a.link{color:var(--accent);text-decoration:none;font-weight:600}
+    .hidden{display:none}
+
+    .meta-row{display:flex;gap:10px;align-items:center;margin-top:8px}
+    .sticky-search{position:sticky;top:12px;z-index:5}
+
+    .controls-right{display:flex;gap:8px}
+    .chev{transition:transform .12s}
+
+    /* highlight for search match */
+    mark.match{background:var(--accent);color:#fff;padding:0 4px;border-radius:3px}
+
+    /* responsive */
+    @media (max-width:880px){.row{grid-template-columns:40px 1fr 90px auto} .day-header{padding:10px}}
+    @media (max-width:720px){ .row{grid-template-columns:32px 1fr auto} .controls{flex-direction:column;align-items:stretch} }
+  </style>
+
+  <!-- Structured data (ItemList) for SEO - includes first 20 items to avoid big payload -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"ItemList",
+    "name":"Gonotes SDE Sheet - Important Coding Problems",
+    "description":"Curated list of important LeetCode problems for SDE preparation, grouped by day and topic.",
+    "url":"https://gonotes.shop/pages/coding.html",
+    "numberOfItems": 20,
+    "itemListElement": [
+      {"@type":"ListItem","position":1,"url":"https://leetcode.com/problems/set-matrix-zeroes/"},
+      {"@type":"ListItem","position":2,"url":"https://leetcode.com/problems/pascals-triangle/"},
+      {"@type":"ListItem","position":3,"url":"https://leetcode.com/problems/next-permutation/"},
+      {"@type":"ListItem","position":4,"url":"https://leetcode.com/problems/maximum-subarray/"},
+      {"@type":"ListItem","position":5,"url":"https://leetcode.com/problems/sort-colors/"},
+      {"@type":"ListItem","position":6,"url":"https://leetcode.com/problems/best-time-to-buy-and-sell-stock/"}
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <!-- header partial (same as shop) -->
+  <div id="header" aria-hidden="true"></div>
+
+  <!-- MAIN -->
+  <main class="qp-container">
+    <section class="qp-page-header">
+      <h1>Most important Coding Problems for SDE</h1>
+      <p>Curated SDE Sheet — day-by-day practice with quick links to LeetCode and progress tracking.</p>
+      <div class="meta-row">
+        <div class="small-muted">Estimated time: 2–3 hours/day</div>
+        <div class="small-muted">Topics: Arrays, Linked List, Trees, Graphs, DP</div>
+      </div>
+    </section>
+
+    <div class="controls sticky-search">
+      <div class="search-wrap">
+        <span class="search-icon">🔎</span>
+        <input id="searchInput" placeholder="Search problems, topics or link..." aria-label="Search problems" />
+      </div>
+
+      <div class="controls-right">
+        <button id="resetBtn" class="btn">Reset</button>
+        <button id="expandAll" class="btn" title="Expand all days">Expand all</button>
+        <button id="collapseAll" class="btn" title="Collapse all days">Collapse all</button>
+      </div>
+    </div>
+
+    <div id="accordion" class="accordion" aria-live="polite"></div>
+  </main>
+
+  <!-- footer if you want, same pattern -->
+  <div id="footer" aria-hidden="true"></div>
+
+  <!-- scripts: SAME loaders as shop + qp-specific JS -->
+  <script src="../js/server.js"></script>
+  <script src="../js/loadPartials.js" defer></script>
+  <script src="../js/components.js" defer></script>
+  <script>
+    // Full problems array (from the list you provided)
+    const sdeSheetProblems = [
+  { title: "Set Matrix Zeroes", link: "https://leetcode.com/problems/set-matrix-zeroes/", difficulty: "Medium" },
+  { title: "Pascal's Triangle", link: "https://leetcode.com/problems/pascals-triangle/", difficulty: "Medium" },
+  { title: "Next Permutation", link: "https://leetcode.com/problems/next-permutation/", difficulty: "Medium" },
+  { title: "Kadane's Algorithm (Maximum Subarray)", link: "https://leetcode.com/problems/maximum-subarray/", difficulty: "Easy" },
+  { title: "Sort Colors", link: "https://leetcode.com/problems/sort-colors/", difficulty: "Medium" },
+  { title: "Best Time to Buy and Sell Stock", link: "https://leetcode.com/problems/best-time-to-buy-and-sell-stock/", difficulty: "Easy" },
+  { title: "Rotate Image", link: "https://leetcode.com/problems/rotate-image/", difficulty: "Medium" },
+  { title: "Merge Intervals", link: "https://leetcode.com/problems/merge-intervals/", difficulty: "Medium" },
+  { title: "Merge Sorted Array", link: "https://leetcode.com/problems/merge-sorted-array/", difficulty: "Easy" },
+  { title: "Find the Duplicate Number", link: "https://leetcode.com/problems/find-the-duplicate-number/", difficulty: "Medium" },
+  { title: "Missing Number", link: "https://leetcode.com/problems/missing-number/", difficulty: "Easy" },
+  { title: "Search a 2D Matrix", link: "https://leetcode.com/problems/search-a-2d-matrix/", difficulty: "Medium" },
+  { title: "Pow(x, n)", link: "https://leetcode.com/problems/powx-n/", difficulty: "Medium" },
+  { title: "Majority Element", link: "https://leetcode.com/problems/majority-element/", difficulty: "Easy" },
+  { title: "Majority Element II", link: "https://leetcode.com/problems/majority-element-ii/", difficulty: "Medium" },
+  { title: "Unique Paths", link: "https://leetcode.com/problems/unique-paths/", difficulty: "Medium" },
+  { title: "Reverse Pairs", link: "https://leetcode.com/problems/reverse-pairs/", difficulty: "Hard" },
+  { title: "Two Sum", link: "https://leetcode.com/problems/two-sum/", difficulty: "Easy" },
+  { title: "4Sum", link: "https://leetcode.com/problems/4sum/", difficulty: "Medium" },
+  { title: "Longest Consecutive Sequence", link: "https://leetcode.com/problems/longest-consecutive-sequence/", difficulty: "Medium" },
+  { title: "Subarray Sum Equals K", link: "https://leetcode.com/problems/subarray-sum-equals-k/", difficulty: "Medium" },
+  { title: "Subarray with Given XOR (Not on LC → skipped)", link: "", difficulty: "—" },
+  { title: "Longest Substring Without Repeating Characters", link: "https://leetcode.com/problems/longest-substring-without-repeating-characters/", difficulty: "Medium" },
+  { title: "Reverse Linked List", link: "https://leetcode.com/problems/reverse-linked-list/", difficulty: "Easy" },
+  { title: "Middle of the Linked List", link: "https://leetcode.com/problems/middle-of-the-linked-list/", difficulty: "Easy" },
+  { title: "Merge Two Sorted Lists", link: "https://leetcode.com/problems/merge-two-sorted-lists/", difficulty: "Easy" },
+  { title: "Remove Nth Node From End of List", link: "https://leetcode.com/problems/remove-nth-node-from-end-of-list/", difficulty: "Medium" },
+  { title: "Add Two Numbers", link: "https://leetcode.com/problems/add-two-numbers/", difficulty: "Medium" },
+  { title: "Delete Node in a Linked List", link: "https://leetcode.com/problems/delete-node-in-a-linked-list/", difficulty: "Easy" },
+  { title: "Intersection of Two Linked Lists", link: "https://leetcode.com/problems/intersection-of-two-linked-lists/", difficulty: "Easy" },
+  { title: "Linked List Cycle", link: "https://leetcode.com/problems/linked-list-cycle/", difficulty: "Easy" },
+  { title: "Reverse Nodes in k-Group", link: "https://leetcode.com/problems/reverse-nodes-in-k-group/", difficulty: "Hard" },
+  { title: "Palindrome Linked List", link: "https://leetcode.com/problems/palindrome-linked-list/", difficulty: "Easy" },
+  { title: "Odd Even Linked List", link: "https://leetcode.com/problems/odd-even-linked-list/", difficulty: "Medium" },
+  { title: "Copy List with Random Pointer", link: "https://leetcode.com/problems/copy-list-with-random-pointer/", difficulty: "Hard" },
+  { title: "3Sum", link: "https://leetcode.com/problems/3sum/", difficulty: "Medium" },
+  { title: "Trapping Rain Water", link: "https://leetcode.com/problems/trapping-rain-water/", difficulty: "Hard" },
+  { title: "Remove Duplicates from Sorted Array", link: "https://leetcode.com/problems/remove-duplicates-from-sorted-array/", difficulty: "Easy" },
+  { title: "Max Consecutive Ones", link: "https://leetcode.com/problems/max-consecutive-ones/", difficulty: "Easy" },
+  { title: "Rotate List", link: "https://leetcode.com/problems/rotate-list/", difficulty: "Medium" },
+  { title: "Integer to Roman", link: "https://leetcode.com/problems/integer-to-roman/", difficulty: "Medium" },
+  { title: "Subsets", link: "https://leetcode.com/problems/subsets/", difficulty: "Medium" },
+  { title: "Subsets II", link: "https://leetcode.com/problems/subsets-ii/", difficulty: "Medium" },
+  { title: "N-Queens", link: "https://leetcode.com/problems/n-queens/", difficulty: "Hard" },
+  { title: "Sudoku Solver", link: "https://leetcode.com/problems/sudoku-solver/", difficulty: "Hard" },
+  { title: "Palindrome Partitioning", link: "https://leetcode.com/problems/palindrome-partitioning/", difficulty: "Medium" },
+  { title: "K-th Permutation Sequence", link: "https://leetcode.com/problems/permutation-sequence/", difficulty: "Medium" },
+  { title: "Permutations", link: "https://leetcode.com/problems/permutations/", difficulty: "Medium" },
+  { title: "Word Search", link: "https://leetcode.com/problems/word-search/", difficulty: "Medium" },
+  { title: "Combination Sum", link: "https://leetcode.com/problems/combination-sum/", difficulty: "Medium" },
+  { title: "Combination Sum II", link: "https://leetcode.com/problems/combination-sum-ii/", difficulty: "Medium" },
+  { title: "Letter Combinations of a Phone Number", link: "https://leetcode.com/problems/letter-combinations-of-a-phone-number/", difficulty: "Medium" },
+  { title: "Generate Parentheses", link: "https://leetcode.com/problems/generate-parentheses/", difficulty: "Medium" },
+  { title: "Single Element in a Sorted Array", link: "https://leetcode.com/problems/single-element-in-a-sorted-array/", difficulty: "Medium" },
+  { title: "Median of Two Sorted Arrays", link: "https://leetcode.com/problems/median-of-two-sorted-arrays/", difficulty: "Hard" },
+  { title: "Kth Smallest Number in Multiplication Table", link: "https://leetcode.com/problems/kth-smallest-number-in-multiplication-table/", difficulty: "Hard" }
+];
+
+    // chunk utility
+    function chunk(arr, size){const out=[]; for(let i=0;i<arr.length;i+=size) out.push(arr.slice(i,i+size)); return out}
+    const days = chunk(sdeSheetProblems,6);
+
+    const accordion = document.getElementById('accordion');
+
+    // helper to highlight search matches
+    function highlight(text, q){
+      if(!q) return text;
+      // escape regex special chars from the query before building the RegExp
+      const re = new RegExp(q.replace(/[.*+?^${}()|[\\\\]\\]/g, '\\\\$&'), 'gi');
+      return text.replace(re, m => `<mark class="match">${m}</mark>`);
+    }
+
+    function makeDayNode(items, dayIndex){
+      const day = document.createElement('div'); day.className='day';
+      const hdr = document.createElement('div'); hdr.className='day-header';
+      const left = document.createElement('div'); left.className='day-left'; left.innerHTML = `<div class="day-title">Day ${dayIndex+1}: ${getDayLabel(dayIndex)}</div><div class="day-sub">0 / ${items.length}</div>`;
+      const right = document.createElement('div'); right.innerHTML = '<span class="chev">▾</span>';
+      hdr.appendChild(left); hdr.appendChild(right);
+      day.appendChild(hdr);
+
+      const table = document.createElement('div'); table.className='table hidden';
+      items.forEach((p, idx)=>{
+        const r = document.createElement('div'); r.className='row';
+        const c1 = document.createElement('div'); c1.innerHTML = '<input type="checkbox" aria-label="done">';
+        const c2 = document.createElement('div');
+        const q = (document.getElementById('searchInput')?.value || '').trim().toLowerCase();
+        const titleHtml = highlight(p.title, q);
+        const linkHtml = p.link ? highlight(p.link, q) : 'No link available';
+        c2.innerHTML = `<div style="font-weight:600">${titleHtml}</div><div class="muted" style="margin-top:6px">${linkHtml}</div>`;
+
+        const c3 = document.createElement('div'); c3.className='col-actions'; const a = document.createElement('a'); a.href = p.link||'#'; a.target='_blank'; a.className='link'; a.textContent='Solve'; c3.appendChild(a);
+        const c4 = document.createElement('div'); c4.className='muted'; c4.textContent='+';
+        const c5 = document.createElement('div'); c5.className='muted'; c5.textContent='☆';
+        const c6 = document.createElement('div'); c6.className='chip '+(p.difficulty? p.difficulty.toLowerCase() : ''); c6.textContent=(p.difficulty||'—');
+        r.appendChild(c1); r.appendChild(c2); r.appendChild(c3); r.appendChild(c4); r.appendChild(c5); r.appendChild(c6);
+        table.appendChild(r);
+
+        c1.querySelector('input').addEventListener('change', ()=>{
+          const checked = table.querySelectorAll('input:checked').length;
+          left.querySelector('.day-sub').textContent = `${checked} / ${items.length}`;
+        });
+      });
+
+      hdr.addEventListener('click', ()=>{ table.classList.toggle('hidden'); right.querySelector('.chev').style.transform = table.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)'; });
+      day.appendChild(table);
+      return day;
+    }
+
+    function getDayLabel(i){
+      const labels = ['Arrays','Arrays Part-II','Arrays Part-III','Arrays Part-IV','Linked List','Linked List II','Trees & BST','Graphs','DP','Misc'];
+      return labels[i] || 'Topic';
+    }
+
+    function render(){ accordion.innerHTML=''; days.forEach((d,i)=>accordion.appendChild(makeDayNode(d,i))); }
+    render();
+
+    // search
+    const input = document.getElementById('searchInput');
+    const resetBtn = document.getElementById('resetBtn');
+    const expandAll = document.getElementById('expandAll');
+    const collapseAll = document.getElementById('collapseAll');
+
+    input.addEventListener('input', ()=>{
+      const q = input.value.trim().toLowerCase();
+      const filtered = sdeSheetProblems.filter(p => p.title.toLowerCase().includes(q) || (p.link||'').toLowerCase().includes(q));
+      const ch = chunk(filtered,6);
+      accordion.innerHTML=''; ch.forEach((d,i)=>accordion.appendChild(makeDayNode(d,i)));
+    });
+    resetBtn.addEventListener('click', ()=>{ input.value=''; render(); });
+
+    expandAll.addEventListener('click', ()=>{ document.querySelectorAll('.table.hidden').forEach(t=>t.classList.remove('hidden')); document.querySelectorAll('.chev').forEach(c=>c.style.transform='rotate(180deg)'); });
+    collapseAll.addEventListener('click', ()=>{ document.querySelectorAll('.table').forEach(t=>t.classList.add('hidden')); document.querySelectorAll('.chev').forEach(c=>c.style.transform='rotate(0deg)'); });
+
+  </script>
+</body>
+</html>

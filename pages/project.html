@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>GoNotes – Projects</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- SEO -->
+  <meta name="description" content="Curated final-year project repositories. Browse by type and search by name or description." />
+  <link rel="canonical" href="https://gonotes.shop/pages/projects.html" />
+
+  <!-- global + header + page styles -->
+  <link rel="stylesheet" href="../css/styles.css" />
+  <link rel="stylesheet" href="../css/pages/header.css" />
+  <link rel="stylesheet" href="../css/pages/org.css" />
+
+  <!-- Page-specific lightweight styling (keeps your theme variables from styles.css) -->
+  <style>
+    :root{
+      --muted-2: #8b7b70;
+      --accent-brown: #a86f38;
+      --accent-soft: #d7b186;
+      --card-radius: 12px;
+      --card-shadow: 0 18px 30px rgba(16,24,40,0.06);
+    }
+
+    /* Page layout tweaks */
+    .org-page{background:transparent}
+    .org-container{max-width:1100px;margin:26px auto;padding:0 18px;font-family:Georgia, serif;color:#231f1c}
+
+    .org-page-header h1{font-size:40px;margin:8px 0 6px}
+    .org-page-header p{color:var(--muted-2);margin:0 0 18px;font-size:15px}
+
+    /* Filter group row */
+    .org-filter-group{display:flex;align-items:center;gap:10px;margin:8px 0 18px}
+    .org-filter-label{font-weight:600;color:var(--muted-2);margin-right:6px}
+    .org-filter-select, .org-filter-input, .org-reset-btn{
+      border-radius:28px;padding:10px 14px;border:1px solid rgba(0,0,0,0.06);background:#fff;
+      font-family:inherit;font-size:14px;box-shadow:0 8px 18px rgba(0,0,0,0.03)
+    }
+    .org-filter-select{min-width:210px}
+    .org-filter-input{flex:1;max-width:640px;margin-left:8px}
+    .org-reset-btn{background:#fff;border:1px solid rgba(0,0,0,0.06);cursor:pointer}
+
+    /* Group title */
+    .org-group-section{margin-top:28px}
+    .org-group-title{font-family:Georgia, serif;font-size:28px;margin:12px 0;color:#241f1b}
+
+    /* Grid */
+    .org-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;margin-top:12px}
+    .org-card{
+      background:#fff;border-radius:var(--card-radius);padding:18px;box-shadow:var(--card-shadow);
+      display:flex;flex-direction:column;gap:12px;min-height:220px;transition:transform .12s,box-shadow .12s;
+    }
+    .org-card:hover{transform:translateY(-6px);box-shadow:0 28px 48px rgba(16,24,40,0.08)}
+
+    .org-card-image{
+      width:56px;height:56px;border-radius:10px;background:linear-gradient(180deg,#fff,#faf3ea);
+      display:flex;align-items:center;justify-content:center;font-size:22px;border:1px solid rgba(0,0,0,0.03)
+    }
+
+    .org-card-title{margin:6px 0 0;font-size:16px;line-height:1.18}
+    .org-card-title a{color:#241f1b;text-decoration:none;font-weight:700}
+    .org-card-title a:hover{text-decoration:underline;color:var(--accent-brown)}
+
+    .org-card-meta{color:var(--muted-2);font-size:14px;margin-top:6px;flex:1}
+
+    .org-card-actions{display:flex;gap:10px;align-items:center}
+    .org-small-link{padding:8px 12px;border-radius:10px;background:transparent;border:1px solid rgba(0,0,0,0.06);text-decoration:none;color:var(--accent-brown);font-weight:600}
+    .org-small-link:hover{background:var(--accent-soft);color:#241f1b;border-color:transparent}
+
+    /* empty state */
+    .org-empty{padding:28px;border-radius:10px;background:#fff;border:1px solid rgba(0,0,0,0.04);color:var(--muted-2);margin-top:18px;text-align:center}
+
+    /* responsive */
+    @media (max-width:920px){
+      .org-filter-group{flex-direction:column;align-items:stretch}
+      .org-filter-select,.org-filter-input{width:100%;max-width:none;margin-left:0}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- header partial (same pattern as shop page) -->
+  <div id="header" aria-hidden="true"></div>
+
+  <!-- MAIN -->
+  <main class="org-page">
+    <div class="org-container">
+      <section class="org-page-header">
+        <h1>All Final Year Projects</h1>
+        <p>Curated GitHub repositories tagged <code>final-year-project</code>. Click a card to open the repo.</p>
+      </section>
+
+      <div class="org-filter-group" role="region" aria-label="Project filters">
+        <span class="org-filter-label">Type</span>
+        <select class="org-filter-select" name="type" id="org-type" aria-label="Filter by project type">
+          <option>All Categories</option>
+        </select>
+
+        <input
+          class="org-filter-input"
+          type="text"
+          name="q"
+          id="org-search"
+          placeholder="Search project name or description..."
+          aria-label="Search projects"
+        />
+
+        <button class="org-reset-btn" type="button" id="org-reset-btn" aria-label="Reset filters">Reset</button>
+      </div>
+
+      <!-- GROUPED GRID: JS will render sections here -->
+      <div id="org-groups"></div>
+
+      <!-- empty state (will be shown when filters return no results) -->
+      <div id="org-empty" class="org-empty hidden" style="display:none">No projects found for your search.</div>
+
+    </div> <!-- end org-container -->
+  </main>
+
+  <!-- optional footer (same mechanism as shop page) -->
+  <div id="footer" aria-hidden="true"></div>
+
+  <!-- scripts: same pattern as shop page -->
+  <script src="js/server.js"></script>
+  <script src="../js/loadPartials.js" defer></script>
+  <script src="../js/components.js" defer></script>
+  <script src="../js/org.js" defer></script>
+
+  <script>
+  (function(){
+    // Projects list with categories
+    const projects = [
+      // ML Projects
+      { title: "CryptocurrencyPrediction", link: "https://github.com/khuangaf/CryptocurrencyPrediction", desc: "Deep learning model for predicting cryptocurrency prices.", icon:"📈", category:"ML Projects" },
+      { title: "Fake-News-Detection-Project", link: "https://github.com/Vatshayan/Fake-News-Detection-Project", desc: "Machine-learning based fake news detection with dataset & model.", icon:"📰", category:"ML Projects" },
+      { title: "Finding-missing-person-using-AI", link: "https://github.com/gaganmanku96/Finding-missing-person-using-AI", desc: "Vision + ML system for locating missing persons.", icon:"🛰️", category:"ML Projects" },
+
+      // Computer Vision
+      { title: "Gesture-Controlled-Virtual-Mouse", link: "https://github.com/Viral-Doshi/Gesture-Controlled-Virtual-Mouse", desc: "Gesture-based virtual mouse using computer vision.", icon:"🖱️", category:"Computer Vision" },
+      { title: "Third-Eye-Final-Year-Project", link: "https://github.com/imakashsahu/Third-Eye-Final-Year-Project", desc: "Forensic face sketch & recognition demo.", icon:"🔍", category:"Computer Vision" },
+
+      // Web
+      { title: "Ecommerce-Website", link: "https://github.com/Vatshayan/Ecommerce-Website", desc: "Full web-based ecommerce system.", icon:"🛒", category:"Web Projects" },
+
+      // Collections
+      { title: "50-Final-Year-Projects-with-Source-Code", link: "https://github.com/Projects-Developer/50-Final-Year-Projects-with-Source-Code", desc: "Pack of 50 final-year templates with reports & PPTs.", icon:"📚", category:"Collections" },
+
+      // AI / Chatbot
+      { title: "Health-Care-Chatbot", link: "https://github.com/amberkakkar01/Health-Care-Chatbot", desc: "NLP-based healthcare chatbot example.", icon:"💬", category:"AI / Chatbot" },
+
+      // Speech
+      { title: "real-time-voice-translator", link: "https://github.com/SamirPaulb/real-time-voice-translator", desc: "Real-time voice translator — audio processing + models.", icon:"🗣️", category:"AI / Speech" },
+
+      // Software
+      { title: "E-Learning-System-Java-GUI-Application", link: "https://github.com/SuwaidAslam/E-Learning-System-Java-GUI-Application", desc: "Desktop Java GUI e-learning system.", icon:"💻", category:"Software Projects" },
+
+      // MATLAB / Embedded (example)
+      { title: "MATLAB-Simulink-Challenge-Project-Hub", link: "https://github.com/mathworks/MATLAB-Simulink-Challenge-Project-Hub", desc: "Collection of MATLAB & Simulink project ideas and example repos.", icon:"🧪", category:"Embedded / MATLAB" },
+
+      // Blockchain
+      { title: "anti-counterfeit-product-identification-system-using-blockchain", link: "https://github.com/yenxuan1381/anti-counterfeit-product-identification-system-using-blockchain", desc: "Blockchain-based anti-counterfeit product ID system.", icon:"🔗", category:"Blockchain" }
+    ];
+
+    const groupsContainer = document.getElementById('org-groups');
+    const typeSelect = document.getElementById('org-type');
+    const searchInput = document.getElementById('org-search');
+    const resetBtn = document.getElementById('org-reset-btn');
+    const emptyEl = document.getElementById('org-empty');
+
+    // build category list (preserve order as they appear in projects)
+    const categories = [];
+    projects.forEach(p => {
+      if(!categories.includes(p.category)) categories.push(p.category);
+    });
+
+    // populate type select
+    function buildTypeSelect(){
+      // keep "All Categories" as first option
+      typeSelect.innerHTML = '<option>All Categories</option>';
+      categories.forEach(cat => {
+        const opt = document.createElement('option');
+        opt.value = cat;
+        opt.textContent = cat;
+        typeSelect.appendChild(opt);
+      });
+    }
+
+    // render grouped sections
+    function renderGroups(filteredProjects){
+      groupsContainer.innerHTML = '';
+      if(filteredProjects.length === 0){
+        emptyEl.style.display = '';
+        return;
+      } else {
+        emptyEl.style.display = 'none';
+      }
+
+      // group map
+      const map = new Map();
+      filteredProjects.forEach(p => {
+        if(!map.has(p.category)) map.set(p.category, []);
+        map.get(p.category).push(p);
+      });
+
+      // render each category in original categories order
+      categories.forEach(cat => {
+        const items = map.get(cat);
+        if(!items || items.length === 0) return;
+
+        const section = document.createElement('section');
+        section.className = 'org-group-section';
+        section.innerHTML = `<h2 class="org-group-title">${cat}</h2><div class="org-grid" role="list"></div>`;
+        const grid = section.querySelector('.org-grid');
+
+        items.forEach(p => {
+          const card = document.createElement('article');
+          card.className = 'org-card';
+          card.setAttribute('data-category', p.category);
+          card.innerHTML = `
+            <div class="org-card-image" aria-hidden="true"><span>${p.icon||'📁'}</span></div>
+            <h2 class="org-card-title"><a href="${p.link}" target="_blank" rel="noopener">${p.title}</a></h2>
+            <p class="org-card-meta">${p.desc}</p>
+            <div class="org-card-actions">
+              <a class="org-small-link" href="${p.link}" target="_blank" rel="noopener">View on GitHub</a>
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+
+        groupsContainer.appendChild(section);
+      });
+    }
+
+    // filter logic: by category + search
+    function applyFilters(){
+      const q = (searchInput.value || '').trim().toLowerCase();
+      const selected = (typeSelect.value || 'All Categories');
+
+      let filtered = projects.filter(p => {
+        const matchesCategory = selected === 'All Categories' || p.category === selected;
+        const text = (p.title + ' ' + p.desc + ' ' + (p.category||'')).toLowerCase();
+        const matchesQuery = q === '' || text.includes(q);
+        return matchesCategory && matchesQuery;
+      });
+
+      renderGroups(filtered);
+    }
+
+    // initial setup
+    buildTypeSelect();
+    renderGroups(projects);
+
+    // events
+    searchInput.addEventListener('input', applyFilters);
+    typeSelect.addEventListener('change', applyFilters);
+    resetBtn.addEventListener('click', () => {
+      searchInput.value = '';
+      typeSelect.value = 'All Categories';
+      renderGroups(projects);
+    });
+
+  })();
+  </script>
+</body>
+</html>

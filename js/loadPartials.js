@@ -1,98 +1,251 @@
 // js/loadPartials.js
-// Dynamic partial loader + asset-path fixer + dynamic logo handling
+// Robust partial loader + asset-path fixer + header auth handling via data-init
 
+// ------------------------
+// Utility helpers
+// ------------------------
+function isRelativeAsset(url) {
+  if (!url) return false;
+  const t = String(url).trim();
+  return (
+    !/^(?:[a-z]+:)?\/\//i.test(t) && // not protocol-relative or absolute
+    !t.startsWith('/') &&
+    !t.startsWith('data:') &&
+    !t.startsWith('mailto:')
+  );
+}
+
+function computeAssetPrefix() {
+  const inPagesFolder = window.location.pathname.includes('/pages/');
+  const siteBase = (typeof window.__SITE_BASE__ === 'string' && window.__SITE_BASE__) || '';
+  if (siteBase) return siteBase.endsWith('/') ? siteBase : siteBase + '/';
+  return inPagesFolder ? '../' : '';
+}
+
+function injectStylesheetHref(href) {
+  try {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = href;
+    link.crossOrigin = 'anonymous';
+    link.onload = () => console.debug('[loadPartials] stylesheet loaded:', href);
+    link.onerror = (e) => console.warn('[loadPartials] stylesheet failed:', href, e);
+    document.head.appendChild(link);
+  } catch (e) {
+    console.warn('[loadPartials] injectStylesheetHref error', href, e);
+  }
+}
+
+// load external scripts sequentially (preserves order)
+function loadScriptsSequentially(urls) {
+  return urls.reduce((p, url) => {
+    return p.then(() => new Promise((resolve) => {
+      const s = document.createElement('script');
+      s.src = url;
+      s.async = false;
+      s.onload = () => {
+        console.debug('[loadPartials] external script loaded:', url);
+        resolve(true);
+      };
+      s.onerror = (ev) => {
+        console.warn('[loadPartials] external script failed:', url, ev);
+        resolve(false); // continue even on failure
+      };
+      document.head.appendChild(s);
+    }));
+  }, Promise.resolve());
+}
+
+// Execute inline script text in a safe manner
+function executeInlineScript(jsText) {
+  try {
+    const s = document.createElement('script');
+    s.type = 'text/javascript';
+    s.text = jsText;
+    document.head.appendChild(s);
+  } catch (e) {
+    console.error('[loadPartials] executeInlineScript error', e);
+  }
+}
+
+// ------------------------
+// Partial loader
+// ------------------------
 async function loadPartial(targetId, fileName) {
   const container = document.getElementById(targetId);
-  if (!container) return;
+  if (!container) {
+    console.debug('[loadPartial] target not found:', targetId);
+    return;
+  }
 
   const inPagesFolder = window.location.pathname.includes('/pages/');
-  const siteBase =
-    (typeof window.__SITE_BASE__ === 'string' && window.__SITE_BASE__) || '';
-
   const partialsBase = inPagesFolder ? '../partials/' : 'partials/';
   const partialPath = partialsBase + fileName;
+  const assetPrefix = computeAssetPrefix();
 
   try {
-    const response = await fetch(partialPath);
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    const html = await response.text();
-    container.innerHTML = html;
+    console.debug('[loadPartials] fetching partial ->', partialPath);
+    const resp = await fetch(partialPath, { cache: 'no-cache' });
+    if (!resp.ok) {
+      console.warn('[loadPartials] failed to fetch partial', partialPath, resp.status);
+      return;
+    }
+    const rawHtml = await resp.text();
 
-    const computedPrefix = siteBase
-      ? (siteBase.endsWith('/') ? siteBase : siteBase + '/')
-      : (inPagesFolder ? '../' : '');
+    // Parse with DOMParser to avoid partial/incomplete script append issues
+    const parser = new DOMParser();
+    const parsed = parser.parseFromString(rawHtml, 'text/html');
 
-    const shouldPrefix = (url) => {
-      if (!url) return false;
-      const t = url.trim();
-      return (
-        !/^(?:[a-z]+:)?\/\//i.test(t) &&
-        !t.startsWith('/') &&
-        !t.startsWith('data:') &&
-        !t.startsWith('mailto:')
-      );
-    };
+    if (!parsed || !parsed.body) {
+      console.warn('[loadPartials] parsed partial looks invalid:', partialPath);
+      return;
+    }
 
-    // Fix <img>
-    container.querySelectorAll('img').forEach((img) => {
-      const src = img.getAttribute('src') || img.getAttribute('data-src');
-      if (src && shouldPrefix(src)) img.src = computedPrefix + src;
-    });
+    // Clear container and adopt nodes (except <script> and <link>)
+    container.innerHTML = ''; // reset container
+    const scriptsToHandle = [];
 
-    // Fix <a>
-    container.querySelectorAll('a').forEach((a) => {
-      const href = a.getAttribute('href');
-      if (href && shouldPrefix(href)) a.href = computedPrefix + href;
-    });
+    // Move nodes from parsed.body into container (but do not directly append <script> or <link>)
+    Array.from(parsed.body.childNodes).forEach((node) => {
+      // handle <link rel="stylesheet">: move to head (resolve path)
+      if (node.nodeType === Node.ELEMENT_NODE && node.tagName.toLowerCase() === 'link' &&
+          (node.getAttribute('rel') || '').toLowerCase() === 'stylesheet') {
+        const href = node.getAttribute('href');
+        if (href) {
+          const finalHref = isRelativeAsset(href) ? (assetPrefix + href) : href;
+          injectStylesheetHref(finalHref);
+        }
+        return; // skip appending to container
+      }
 
-    // Fix CSS
-    container.querySelectorAll('link[rel="stylesheet"]').forEach((link) => {
-      const href = link.getAttribute('href');
-      if (href && shouldPrefix(href)) link.href = computedPrefix + href;
-    });
+      // Collect <script> elements separately
+      if (node.nodeType === Node.ELEMENT_NODE && node.tagName.toLowerCase() === 'script') {
+        scriptsToHandle.push(node);
+        return;
+      }
 
-    // Fix scripts
-    container.querySelectorAll('script').forEach((s) => {
-      const src = s.getAttribute('src');
-      if (src && shouldPrefix(src)) {
-        const newScript = document.createElement('script');
-        Array.from(s.attributes).forEach((attr) => {
-          if (attr.name !== 'src') newScript.setAttribute(attr.name, attr.value);
+      // For other element nodes, adjust <img> and <a> attributes inside them then append
+      if (node.nodeType === Node.ELEMENT_NODE) {
+        // fix images inside this node
+        node.querySelectorAll && node.querySelectorAll('img').forEach(img => {
+          const s = img.getAttribute('src') || img.getAttribute('data-src');
+          if (s && isRelativeAsset(s)) img.src = assetPrefix + s;
         });
-        newScript.src = computedPrefix + src;
-        s.parentNode.replaceChild(newScript, s);
+        // fix anchors inside this node
+        node.querySelectorAll && node.querySelectorAll('a').forEach(a => {
+          const h = a.getAttribute('href');
+          if (h && isRelativeAsset(h)) a.href = assetPrefix + h;
+        });
+      }
+
+      // import node into current document to avoid document ownership errors
+      try {
+        const imported = document.importNode(node, true);
+        container.appendChild(imported);
+      } catch (e) {
+        // fallback: use innerHTML append for safer recovery
+        try {
+          const wrapper = document.createElement('div');
+          wrapper.appendChild(node.cloneNode(true));
+          container.appendChild(wrapper);
+        } catch (err) {
+          console.warn('[loadPartials] failed to append node for', targetId, err);
+        }
       }
     });
 
-    // Fix logo
+    // Now handle scripts: collect external urls and inline code (preserve order)
+    const externalScriptUrls = [];
+    const inlineScriptTexts = [];
+
+    for (const s of scriptsToHandle) {
+      const src = s.getAttribute && s.getAttribute('src');
+      if (src) {
+        const finalSrc = isRelativeAsset(src) ? (assetPrefix + src) : src;
+        externalScriptUrls.push(finalSrc);
+      } else {
+        inlineScriptTexts.push(s.textContent || s.innerText || '');
+      }
+    }
+
+    // Load external scripts first (sequentially) then run inline scripts
+    if (externalScriptUrls.length) {
+      await loadScriptsSequentially(externalScriptUrls);
+    }
+
+    if (inlineScriptTexts.length) {
+      inlineScriptTexts.forEach(executeInlineScript);
+    }
+
+    // Attempt to resolve and set logo src if present
     const logo = container.querySelector('#appLogo');
     if (logo) {
       const dataLogo = logo.getAttribute('data-logo') || 'images/gonotes.png';
       let resolved;
-
       if (dataLogo.startsWith('/')) resolved = dataLogo;
       else if (/^(?:[a-z]+:)?\/\//i.test(dataLogo)) resolved = dataLogo;
-      else resolved = computedPrefix + dataLogo;
-
+      else resolved = assetPrefix + dataLogo;
       logo.src = resolved;
     }
 
-    // Hooks: data-init
+    // Run data-init hooks (run after scripts so functions are available)
     container.querySelectorAll('[data-init]').forEach((el) => {
       const fnName = el.getAttribute('data-init');
       if (fnName && typeof window[fnName] === 'function') {
         try {
           window[fnName](el);
-        } catch (e) {}
+          console.debug('[loadPartials] ran data-init:', fnName, 'for', fileName);
+        } catch (err) {
+          console.error('[loadPartials] data-init error for', fnName, err);
+        }
+      } else if (fnName) {
+        // not found yet — log but don't throw
+        console.debug('[loadPartials] data-init function not found yet:', fnName, 'for', fileName);
       }
     });
 
+    // Special-case: if this is articles partial and window.articles not present,
+    // try loading common fallback paths for js/articles.js then rerun data-init hooks.
+    if (fileName.toLowerCase().includes('articles')) {
+      const needArticles = !(Array.isArray(window.articles));
+      if (needArticles) {
+        const candidates = [ assetPrefix + 'js/articles.js', '/js/articles.js', './js/articles.js', '../js/articles.js' ];
+        for (const p of candidates) {
+          try {
+            await new Promise((resolve) => {
+              const s = document.createElement('script');
+              s.src = p;
+              s.async = false;
+              s.onload = () => resolve(true);
+              s.onerror = () => resolve(false);
+              document.head.appendChild(s);
+              // small delay to allow execution
+              setTimeout(resolve, 150);
+            });
+            if (Array.isArray(window.articles)) break;
+          } catch (e) {
+            /* continue */
+          }
+        }
+        // rerun data-init hooks again in case they depend on window.articles
+        container.querySelectorAll('[data-init]').forEach((el) => {
+          const fnName = el.getAttribute('data-init');
+          if (fnName && typeof window[fnName] === 'function') {
+            try { window[fnName](el); } catch (err) { console.error('[loadPartials] data-init retry', fnName, err); }
+          }
+        });
+      }
+    }
+
+    console.debug('[loadPartials] injected partial:', partialPath);
   } catch (err) {
-    console.error('Error loading partial:', partialPath, err);
+    console.error('[loadPartials] caught error loading partial:', partialPath, err);
   }
 }
 
-// Load all partials
+// ------------------------
+// Bulk load list & DOM ready
+// ------------------------
 window.addEventListener('DOMContentLoaded', () => {
   [
     ['header', 'header.html'],
@@ -107,15 +260,16 @@ window.addEventListener('DOMContentLoaded', () => {
     ['newsletter', 'newsletter.html'],
     ['articles', 'articles.html'],
     ['footer', 'footer.html'],
-  ].forEach(([id, file]) => loadPartial(id, file));
+  ].forEach(([id, file]) => {
+    // schedule asynchronously to avoid blocking
+    setTimeout(() => loadPartial(id, file), 0);
+  });
 });
 
-/* =========================
-   AUTH + HEADER UI HANDLING
-   ========================= */
-
+// ------------------------
+// AUTH + HEADER UI HANDLING (unchanged logic)
+// ------------------------
 function setupAuthAndHeaderUI() {
-  // ✅ use the same keys as login.js / buynow.js / mynotes.js
   const token = localStorage.getItem('gonotes_token');
   let user = null;
 
@@ -133,13 +287,13 @@ function setupAuthAndHeaderUI() {
     'login.html',
     'signup.html',
     'shop.html',
-    'cart.html'
+    'cart.html',
+    'forgot-password.html'
   ];
 
   const isRoot = currentPage === '/' || currentPage === '';
   const isPublic = isRoot || publicPages.some((p) => currentPage.includes(p));
 
-  // If not logged in and page is not public → redirect to login
   if (!token && !isPublic) {
     const target = isInPages ? './login.html' : '/pages/login.html';
     window.location.href = target;
@@ -160,9 +314,6 @@ function setupAuthAndHeaderUI() {
   const loginItemMobile = document.getElementById('loginItemMobile');
 
   if (token && user) {
-    // ===== LOGGED IN STATE =====
-
-    // Hide login, show My Notes + user menu
     if (loginLink) loginLink.style.display = 'none';
     if (loginItemMobile) loginItemMobile.style.display = 'none';
 
@@ -178,7 +329,6 @@ function setupAuthAndHeaderUI() {
     if (userNameDisplay) userNameDisplay.textContent = name;
     if (userEmailDisplay) userEmailDisplay.textContent = email;
 
-    // Toggle dropdown menu
     if (userMenuToggle && userDropdown) {
       userMenuToggle.onclick = (e) => {
         e.stopPropagation();
@@ -190,10 +340,8 @@ function setupAuthAndHeaderUI() {
       });
     }
 
-    // ===== LOGOUT =====
     if (logoutBtn) {
       logoutBtn.onclick = async () => {
-        // Build API base from SERVER_URL (used everywhere else)
         let AUTH_BASE = '/api';
         if (window.SERVER_URL) {
           const root = window.SERVER_URL.replace(/\/+$/, '');
@@ -206,10 +354,9 @@ function setupAuthAndHeaderUI() {
             headers: { Authorization: 'Bearer ' + token },
           });
         } catch (e) {
-          // ignore network errors, we'll still clear localStorage
+          // ignore
         }
 
-        // Clear new keys
         localStorage.removeItem('gonotes_token');
         localStorage.removeItem('gonotes_user');
 
@@ -218,7 +365,6 @@ function setupAuthAndHeaderUI() {
       };
     }
   } else {
-    // ===== LOGGED OUT STATE =====
     if (loginLink) loginLink.style.display = 'inline-flex';
     if (loginItemMobile) loginItemMobile.style.display = 'block';
 
@@ -227,6 +373,3 @@ function setupAuthAndHeaderUI() {
     if (userMenu) userMenu.style.display = 'none';
   }
 }
-
-// Run after partials & header HTML are injected
-setTimeout(setupAuthAndHeaderUI, 600);

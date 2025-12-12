@@ -13,7 +13,7 @@ let cart = [];
 let subtotal = 0;
 let discount = 0;
 let payable = 0;
-let appliedCoupon = null;
+let appliedCoupon = null; // { code, discountType, discountValue }
 
 /* =====================================================
    CART LOADING
@@ -85,12 +85,14 @@ function renderOrderSummary() {
 }
 
 /* =====================================================
-   COUPON
+   COUPON  (USES BACKEND /api/coupons/validate)
    ===================================================== */
 
-function applyCoupon() {
-  const code = document.getElementById("couponInput").value.trim().toUpperCase();
+async function applyCoupon() {
+  const inputEl = document.getElementById("couponInput");
   const msg = document.getElementById("couponMsg");
+  const rawCode = (inputEl.value || "").trim();
+  const code = rawCode.toUpperCase();
 
   if (!cart.length) {
     msg.textContent = "Add at least one note first.";
@@ -99,20 +101,63 @@ function applyCoupon() {
     return;
   }
 
-  if (code === "GONOTES10") {
-    discount = subtotal * 0.1;
-    payable = subtotal - discount;
-    msg.textContent = "Coupon applied (10% OFF)";
-    msg.className = "msg success";
-    msg.style.display = "block";
-  } else {
-    msg.textContent = "Invalid coupon.";
+  if (!code) {
+    msg.textContent = "Please enter a coupon code.";
     msg.className = "msg error";
     msg.style.display = "block";
-    discount = 0;
+    return;
   }
 
-  renderOrderSummary();
+  try {
+    const res = await fetch(API_BASE + "/coupons/validate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        code,      // coupon code
+        subtotal,  // current subtotal amount
+      }),
+    });
+
+    const data = await res.json().catch(() => ({}));
+    console.log("[buynow] /coupons/validate =>", data);
+
+    if (!res.ok || !data.success) {
+      msg.textContent = data.message || "Invalid coupon.";
+      msg.className = "msg error";
+      msg.style.display = "block";
+
+      discount = 0;
+      appliedCoupon = null;
+      renderOrderSummary();
+      return;
+    }
+
+    // ✅ Use fields directly from response (NOT data.coupon)
+    discount = Number(data.discountAmount || 0);
+    payable =
+      data.payable != null ? Number(data.payable) : subtotal - discount;
+
+    appliedCoupon = {
+      code: data.code,
+      discountType: data.discountType,
+      discountValue: data.discountValue,
+    };
+
+    msg.textContent = data.message || "Coupon applied successfully.";
+    msg.className = "msg success";
+    msg.style.display = "block";
+
+    renderOrderSummary();
+  } catch (err) {
+    console.error("[buynow] coupon validate error:", err);
+    msg.textContent = "Could not validate coupon. Please try again.";
+    msg.className = "msg error";
+    msg.style.display = "block";
+
+    discount = 0;
+    appliedCoupon = null;
+    renderOrderSummary();
+  }
 }
 
 /* =====================================================
@@ -125,12 +170,11 @@ async function startPayment() {
       title: "Cart is empty",
       message: "Please add at least one note before paying.",
       type: "error",
-      secondaryText: "Close"
+      secondaryText: "Close",
     });
     return;
   }
 
-  // MUST CHECK USER LOGIN
   const token = localStorage.getItem("gonotes_token");
   if (!token) {
     showInteractiveToast({
@@ -139,7 +183,7 @@ async function startPayment() {
       type: "error",
       primaryText: "Go to Login",
       onPrimary: () => (window.location.href = "login.html"),
-      secondaryText: "Close"
+      secondaryText: "Close",
     });
     return;
   }
@@ -157,7 +201,7 @@ async function startPayment() {
       title: "Order failed",
       message: "We could not create your order. Please try again.",
       type: "error",
-      secondaryText: "Close"
+      secondaryText: "Close",
     });
     return;
   }
@@ -178,18 +222,17 @@ async function startPayment() {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          ...response, // razorpay_*
-          cart,        // purchased notes
+          ...response,   // razorpay_* fields
+          cart,          // purchased notes
+          appliedCouponCode: appliedCoupon ? appliedCoupon.code : null,
         }),
       });
 
       const verifyData = await verifyRes.json();
 
       if (verifyData.success) {
-        // clear single-checkout selection
         localStorage.removeItem("gonotes_checkout");
 
-        // success toast + auto redirect
         showInteractiveToast({
           title: "Payment Successful!",
           message: "Your notes are unlocked. Redirecting to My Notes...",
@@ -201,14 +244,14 @@ async function startPayment() {
           autoCloseMs: 6000,
           autoRedirect: () => {
             window.location.href = "mynotes.html";
-          }
+          },
         });
       } else {
         showInteractiveToast({
           title: "Verification failed",
           message: verifyData.message || "Payment verification failed.",
           type: "error",
-          secondaryText: "Close"
+          secondaryText: "Close",
         });
       }
     },

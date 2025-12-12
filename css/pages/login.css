@@ -101,3 +101,20 @@ body {
     font-size: 22px;
   }
 }
+
+
+.forgot-password {
+  text-align: right;
+  margin-top: -8px;
+  margin-bottom: 12px;
+}
+
+.forgot-password .login-link {
+  font-size: 0.9rem;
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.forgot-password .login-link:hover {
+  text-decoration: underline;
+}

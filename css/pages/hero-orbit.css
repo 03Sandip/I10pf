@@ -13,7 +13,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -52%) rotate(-8deg); /* -52% = tiny visual lift */
-  width: 360px;   /* slightly smaller so rings don't hug it */
+  width: 500px;   /* slightly smaller so rings don't hug it */
   height: auto;
 
   border-radius: 0 !important;

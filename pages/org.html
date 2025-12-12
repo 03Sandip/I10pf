@@ -9,141 +9,144 @@
   <link rel="stylesheet" href="../css/styles.css" />
   <link rel="stylesheet" href="../css/pages/header.css" />
   <link rel="stylesheet" href="../css/pages/org.css" />
+
+  <style>
+    /* small inline tweaks for grouped-semester layout */
+    .org-controls {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      margin: 1.25rem 0 2rem;
+      flex-wrap:wrap;
+    }
+    .org-select, .org-filter-input {
+      height: 44px;
+      border-radius: 999px;
+      padding: 0 1rem;
+      border: 1px solid rgba(0,0,0,0.06);
+      background: #fff;
+      min-width: 200px;
+    }
+
+    /* semester section */
+    .org-sem-section {
+      margin: 2.5rem 0;
+    }
+    .org-sem-title {
+      font-size: 1.6rem;
+      margin: 0 0 1rem;
+      color: #2d2a25;
+    }
+
+    .org-grid { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); 
+      gap: 24px; 
+    }
+
+    .org-card { 
+      padding: 1.25rem; 
+      border-radius: 14px; 
+      background:#fff; 
+      box-shadow: var(--shadow, 0 6px 18px rgba(16,24,40,0.06)); 
+      position: relative;
+      min-height: 110px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+
+    .org-card-title { 
+      margin: 0 0 6px; 
+      font-size: 1.05rem; 
+      line-height:1.2;
+      color: #2b241f;
+      font-weight:700;
+    }
+
+    .org-card-meta { 
+      color: #8b7b67; 
+      font-size:0.9rem; 
+      margin-bottom: 12px; 
+    }
+
+    .org-btn-download { 
+      display:inline-block; 
+      padding: 10px 20px; 
+      border-radius: 999px; 
+      text-decoration:none; 
+      font-weight:700; 
+      background: #bb8640; 
+      color:#fff;
+      align-self:flex-start;
+    }
+
+    /* empty state */
+    .org-empty {
+      grid-column: 1/-1;
+      padding: 1.25rem;
+      color: #6b6b6b;
+      background: rgba(0,0,0,0.02);
+      border-radius: 8px;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- header partial (same pattern as shop page) -->
+  <!-- header partial -->
   <div id="header" aria-hidden="true"></div>
 
   <!-- MAIN -->
   <main class="org-page">
     <div class="org-container">
+
+      <!-- PAGE HEADER -->
       <section class="org-page-header">
         <h1>All Organizers</h1>
-        <p>Download study planners, timetables and trackers to organize your semester.</p>
+        <p>Download printable planners, subject notes organizers, semester trackers & more.</p>
       </section>
 
-      <!-- FILTERS -->
-      <section class="org-filters">
-        <div class="org-filter-group">
-          <span class="org-filter-label">Stream</span>
-          <select class="org-filter-select" name="stream" id="org-stream">
-            <option>All Streams</option>
-            <option>CSE</option>
-            <option>IT</option>
-            <option>ECE</option>
-          </select>
-        </div>
-
-        <div class="org-filter-group">
-          <span class="org-filter-label">Semester</span>
-          <select class="org-filter-select" name="semester" id="org-semester">
-            <option>All Semesters</option>
-            <option>Sem 1</option>
-            <option>Sem 2</option>
-            <option>Sem 3</option>
-            <option>Sem 4</option>
-            <option>Sem 5</option>
-            <option>Sem 6</option>
-          </select>
-        </div>
-
-        <div class="org-filter-group">
-          <span class="org-filter-label">Type</span>
-          <select class="org-filter-select" name="type" id="org-type">
-            <option>All Types</option>
-            <option>Study Planner</option>
-            <option>Exam Planner</option>
-            <option>Timetable</option>
-            <option>Revision Tracker</option>
-          </select>
-        </div>
-
+      <!-- SEARCH, SEMESTER SELECT & RESET -->
+      <section class="org-controls" aria-label="organizer controls">
         <input
           class="org-filter-input"
           type="text"
           name="q"
           id="org-search"
-          placeholder="Search organizer name or type..."
+          placeholder="Search subject or code..."
         />
 
-        <button class="org-reset-btn" type="button" id="org-reset-btn">Reset</button>
+        <select id="org-semester" class="org-select" aria-label="Select semester">
+          <option value="all">All Semesters</option>
+          <option value="1">Sem 1</option>
+          <option value="2">Sem 2</option>
+          <option value="3">Sem 3</option>
+          <option value="4">Sem 4</option>
+          <option value="5">Sem 5</option>
+          <option value="6">Sem 6</option>
+          <option value="7">Sem 7</option>
+          <option value="8">Sem 8</option>
+        </select>
+
+        <button class="org-reset-btn" type="button" id="org-reset-btn">
+          Reset
+        </button>
       </section>
 
-      <!-- GRID -->
-      <section class="org-grid">
-        <!-- CARD 1 -->
-        <article class="org-card">
-          <span class="org-card-badge">All Streams · Sem 1</span>
-          <div class="org-card-image">
-            <span>📆</span>
-          </div>
-          <h2 class="org-card-title">Weekly Study Planner</h2>
-          <p class="org-card-meta">Printable PDF · Plan subjects for each day of the week.</p>
-          <div class="org-card-actions">
-            <button class="org-small-link" type="button">Preview</button>
-            <a href="/organizers/weekly_study_planner.pdf" class="org-btn-download" download>
-              Download
-            </a>
-          </div>
-        </article>
+      <!-- GROUPED BY SEMESTER: JS will populate this -->
+      <div id="org-wrapper"></div>
 
-        <!-- CARD 2 -->
-        <article class="org-card">
-          <span class="org-card-badge">CSE · Sem 3</span>
-          <div class="org-card-image">
-            <span>🗂️</span>
-          </div>
-          <h2 class="org-card-title">CSE Sem 3 Master Tracker</h2>
-          <p class="org-card-meta">Subjects checklist · Assignments · Tests · Attendance.</p>
-          <div class="org-card-actions">
-            <button class="org-small-link" type="button">Preview</button>
-            <a href="/organizers/cse_sem3_master_tracker.pdf" class="org-btn-download" download>
-              Download
-            </a>
-          </div>
-        </article>
-
-        <!-- CARD 3 -->
-        <article class="org-card">
-          <span class="org-card-badge">All Streams · All Sems</span>
-          <div class="org-card-image">
-            <span>📝</span>
-          </div>
-          <h2 class="org-card-title">Exam Countdown Planner</h2>
-          <p class="org-card-meta">30-day countdown template for any subject.</p>
-          <div class="org-card-actions">
-            <button class="org-small-link" type="button">Preview</button>
-            <a href="/organizers/exam_countdown_planner.pdf" class="org-btn-download" download>
-              Download
-            </a>
-          </div>
-        </article>
-
-        <!-- CARD 4 (coming soon) -->
-        <article class="org-card">
-          <span class="org-card-badge">IT · Sem 5</span>
-          <div class="org-card-image">
-            <span>📊</span>
-          </div>
-          <h2 class="org-card-title">IT Sem 5 Detailed Planner</h2>
-          <p class="org-card-meta">Organizer template will be added soon.</p>
-          <div class="org-card-actions">
-            <span class="org-small-link">Coming soon</span>
-            <button class="org-btn-download" disabled>Download</button>
-          </div>
-        </article>
-      </section>
     </div>
   </main>
 
-  <!-- optional footer (same mechanism as shop page) -->
+  <!-- FOOTER PARTIAL -->
   <div id="footer" aria-hidden="true"></div>
 
-  <!-- scripts: same pattern as shop page -->
+  <!-- SCRIPTS -->
   <script src="js/server.js"></script>
   <script src="../js/loadPartials.js" defer></script>
   <script src="../js/components.js" defer></script>
+  <!-- NOTE: this script should implement the grouped-by-semester rendering & filtering -->
   <script src="../js/org.js" defer></script>
 </body>
 </html>
