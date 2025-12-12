@@ -4,48 +4,36 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Gonotes</title>
-  <link rel="icon" type="image/png" sizes="512x512" href="/images/tab.png">
 
+  <!-- favicon -->
+  <link rel="icon" type="image/png" sizes="512x512" href="./images/tab.png">
 
-  <!-- Styles (use absolute root paths so dev server serves real files) -->
-  <link rel="stylesheet" href="/css/pages/hero-orbit.css">
-  <link rel="stylesheet" href="/css/styles.css">
-  <link rel="stylesheet" href="/css/pages/header.css">
+  <!-- Styles (RELATIVE paths) -->
+  <link rel="stylesheet" href="./css/pages/hero-orbit.css">
+  <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="./css/pages/header.css">
 </head>
 <body>
 
   <!-- Dynamic Partials Will Load Here -->
   <div id="header"></div>
   <div id="hero"></div>
-  <div id ="other_product"></div>
-  <!-- <div id="benefits"></div> -->
-  <!-- <div id="featured"></div> -->
-  <!-- <div id="spotlight"></div> -->
+  <div id="other_product"></div>
   <div id="popular"></div>
-  <!-- <div id="quote"></div> -->
   <div id="offers"></div>
   <div id="articles"></div>
   <div id="newsletter"></div>
-  
-  <!-- <div id="appcta"></div> -->
   <div id="footer"></div>
 
-  <!-- Modals stay in index.html -->
+  <!-- Modals -->
   <div id="previewModal" class="modal" aria-hidden="true"></div>
   <div id="cartModal" class="modal" aria-hidden="true"></div>
 
-  <!-- Scripts -->
-  <script src="/js/server.js"></script>
-
-  <!-- Ensure articles data is loaded before partials are injected -->
-  <script src="/js/articles.js"></script>
-
-  <!-- Partial loader & other scripts -->
-  <script src="/js/loadPartials.js"></script>
-  <script src="/js/components.js"></script>
-  
-  
-
+  <!-- Scripts (RELATIVE paths) -->
+  <script src="./js/server.js"></script>
+  <script src="./js/articles.js"></script>
+  <script src="./js/loadPartials.js"></script>
+  <script src="./js/components.js"></script>
 
 </body>
 </html>
