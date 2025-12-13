@@ -1,0 +1,373 @@
+/* ---------- Improved header CSS (centered nav, fixed height, responsive) ---------- */
+
+/* overall header */
+.header--clean {
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  position: sticky;
+  top: 0;
+  z-index: 120;
+  width: 100%;
+  /* fixed header height to avoid layout shifts when logo size changes */
+  height: 76px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr; /* left / center / right */
+  align-items: center;
+  align-content: center;
+}
+
+/* container inside header to limit width */
+.header-bar {
+  grid-column: 1 / -1;
+  justify-self: center;
+  width: 100%;
+  max-width: var(--container, 1200px);
+  display: contents; /* keep grid layout outside, content inside */
+}
+
+/* left (logo) - placed in the left grid cell */
+.header-left {
+  grid-column: 1 / 2;
+  display: flex;
+  align-items: center;
+  padding-left: 18px;
+  gap: 12px;
+}
+.brand-link { display:inline-flex; align-items:center; }
+
+/* make logo scale without growing header */
+.logo-img {
+  max-height: 56px;   /* visual size of logo on desktop */
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+/* center nav - occupies middle column and is centered */
+.header-nav {
+  grid-column: 2 / 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* nav list */
+.nav-list {
+  display: flex;
+  gap: 28px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+.nav-item { position: relative; }
+.nav-link {
+  background: none;
+  border: none;
+  color: #111;
+  font-weight: 500;
+  font-size: 15px;
+  cursor: pointer;
+  padding: 8px 6px;
+  border-radius: 6px;
+  text-decoration: none;
+}
+.nav-link:hover,
+.nav-link:focus { background: rgba(0,0,0,0.03); outline: none; }
+
+/* caret */
+.caret { margin-left: 6px; font-size: 12px; color: #666; }
+
+/* dropdown */
+.sub-menu {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 8px);
+  background: #fff;
+  border-radius: 8px;
+  min-width: 200px;
+  box-shadow: 0 10px 30px rgba(20,20,30,0.08);
+  padding: 8px 0;
+  display: none;
+  z-index: 140;
+}
+.nav-item:hover > .sub-menu,
+.nav-item:focus-within > .sub-menu,
+.nav-item .sub-menu[aria-hidden="false"] { display: block; }
+
+/* submenu links */
+.sub-link {
+  display: block;
+  padding: 8px 14px;
+  color: #222;
+  text-decoration: none;
+  font-size: 14px;
+}
+.sub-link:hover { background: #f6f7fb; }
+
+/* right utilities area - placed in the right grid cell */
+.header-right {
+  grid-column: 3 / 4;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-right: 18px;
+}
+
+/* utility controls */
+.icon-btn {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+}
+.icon-btn:hover { background: rgba(0,0,0,0.03); }
+
+/* ===== UNIFIED TEXT LINK STYLE (Log In + My Notes) ===== */
+.text-link {
+  color: #3f3429;
+  text-decoration: none;
+  padding: 6px 8px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+
+.text-link:hover {
+  background: rgba(0, 0, 0, 0.03);
+  color: #1f2933;
+}
+
+/* CTA button */
+.btn.cta {
+  background: linear-gradient(90deg,#1e88ff,#5a5df5);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: none;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn.cta:hover { filter: brightness(.95); }
+
+/* mobile hamburger (hidden on desktop) */
+.hamburger {
+  display: none;
+  background: transparent;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+}
+.hamburger-box { display: inline-block; width: 26px; height: 18px; position: relative; }
+.hamburger-inner, .hamburger-inner::before, .hamburger-inner::after {
+  display: block;
+  background: #111;
+  height: 2px;
+  border-radius: 2px;
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+.hamburger-inner { top: 50%; transform: translateY(-50%); }
+.hamburger-inner::before { content: ''; top: -7px; }
+.hamburger-inner::after  { content: ''; top: 7px; }
+
+/* mobile menu */
+.mobile-menu {
+  display: none;
+  background: #fff;
+  border-top: 1px solid #eee;
+  box-shadow: 0 8px 20px rgba(10,10,20,0.04);
+}
+.mobile-menu[aria-hidden="false"] { display: block; }
+.mobile-nav {
+  list-style: none;
+  padding: 12px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.mobile-nav a {
+  text-decoration: none;
+  color: #111;
+  padding: 10px 12px;
+  border-radius: 8px;
+}
+.mobile-nav a.full { display: block; text-align: center; margin-top: 8px; }
+
+/* -------- Responsive adjustments -------- */
+@media (max-width: 980px) {
+  .header--clean { height: 64px; grid-template-columns: auto 1fr auto; }
+  .header-nav { display: none; }
+  .hamburger { display: inline-block; }
+  .logo-img { max-height: 40px; }
+  .header-right .text-link { display: none; }
+}
+
+@media (max-width: 480px) {
+  .header--clean { height: 60px; }
+  .logo-img { max-height: 36px; }
+  .btn.cta { padding: 6px 12px; font-size: 14px; }
+}
+
+/* Cart Button */
+.cart-btn {
+  position: relative;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* ========================================= */
+/* 🔥 REMOVE CART COUNT BADGE COMPLETELY HERE */
+/* ========================================= */
+#cartCount,
+#cartCountMobile,
+.cart-badge {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* ====== USER MENU (DESKTOP) ====== */
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.header-right .text-link {
+  font-size: 14px;
+  color: #3f3429;
+}
+
+.user-menu {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.user-icon-btn {
+  border: none;
+  background: #f4e7d7;
+  border-radius: 999px;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.03);
+}
+
+.user-icon-btn:hover {
+  background: #ebdcc8;
+}
+
+.user-initial {
+  font-weight: 600;
+  font-size: 14px;
+  color: #4b2f1b;
+}
+
+.user-dropdown {
+  position: absolute;
+  top: 115%;
+  right: 0;
+  min-width: 220px;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 12px 25px rgba(15, 23, 42, 0.18);
+  padding: 8px 0;
+  z-index: 100;
+  overflow: hidden;
+}
+
+.user-dropdown-header {
+  padding: 10px 14px 8px;
+  border-bottom: 1px solid #f1ece6;
+}
+
+.user-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2933;
+  margin-bottom: 2px;
+}
+
+.user-email {
+  font-size: 12px;
+  color: #6c727f;
+}
+
+.user-dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 8px 14px;
+  font-size: 14px;
+  text-align: left;
+  color: #374151;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.user-dropdown-item:hover {
+  background: #f8f3ec;
+}
+
+.user-logout-btn {
+  color: #b91c1c;
+}
+
+#myNotesLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 6px 14px;
+  margin-right: 4px;
+  border-radius: 1000px;
+  background: #f4e7d7;
+  color: #4b2f1b;
+  text-decoration: none;
+  border: 1px solid rgba(0,0,0,0.02);
+}
+
+#myNotesLink:hover {
+  background: #ebdcc8;
+  color: #4b2f1b;
+}
+
+.header-right .btn.cta {
+  margin-left: 4px;
+}
+
+@media (max-width: 768px) {
+  .header-right {
+    gap: 8px;
+  }
+  .user-dropdown {
+    right: 8px;
+  }
+}

@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Gonotes — Top Interview 150 (LeetCode)</title>
+
+<meta name="description" content="Top Interview 150 LeetCode problems, grouped by topic. Practice important coding interview questions with quick solve access." />
+<link rel="canonical" href="https://gonotes.shop/pages/top-interview-150.html" />
+
+<!-- GLOBAL + HEADER STYLES (same as coding.html) -->
+<link rel="stylesheet" href="../css/styles.css" />
+<link rel="stylesheet" href="../css/pages/header.css" />
+
+<style>
+:root{
+  --card:#fff;
+  --accent:#6b4f3a;
+  --radius:14px;
+  --shadow:0 10px 32px rgba(16,24,40,0.06);
+}
+body{
+  margin:0;
+  font-family:Inter,system-ui,Arial,sans-serif;
+}
+
+/* Layout */
+.ti150-layout{
+  display:flex;
+  gap:20px;
+  padding:20px;
+  max-width:1400px;
+  margin:auto;
+}
+
+/* Sidebar */
+.ti150-sidebar{
+  width:280px;
+  background:var(--card);
+  border-radius:var(--radius);
+  padding:14px;
+  box-shadow:var(--shadow);
+}
+.ti150-topic{
+  padding:12px 14px;
+  border-radius:10px;
+  cursor:pointer;
+  margin-bottom:6px;
+}
+.ti150-topic:hover{background:#f6f3ee}
+.ti150-topic.active{
+  background:#f1ece4;
+  font-weight:600;
+}
+
+/* Content */
+.ti150-content{
+  flex:1;
+  background:var(--card);
+  border-radius:var(--radius);
+  padding:26px;
+  box-shadow:var(--shadow);
+}
+.problem-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px 0;
+  border-bottom:1px solid #eee;
+}
+.problem-title{font-weight:600}
+
+/* Solve button */
+.solve-btn{
+  padding:6px 18px;
+  border-radius:18px;
+  background:#fff;
+  border:1px solid #ddd;
+  cursor:pointer;
+}
+.solve-btn:hover{
+  background:var(--accent);
+  color:#fff;
+  border-color:var(--accent);
+}
+</style>
+</head>
+
+<body>
+
+<!-- ✅ HEADER (loaded EXACTLY like coding.html) -->
+<div id="header" aria-hidden="true"></div>
+
+<main class="ti150-layout">
+
+  <!-- LEFT SIDEBAR -->
+  <aside class="ti150-sidebar" id="topicList"></aside>
+
+  <!-- RIGHT CONTENT -->
+  <section class="ti150-content" id="problemContainer"></section>
+
+</main>
+
+<!-- optional footer (same pattern as coding.html) -->
+<div id="footer" aria-hidden="true"></div>
+
+<!-- ✅ SAME SCRIPTS AS coding.html -->
+<script src="../js/server.js"></script>
+<script src="../js/loadPartials.js" defer></script>
+<script src="../js/components.js" defer></script>
+
+<script>
+/* ================= TOP INTERVIEW 150 DATA ================= */
+const data = {
+
+"Array / String":[
+ {name:"Two Sum",url:"https://leetcode.com/problems/two-sum/"},
+ {name:"Best Time to Buy and Sell Stock",url:"https://leetcode.com/problems/best-time-to-buy-and-sell-stock/"},
+ {name:"Contains Duplicate",url:"https://leetcode.com/problems/contains-duplicate/"},
+ {name:"Product of Array Except Self",url:"https://leetcode.com/problems/product-of-array-except-self/"},
+ {name:"Maximum Subarray",url:"https://leetcode.com/problems/maximum-subarray/"},
+ {name:"Maximum Product Subarray",url:"https://leetcode.com/problems/maximum-product-subarray/"},
+ {name:"Find Minimum in Rotated Sorted Array",url:"https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/"},
+ {name:"Search in Rotated Sorted Array",url:"https://leetcode.com/problems/search-in-rotated-sorted-array/"},
+ {name:"3Sum",url:"https://leetcode.com/problems/3sum/"},
+ {name:"Container With Most Water",url:"https://leetcode.com/problems/container-with-most-water/"}
+],
+
+"Hashing":[
+ {name:"Group Anagrams",url:"https://leetcode.com/problems/group-anagrams/"},
+ {name:"Valid Anagram",url:"https://leetcode.com/problems/valid-anagram/"},
+ {name:"Top K Frequent Elements",url:"https://leetcode.com/problems/top-k-frequent-elements/"},
+ {name:"Longest Consecutive Sequence",url:"https://leetcode.com/problems/longest-consecutive-sequence/"}
+],
+
+"Two Pointers":[
+ {name:"Valid Palindrome",url:"https://leetcode.com/problems/valid-palindrome/"},
+ {name:"Two Sum II",url:"https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/"},
+ {name:"3Sum Closest",url:"https://leetcode.com/problems/3sum-closest/"},
+ {name:"Trapping Rain Water",url:"https://leetcode.com/problems/trapping-rain-water/"}
+],
+
+"Sliding Window":[
+ {name:"Longest Substring Without Repeating Characters",url:"https://leetcode.com/problems/longest-substring-without-repeating-characters/"},
+ {name:"Longest Repeating Character Replacement",url:"https://leetcode.com/problems/longest-repeating-character-replacement/"},
+ {name:"Minimum Window Substring",url:"https://leetcode.com/problems/minimum-window-substring/"}
+],
+
+"Stack":[
+ {name:"Valid Parentheses",url:"https://leetcode.com/problems/valid-parentheses/"},
+ {name:"Min Stack",url:"https://leetcode.com/problems/min-stack/"},
+ {name:"Evaluate Reverse Polish Notation",url:"https://leetcode.com/problems/evaluate-reverse-polish-notation/"},
+ {name:"Daily Temperatures",url:"https://leetcode.com/problems/daily-temperatures/"},
+ {name:"Largest Rectangle in Histogram",url:"https://leetcode.com/problems/largest-rectangle-in-histogram/"}
+],
+
+"Binary Search":[
+ {name:"Binary Search",url:"https://leetcode.com/problems/binary-search/"},
+ {name:"Search a 2D Matrix",url:"https://leetcode.com/problems/search-a-2d-matrix/"},
+ {name:"Koko Eating Bananas",url:"https://leetcode.com/problems/koko-eating-bananas/"}
+],
+
+"Linked List":[
+ {name:"Reverse Linked List",url:"https://leetcode.com/problems/reverse-linked-list/"},
+ {name:"Merge Two Sorted Lists",url:"https://leetcode.com/problems/merge-two-sorted-lists/"},
+ {name:"Remove Nth Node From End",url:"https://leetcode.com/problems/remove-nth-node-from-end-of-list/"},
+ {name:"Linked List Cycle",url:"https://leetcode.com/problems/linked-list-cycle/"},
+ {name:"Merge k Sorted Lists",url:"https://leetcode.com/problems/merge-k-sorted-lists/"}
+]
+
+};
+
+/* ================= RENDER LOGIC ================= */
+const topicList = document.getElementById("topicList");
+const problemContainer = document.getElementById("problemContainer");
+
+function renderTopics(){
+  const topics = Object.keys(data);
+  topicList.innerHTML="";
+  topics.forEach((topic,i)=>{
+    const div=document.createElement("div");
+    div.className="ti150-topic"+(i===0?" active":"");
+    div.textContent=`${topic} (${data[topic].length})`;
+    div.onclick=()=>selectTopic(topic,div);
+    topicList.appendChild(div);
+  });
+  showProblems(topics[0]);
+}
+
+function selectTopic(topic,el){
+  document.querySelectorAll(".ti150-topic").forEach(t=>t.classList.remove("active"));
+  el.classList.add("active");
+  showProblems(topic);
+}
+
+function showProblems(topic){
+  problemContainer.innerHTML=`<h2>${topic}</h2>`;
+  data[topic].forEach((p,i)=>{
+    problemContainer.innerHTML+=`
+      <div class="problem-item">
+        <div class="problem-title">${i+1}. ${p.name}</div>
+        <button class="solve-btn" onclick="window.open('${p.url}','_blank')">
+          Solve
+        </button>
+      </div>`;
+  });
+}
+
+renderTopics();
+</script>
+
+</body>
+</html>

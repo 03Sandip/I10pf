@@ -45,7 +45,7 @@ Focus more on repeated question patterns.`
   {
     title: "Common Mistakes Students Make During GATE Preparation",
     date: "10 OCT 2024",
-    image: "https://images.unsplash.com/photo-1584697964154-af0a7d1a4475?auto=format&fit=crop&w=1400&q=80",
+    image: "./images/pic1.png",
     excerpt: "Avoid these top mistakes that reduce your GATE score drastically.",
     content: `Most students lose 20–30 marks because of a few common mistakes:
 
@@ -61,7 +61,7 @@ Avoid these mistakes to boost your rank significantly.`
   {
     title: "Best Books for GATE CSE 2026 Preparation",
     date: "28 SEP 2024",
-    image: "https://images.unsplash.com/photo-1526662092594-e98c1e356d6c?auto=format&fit=crop&w=1400&q=80",
+    image: "./images/pic2.png",
     excerpt: "Handpicked list of top recommended books for each GATE CSE subject.",
     content: `The best standard books for GATE CSE include:
 
@@ -81,7 +81,7 @@ Stick to one book per subject and revise multiple times.`
   {
     title: "How to Score 70+ Marks in GATE Without Coaching",
     date: "15 AUG 2024",
-    image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1400&q=80",
+    image: "./images/pic3.png",
     excerpt: "A complete guide for self-study students preparing for GATE CSE.",
     content: `Coaching is not mandatory for GATE. Thousands clear with self-study every year.
 
@@ -99,7 +99,7 @@ Self-study + discipline = top rank.`
   {
     title: "GATE Exam Pattern 2026 Explained in Simple Terms",
     date: "01 AUG 2024",
-    image: "https://images.unsplash.com/photo-1558021212-51b6ecfa0db9?auto=format&fit=crop&w=1400&q=80",
+    image: "./images/pic4.png",
     excerpt: "A simple breakdown of question types, marks distribution, and weightage.",
     content: `GATE exam consists of 65 questions for 100 marks.
 
