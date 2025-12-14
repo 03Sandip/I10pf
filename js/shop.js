@@ -1,10 +1,10 @@
-// js/shop.js — list + filters + cart for client website
+// js/shop.js — SAFE + FIXED VERSION
 (function () {
   /* ================= CONFIG ================= */
 
   if (!window.SERVER_URL) {
     alert("SERVER_URL missing — load js/server.js before js/shop.js");
-    throw new Error("SERVER_URL missing");
+    return;
   }
 
   const ROOT_URL = window.SERVER_URL.replace(/\/+$/, "");
@@ -22,21 +22,21 @@
   const shopSearch = document.getElementById("shopSearch");
   const resetFiltersBtn = document.getElementById("resetFilters");
   const loadMoreBtn = document.getElementById("loadMoreBtn");
-  const noMoreEl = document.getElementById("noMore");
-  const emptyMessage = document.getElementById("emptyMessage");
 
   const cartItemsWrap = document.getElementById("cartItems");
   const cartTotalEl = document.getElementById("cartTotal");
   const checkoutBtn = document.getElementById("checkoutBtn");
   const openCartBtn = document.getElementById("openCartBtn");
   const cartModal = document.getElementById("cartModal");
+  const closeCartBtn = document.getElementById("closeCart");
+
+  if (!notesGrid || !noteCardTemplate) return;
 
   /* ================= STATE ================= */
 
   let currentPage = 1;
   let totalResults = 0;
   let isLoading = false;
-  let currentNotes = [];
   let cart = loadCartFromStorage();
 
   let currentFilters = {
@@ -52,11 +52,12 @@
     if (!params) return url;
 
     const qs = new URLSearchParams();
-    Object.entries(params).forEach(([k, v]) => {
+    Object.keys(params).forEach((k) => {
+      const v = params[k];
       if (v !== undefined && v !== "") qs.set(k, v);
     });
 
-    return qs.toString() ? `${url}?${qs}` : url;
+    return qs.toString() ? url + "?" + qs.toString() : url;
   }
 
   async function apiGet(path, params) {
@@ -66,15 +67,18 @@
     try {
       return JSON.parse(text);
     } catch {
-      return text;
+      return {};
     }
   }
 
-  function debounce(fn, delay = 300) {
+  function debounce(fn, delay) {
     let t;
-    return (...args) => {
+    return function () {
       clearTimeout(t);
-      t = setTimeout(() => fn(...args), delay);
+      const args = arguments;
+      t = setTimeout(function () {
+        fn.apply(null, args);
+      }, delay);
     };
   }
 
@@ -96,73 +100,58 @@
     localStorage.setItem("gonotes_cart", JSON.stringify(cart));
   }
 
-  function updateCartCount() {
-    const badge = document.getElementById("cartCount");
-    if (!badge) return;
-    const count = cart.reduce((s, i) => s + i.qty, 0);
-    badge.textContent = count;
-    badge.style.display = count ? "inline-flex" : "none";
-  }
-
-  function addToCart(note) {
-    const existing = cart.find((i) => i.id === note.id);
-    if (existing) existing.qty++;
-    else cart.push({ id: note.id, title: note.title, price: note.price, qty: 1 });
-    saveCart();
-    renderCart();
-  }
-
   function renderCart() {
-    if (!cartItemsWrap) return;
-    cartItemsWrap.innerHTML = "";
+    if (!cartItemsWrap || !cartTotalEl) return;
 
+    cartItemsWrap.innerHTML = "";
     if (!cart.length) {
-      cartItemsWrap.innerHTML = `<div class="empty">Your cart is empty.</div>`;
+      cartItemsWrap.innerHTML = "<div class='empty'>Your cart is empty.</div>";
       cartTotalEl.textContent = "0.00";
-      updateCartCount();
       return;
     }
 
     let total = 0;
-
-    cart.forEach((item) => {
+    cart.forEach(function (item) {
       const row = document.createElement("div");
       row.className = "cart-row";
-      row.innerHTML = `
-        <div>
-          <strong>${item.title}</strong>
-          <div>₹${formatPrice(item.price)}</div>
-        </div>
-        <button class="btn">Remove</button>
-      `;
-      row.querySelector("button").onclick = () => {
-        cart = cart.filter((c) => c.id !== item.id);
+      row.innerHTML =
+        "<div><strong>" +
+        item.title +
+        "</strong><div>₹" +
+        formatPrice(item.price) +
+        "</div></div><button class='btn'>Remove</button>";
+
+      row.querySelector("button").onclick = function () {
+        cart = cart.filter(function (c) {
+          return c.id !== item.id;
+        });
         saveCart();
         renderCart();
       };
+
       cartItemsWrap.appendChild(row);
       total += item.price * item.qty;
     });
 
     cartTotalEl.textContent = formatPrice(total);
-    updateCartCount();
   }
 
   /* ================= API ================= */
 
   async function loadDepartments() {
+    if (!streamSelect) return;
     const data = await apiGet("/departments");
     while (streamSelect.options.length > 1) streamSelect.remove(1);
-    data.forEach((d) => {
+
+    (data || []).forEach(function (d) {
       const opt = document.createElement("option");
       opt.value = d._id || d.id;
-      opt.textContent = d.name;
-      opt.dataset.sems = JSON.stringify(d.semesters || []);
+      opt.textContent = d.name || "Unknown";
       streamSelect.appendChild(opt);
     });
   }
 
-  async function fetchNotes({ append = false } = {}) {
+  async function fetchNotes(append) {
     if (isLoading) return;
     isLoading = true;
 
@@ -179,18 +168,16 @@
       const results = data.results || [];
       totalResults = data.total || results.length;
 
-      if (!append) {
-        currentNotes = [];
-        notesGrid.innerHTML = "";
+      if (!append) notesGrid.innerHTML = "";
+
+      results.forEach(renderNote);
+
+      if (loadMoreBtn) {
+        loadMoreBtn.style.display =
+          currentPage * PAGE_SIZE < totalResults ? "inline-block" : "none";
       }
-
-      results.forEach((n) => renderNote(n));
-      currentNotes = currentNotes.concat(results);
-
-      loadMoreBtn.style.display =
-        currentNotes.length < totalResults ? "inline-block" : "none";
     } catch (e) {
-      notesGrid.innerHTML = `<div class="empty">Failed to load notes.</div>`;
+      notesGrid.innerHTML = "<div class='empty'>Failed to load notes.</div>";
     } finally {
       isLoading = false;
     }
@@ -200,84 +187,95 @@
 
   function renderNote(n) {
     const tpl = noteCardTemplate.content.cloneNode(true);
-    tpl.querySelector(".card-title").textContent = n.title;
+
+    const deptName =
+      n.department && n.department.name ? n.department.name : "";
+
+    tpl.querySelector(".card-title").textContent = n.title || "Untitled";
     tpl.querySelector(".card-subtitle").textContent =
-      `${n.department?.name || ""} · Sem ${n.semester || ""}`;
+      deptName + (n.semester ? " · Sem " + n.semester : "");
 
     const img = tpl.querySelector(".card-image");
     img.src = n.hasImage
-      ? `${API_BASE}/notes/${n._id}/pic`
+      ? API_BASE + "/notes/" + n._id + "/pic"
       : PLACEHOLDER_IMG;
 
     tpl.querySelector(".discounted-price").textContent =
-      `₹${formatPrice(n.discountPrice || n.originalPrice)}`;
+      "₹" + formatPrice(n.discountPrice || n.originalPrice);
 
-    tpl.querySelector(".add-to-cart").onclick = () => addToCart({
-      id: n._id,
-      title: n.title,
-      price: n.discountPrice || n.originalPrice,
-    });
+    tpl.querySelector(".add-to-cart").onclick = function () {
+      cart.push({
+        id: n._id,
+        title: n.title,
+        price: n.discountPrice || n.originalPrice,
+        qty: 1,
+      });
+      saveCart();
+      renderCart();
+    };
 
     notesGrid.appendChild(tpl);
   }
 
   /* ================= EVENTS ================= */
 
-  const debouncedSearch = debounce(() => {
+  const debouncedSearch = debounce(function () {
     currentFilters.q = shopSearch.value.trim();
     currentPage = 1;
-    fetchNotes();
-  });
+    fetchNotes(false);
+  }, 300);
 
-  streamSelect.onchange = () => {
-    currentFilters.departmentId = streamSelect.value;
-    currentPage = 1;
-    fetchNotes();
-  };
+  if (streamSelect)
+    streamSelect.onchange = function () {
+      currentFilters.departmentId = streamSelect.value;
+      currentPage = 1;
+      fetchNotes(false);
+    };
 
-  semesterSelect.onchange = () => {
-    currentFilters.semester = semesterSelect.value;
-    currentPage = 1;
-    fetchNotes();
-  };
+  if (semesterSelect)
+    semesterSelect.onchange = function () {
+      currentFilters.semester = semesterSelect.value;
+      currentPage = 1;
+      fetchNotes(false);
+    };
 
-  shopSearch.oninput = debouncedSearch;
+  if (shopSearch) shopSearch.oninput = debouncedSearch;
 
-  resetFiltersBtn.onclick = () => {
-    streamSelect.value = "";
-    semesterSelect.value = "";
-    shopSearch.value = "";
-    currentFilters = { departmentId: "", semester: "", q: "" };
-    currentPage = 1;
-    fetchNotes();
-  };
+  if (resetFiltersBtn)
+    resetFiltersBtn.onclick = function () {
+      currentFilters = { departmentId: "", semester: "", q: "" };
+      currentPage = 1;
+      fetchNotes(false);
+    };
 
-  loadMoreBtn.onclick = () => {
-    if (currentNotes.length < totalResults) {
+  if (loadMoreBtn)
+    loadMoreBtn.onclick = function () {
       currentPage++;
-      fetchNotes({ append: true });
-    }
-  };
+      fetchNotes(true);
+    };
 
-  openCartBtn.onclick = () => {
-    cartModal.setAttribute("aria-hidden", "false");
-  };
+  if (openCartBtn)
+    openCartBtn.onclick = function () {
+      cartModal.setAttribute("aria-hidden", "false");
+    };
 
-  document.getElementById("closeCart")?.onclick = () => {
-    cartModal.setAttribute("aria-hidden", "true");
-  };
+  if (closeCartBtn)
+    closeCartBtn.onclick = function () {
+      cartModal.setAttribute("aria-hidden", "true");
+    };
 
-  checkoutBtn.onclick = () => {
-    if (!cart.length) return alert("Cart is empty");
-    localStorage.setItem("gonotes_checkout", JSON.stringify(cart));
-    window.location.href = "buynow.html";
-  };
+  if (checkoutBtn)
+    checkoutBtn.onclick = function () {
+      if (!cart.length) return alert("Cart is empty");
+      localStorage.setItem("gonotes_checkout", JSON.stringify(cart));
+      window.location.href = "buynow.html";
+    };
 
   /* ================= INIT ================= */
 
-  document.addEventListener("DOMContentLoaded", async () => {
+  document.addEventListener("DOMContentLoaded", function () {
     renderCart();
-    await loadDepartments();
-    fetchNotes();
+    loadDepartments();
+    fetchNotes(false);
   });
 })();
