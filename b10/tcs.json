@@ -1,0 +1,114 @@
+{
+  "blogs": [
+    {
+      "id": "tcs-common-coding-questions",
+      "title": "TCS Common Coding Questions – Complete Guide",
+      "author": "Gonotes",
+      "date": "2025",
+      "readTime": "12 min read",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "TCS National Qualifier Test (NQT) is a standardized assessment conducted by Tata Consultancy Services for recruiting fresh graduates across India. It acts as the initial screening for multiple entry-level roles."
+        },
+        {
+          "type": "h2",
+          "text": "About TCS National Qualifier Test (NQT)"
+        },
+        {
+          "type": "paragraph",
+          "text": "The test is open to graduates from AICTE/UGC recognized institutions including B.Tech, B.E, M.Tech, M.E, MCA, and M.Sc candidates."
+        },
+        {
+          "type": "h2",
+          "text": "TCS NQT 2025 – Key Information"
+        },
+        {
+          "type": "paragraph",
+          "text": "Registration is open until 23rd March 2025. The exam starts from 15th March 2025 and is conducted at TCS iON centers."
+        },
+        {
+          "type": "h2",
+          "text": "Test Pattern"
+        },
+        {
+          "type": "paragraph",
+          "text": "The exam consists of two parts: Foundation Section (Numerical Ability, Verbal Ability, Reasoning Ability) and Advanced Section (Advanced Quantitative & Reasoning, Advanced Coding). Total duration is 190 minutes."
+        },
+        {
+          "type": "h2",
+          "text": "Career Tracks Based on Performance"
+        },
+        {
+          "type": "paragraph",
+          "text": "Based on performance, candidates qualify for Prime, Digital, or Ninja roles. Prime requires top performance, Digital focuses on advanced technical skills, and Ninja is for standard developer roles."
+        },
+        {
+          "type": "h2",
+          "text": "Most Common Programming Questions in TCS Interviews"
+        },
+        {
+          "type": "h3",
+          "text": "Check for Leap Year"
+        },
+        {
+          "type": "code",
+          "language": "javascript",
+          "text": "function isLeapYear(year) {\n  if (year % 400 === 0) return true;\n  if (year % 100 === 0) return false;\n  return year % 4 === 0;\n}"
+        },
+        {
+          "type": "h3",
+          "text": "Fibonacci Sequence"
+        },
+        {
+          "type": "code",
+          "language": "javascript",
+          "text": "function generateFibonacci(n) {\n  const fibonacci = [0, 1];\n  for (let i = 2; i < n; i++) {\n    fibonacci[i] = fibonacci[i-1] + fibonacci[i-2];\n  }\n  return fibonacci.slice(0, n);\n}"
+        },
+        {
+          "type": "h3",
+          "text": "Prime Number Check"
+        },
+        {
+          "type": "code",
+          "language": "javascript",
+          "text": "function isPrime(num) {\n  if (num <= 1) return false;\n  if (num <= 3) return true;\n  if (num % 2 === 0 || num % 3 === 0) return false;\n  let i = 5;\n  while (i * i <= num) {\n    if (num % i === 0 || num % (i + 2) === 0) return false;\n    i += 6;\n  }\n  return true;\n}"
+        },
+        {
+          "type": "h2",
+          "text": "Advanced Coding Questions (TCS Digital)"
+        },
+        {
+          "type": "h3",
+          "text": "Two Sum Problem"
+        },
+        {
+          "type": "code",
+          "language": "javascript",
+          "text": "function twoSum(nums, target) {\n  const map = {};\n  for (let i = 0; i < nums.length; i++) {\n    const diff = target - nums[i];\n    if (diff in map) return [map[diff], i];\n    map[nums[i]] = i;\n  }\n  return [-1, -1];\n}"
+        },
+        {
+          "type": "h2",
+          "text": "TCS Ninja Level Questions"
+        },
+        {
+          "type": "h3",
+          "text": "Check if Array is Sorted"
+        },
+        {
+          "type": "code",
+          "language": "javascript",
+          "text": "function isSorted(arr) {\n  for (let i = 1; i < arr.length; i++) {\n    if (arr[i] < arr[i - 1]) return false;\n  }\n  return true;\n}"
+        },
+        {
+          "type": "h2",
+          "text": "Conclusion"
+        },
+        {
+          "type": "paragraph",
+          "text": "This guide provides a comprehensive list of the most frequently asked coding questions in TCS interviews. Practicing these problems improves logical thinking and coding confidence for NQT and interview rounds."
+        }
+      ]
+    }
+  ]
+}
