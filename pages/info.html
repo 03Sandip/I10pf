@@ -5,13 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Gonotes — About · Privacy · Contact</title>
 
-  <meta name="description" content="About Gonotes — notes marketplace for students. Contact details and privacy policy." />
+  <meta name="description" content="About Gonotes — notes marketplace for students. Privacy policy and contact details." />
 
-    <!-- Google AdSense -->
+  <!-- Google AdSense -->
   <script async
     src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5527929468197396"
-    crossorigin="anonymous">
-  </script>
+    crossorigin="anonymous"></script>
 
   <!-- styles -->
   <link rel="stylesheet" href="../css/styles.css" />
@@ -20,48 +19,161 @@
   <style>
     .info-container{max-width:980px;margin:28px auto;padding:18px}
     .info-nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
-    .info-nav a{padding:8px 12px;border-radius:8px;background:#fff;color:var(--accent);text-decoration:none}
-    .info-nav a[aria-current="true"]{background:var(--accent);color:#fff}
-    .info-section{background:#fff;border:1px solid #ece7e1;border-radius:10px;padding:18px;box-shadow:0 8px 24px rgba(16,24,40,0.04)}
+    .info-nav a{
+      padding:8px 12px;
+      border-radius:8px;
+      background:#fff;
+      color:var(--accent);
+      text-decoration:none;
+      font-weight:500
+    }
+    .info-nav a[aria-current="true"]{
+      background:var(--accent);
+      color:#fff
+    }
+    .info-section{
+      background:#fff;
+      border:1px solid #ece7e1;
+      border-radius:10px;
+      padding:22px;
+      box-shadow:0 8px 24px rgba(16,24,40,0.04)
+    }
     .muted{color:var(--muted)}
-    .contact-grid{display:grid;grid-template-columns:1fr 320px;gap:18px}
-    .contact-card{background:#fbf9f7;padding:12px;border-radius:8px}
-    .form-row{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
-    .form-row input,.form-row textarea{padding:10px;border-radius:8px;border:1px solid #e7ded3}
-    .btn-primary{padding:10px 14px;border-radius:8px;background:var(--accent);color:#fff;border:none;cursor:pointer}
     .small-muted{font-size:13px;color:var(--muted)}
-    @media (max-width:880px){ .contact-grid{grid-template-columns:1fr} }
+    .info-section h3{margin-top:22px}
+    .info-section ul{padding-left:20px}
+    .info-section li{margin-bottom:6px}
+
+    .contact-grid{
+      display:grid;
+      grid-template-columns:1fr 320px;
+      gap:18px
+    }
+    .contact-card{
+      background:#fbf9f7;
+      padding:14px;
+      border-radius:8px
+    }
+    .form-row{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      margin-bottom:10px
+    }
+    .form-row input,
+    .form-row textarea{
+      padding:10px;
+      border-radius:8px;
+      border:1px solid #e7ded3
+    }
+    .btn-primary{
+      padding:10px 14px;
+      border-radius:8px;
+      background:var(--accent);
+      color:#fff;
+      border:none;
+      cursor:pointer
+    }
+    @media (max-width:880px){
+      .contact-grid{grid-template-columns:1fr}
+    }
   </style>
 </head>
 <body>
 
-  <!-- header partial -->
+  <!-- header -->
   <div id="header"></div>
 
   <main class="info-container">
+
     <nav class="info-nav">
       <a href="#about" id="link-about">About</a>
       <a href="#privacy" id="link-privacy">Privacy Policy</a>
       <a href="#contact" id="link-contact">Contact</a>
     </nav>
 
+    <!-- ABOUT -->
     <section id="about" class="info-section" hidden>
       <h2>About Gonotes</h2>
       <p class="small-muted">Notes marketplace for students — curated, searchable, and preview-first.</p>
       <p>
-        Gonotes helps students discover high-quality notes, preview them, and learn efficiently.
+        Gonotes helps students discover high-quality academic notes, preview them before use,
+        and learn efficiently — all in one place.
       </p>
     </section>
 
+    <!-- PRIVACY -->
     <section id="privacy" class="info-section" hidden>
-      <h2>Privacy Policy</h2>
-      <p class="small-muted">Last updated: December 12, 2025</p>
+      <h2>Privacy Policy for GoNotes</h2>
+      <p class="small-muted">Effective Date: November 1, 2024</p>
+
       <p>
-        We respect your privacy. For details see our
-        <a href="./privacy-policy.html">full privacy policy</a>.
+        This Privacy Policy describes how <strong>GoNotes</strong> ("the Site", "we", "us", or "our")
+        uses data when you visit <a href="https://gonotes.shop" target="_blank">https://gonotes.shop</a>.
+      </p>
+
+      <h3>1. Information We Collect</h3>
+      <p>
+        We do not collect personal information such as your name, address, email address, or phone number.
+        We do not require account creation or process payments.
+      </p>
+      <p>
+        The only data collected is through Google Analytics.
+      </p>
+
+      <h3>2. Google Analytics</h3>
+      <p>
+        We use Google Analytics to understand how visitors interact with our site and improve performance.
+      </p>
+      <ul class="small-muted">
+        <li>IP Address (anonymized)</li>
+        <li>Device and browser information</li>
+        <li>Pages visited and time spent</li>
+        <li>Referral sources</li>
+      </ul>
+
+      <h3>3. How We Use the Data</h3>
+      <ul class="small-muted">
+        <li>Analyze website traffic</li>
+        <li>Improve content and usability</li>
+        <li>Optimize user experience</li>
+      </ul>
+
+      <h3>4. Third-Party Sharing</h3>
+      <p>
+        Google Analytics data is processed by Google according to their Privacy Policy:
+        <a href="https://policies.google.com/privacy" target="_blank">https://policies.google.com/privacy</a>
+      </p>
+
+      <h3>5. Your Choices</h3>
+      <ul class="small-muted">
+        <li>Disable cookies in your browser</li>
+        <li>
+          Use Google Analytics Opt-out Add-on:
+          <a href="https://tools.google.com/dlpage/gaoptout" target="_blank">
+            https://tools.google.com/dlpage/gaoptout
+          </a>
+        </li>
+      </ul>
+
+      <h3>6. Changes</h3>
+      <p>
+        This policy may be updated periodically. Changes will be posted on this page.
+      </p>
+
+      <h3>7. Contact</h3>
+      <p>
+        Email:
+        <a href="mailto:gonotes01@gmail.com">gonotes01@gmail.com</a>
+      </p>
+
+      <p class="small-muted">
+        Disclaimer: This policy is for general informational purposes.
+        Consult a legal professional for compliance guidance.
       </p>
     </section>
 
+    <!-- CONTACT -->
     <section id="contact" class="info-section" hidden>
       <h2>Contact Us</h2>
 
@@ -72,7 +184,7 @@
         </div>
 
         <aside class="contact-card">
-          <form id="contactForm">
+          <form>
             <div class="form-row">
               <label>Name</label>
               <input required>
@@ -86,11 +198,11 @@
               <textarea rows="4" required></textarea>
             </div>
             <button class="btn-primary">Send</button>
-            <div id="contactStatus" class="small-muted"></div>
           </form>
         </aside>
       </div>
     </section>
+
   </main>
 
   <!-- footer -->
@@ -101,9 +213,9 @@
         <p>Your trusted marketplace for student notes.</p>
       </div>
       <div class="footer-links">
-        <a href="./info.html#about">About</a>
-        <a href="./info.html#privacy">Privacy</a>
-        <a href="./info.html#contact">Contact</a>
+        <a href="#about">About</a>
+        <a href="#privacy">Privacy</a>
+        <a href="#contact">Contact</a>
       </div>
     </div>
   </footer>
@@ -121,9 +233,10 @@
           document.getElementById('link-'+s)?.toggleAttribute('aria-current', s===id);
         });
       };
-      show(location.hash.replace('#','')||'about');
+      show(location.hash.replace('#','') || 'about');
       window.addEventListener('hashchange',()=>show(location.hash.replace('#','')));
     })();
   </script>
+
 </body>
 </html>
