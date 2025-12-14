@@ -18,19 +18,34 @@
 
   <style>
     .info-container{max-width:980px;margin:28px auto;padding:18px}
-    .info-nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+
+    /* NAV */
+    .info-nav{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:22px
+    }
     .info-nav a{
-      padding:8px 12px;
-      border-radius:8px;
+      padding:8px 16px;
+      border-radius:999px;
       background:#fff;
       color:var(--accent);
       text-decoration:none;
-      font-weight:500
+      font-weight:500;
+      border:1px solid #ece7e1;
+      transition:all .25s ease;
+    }
+    .info-nav a:hover{
+      background:#f5f2ee;
     }
     .info-nav a[aria-current="true"]{
       background:var(--accent);
-      color:#fff
+      color:#fff;
+      border-color:var(--accent);
     }
+
+    /* SECTIONS */
     .info-section{
       background:#fff;
       border:1px solid #ece7e1;
@@ -44,6 +59,7 @@
     .info-section ul{padding-left:20px}
     .info-section li{margin-bottom:6px}
 
+    /* CONTACT */
     .contact-grid{
       display:grid;
       grid-template-columns:1fr 320px;
@@ -95,7 +111,7 @@
     <!-- ABOUT -->
     <section id="about" class="info-section" hidden>
       <h2>About Gonotes</h2>
-      <p class="small-muted">Notes marketplace for students — curated, searchable, and preview-first.</p>
+      <p class="small-muted">Notes marketplace for students — curated, searchable, preview-first.</p>
       <p>
         Gonotes helps students discover high-quality academic notes, preview them before use,
         and learn efficiently — all in one place.
@@ -117,14 +133,8 @@
         We do not collect personal information such as your name, address, email address, or phone number.
         We do not require account creation or process payments.
       </p>
-      <p>
-        The only data collected is through Google Analytics.
-      </p>
 
       <h3>2. Google Analytics</h3>
-      <p>
-        We use Google Analytics to understand how visitors interact with our site and improve performance.
-      </p>
       <ul class="small-muted">
         <li>IP Address (anonymized)</li>
         <li>Device and browser information</li>
@@ -132,44 +142,19 @@
         <li>Referral sources</li>
       </ul>
 
-      <h3>3. How We Use the Data</h3>
-      <ul class="small-muted">
-        <li>Analyze website traffic</li>
-        <li>Improve content and usability</li>
-        <li>Optimize user experience</li>
-      </ul>
-
-      <h3>4. Third-Party Sharing</h3>
-      <p>
-        Google Analytics data is processed by Google according to their Privacy Policy:
-        <a href="https://policies.google.com/privacy" target="_blank">https://policies.google.com/privacy</a>
-      </p>
-
-      <h3>5. Your Choices</h3>
+      <h3>3. Your Choices</h3>
       <ul class="small-muted">
         <li>Disable cookies in your browser</li>
         <li>
-          Use Google Analytics Opt-out Add-on:
+          Google Analytics Opt-out:
           <a href="https://tools.google.com/dlpage/gaoptout" target="_blank">
             https://tools.google.com/dlpage/gaoptout
           </a>
         </li>
       </ul>
 
-      <h3>6. Changes</h3>
-      <p>
-        This policy may be updated periodically. Changes will be posted on this page.
-      </p>
-
-      <h3>7. Contact</h3>
-      <p>
-        Email:
-        <a href="mailto:gonotes01@gmail.com">gonotes01@gmail.com</a>
-      </p>
-
       <p class="small-muted">
-        Disclaimer: This policy is for general informational purposes.
-        Consult a legal professional for compliance guidance.
+        Disclaimer: This policy is for informational purposes only.
       </p>
     </section>
 
@@ -225,16 +210,30 @@
   <script src="../js/components.js"></script>
 
   <script>
-    (function(){
-      const sections=['about','privacy','contact'];
-      const show=(id)=>{
-        sections.forEach(s=>{
-          document.getElementById(s).hidden = s!==id;
-          document.getElementById('link-'+s)?.toggleAttribute('aria-current', s===id);
+    (function () {
+      const sections = ["about", "privacy", "contact"];
+
+      function showSection(id) {
+        if (!sections.includes(id)) id = "about";
+
+        sections.forEach(s => {
+          document.getElementById(s).hidden = s !== id;
+          const link = document.getElementById("link-" + s);
+          if (s === id) {
+            link.setAttribute("aria-current", "true");
+          } else {
+            link.removeAttribute("aria-current");
+          }
         });
-      };
-      show(location.hash.replace('#','') || 'about');
-      window.addEventListener('hashchange',()=>show(location.hash.replace('#','')));
+      }
+
+      // Initial load
+      showSection(location.hash.replace("#", ""));
+
+      // On tab click / hash change
+      window.addEventListener("hashchange", () => {
+        showSection(location.hash.replace("#", ""));
+      });
     })();
   </script>
 

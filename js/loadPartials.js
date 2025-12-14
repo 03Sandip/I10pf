@@ -1,5 +1,5 @@
 // js/loadPartials.js
-// Robust partial loader + asset-path fixer + header auth handling (FIXED)
+// Robust partial loader + asset-path fixer + header auth handling (PRODUCTION SAFE)
 
 // ------------------------
 // Utility helpers
@@ -16,10 +16,16 @@ function isRelativeAsset(url) {
 }
 
 function computeAssetPrefix() {
-  const inPagesFolder = window.location.pathname.includes('/pages/');
+  // Prefer explicit site base if provided
   const siteBase =
     (typeof window.__SITE_BASE__ === 'string' && window.__SITE_BASE__) || '';
-  if (siteBase) return siteBase.endsWith('/') ? siteBase : siteBase + '/';
+
+  if (siteBase) {
+    return siteBase.endsWith('/') ? siteBase : siteBase + '/';
+  }
+
+  // Fallback: detect /pages/
+  const inPagesFolder = window.location.pathname.includes('/pages/');
   return inPagesFolder ? '../' : '';
 }
 
@@ -51,6 +57,7 @@ function loadScriptsSequentially(urls) {
 }
 
 function executeInlineScript(jsText) {
+  if (!jsText) return;
   const s = document.createElement('script');
   s.type = 'text/javascript';
   s.text = jsText;
@@ -67,6 +74,7 @@ async function loadPartial(targetId, fileName) {
   const inPagesFolder = window.location.pathname.includes('/pages/');
   const partialsBase = inPagesFolder ? '../partials/' : 'partials/';
   const partialPath = partialsBase + fileName;
+
   const assetPrefix = computeAssetPrefix();
 
   try {
@@ -80,7 +88,9 @@ async function loadPartial(targetId, fileName) {
     const scriptsToHandle = [];
 
     Array.from(parsed.body.childNodes).forEach((node) => {
+      // ------------------------
       // Stylesheets
+      // ------------------------
       if (
         node.nodeType === 1 &&
         node.tagName.toLowerCase() === 'link' &&
@@ -95,28 +105,51 @@ async function loadPartial(targetId, fileName) {
         return;
       }
 
-      // Scripts
+      // ------------------------
+      // Scripts (defer execution)
+      // ------------------------
       if (node.nodeType === 1 && node.tagName.toLowerCase() === 'script') {
         scriptsToHandle.push(node);
         return;
       }
 
-      // Fix assets
+      // ------------------------
+      // Asset fixing (IMPORTANT)
+      // ------------------------
       if (node.nodeType === 1) {
+        // 🔥 FIX LOGO + IMAGES
         node.querySelectorAll('img').forEach((img) => {
+          // Prefer data-logo
+          const dataLogo = img.getAttribute('data-logo');
+          if (dataLogo) {
+            img.src = isRelativeAsset(dataLogo)
+              ? assetPrefix + dataLogo
+              : dataLogo;
+            return;
+          }
+
+          // Fallback to src
           const s = img.getAttribute('src');
-          if (s && isRelativeAsset(s)) img.src = assetPrefix + s;
+          if (s && isRelativeAsset(s)) {
+            img.src = assetPrefix + s;
+          }
         });
+
+        // Fix anchor links
         node.querySelectorAll('a').forEach((a) => {
           const h = a.getAttribute('href');
-          if (h && isRelativeAsset(h)) a.href = assetPrefix + h;
+          if (h && isRelativeAsset(h)) {
+            a.href = assetPrefix + h;
+          }
         });
       }
 
       container.appendChild(document.importNode(node, true));
     });
 
-    // Handle scripts
+    // ------------------------
+    // Execute scripts
+    // ------------------------
     const external = [];
     const inline = [];
 
@@ -132,7 +165,9 @@ async function loadPartial(targetId, fileName) {
     if (external.length) await loadScriptsSequentially(external);
     inline.forEach(executeInlineScript);
 
+    // ------------------------
     // data-init hooks
+    // ------------------------
     container.querySelectorAll('[data-init]').forEach((el) => {
       const fn = el.getAttribute('data-init');
       if (fn && typeof window[fn] === 'function') {
@@ -165,7 +200,7 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 // ------------------------
-// AUTH + HEADER UI (FIXED)
+// AUTH + HEADER UI
 // ------------------------
 function setupAuthAndHeaderUI() {
   const token = localStorage.getItem('gonotes_token');
@@ -180,7 +215,7 @@ function setupAuthAndHeaderUI() {
   const currentPage = window.location.pathname.toLowerCase();
   const isInPages = currentPage.includes('/pages/');
 
-  // 🔒 ONLY these pages require login
+  // 🔒 Only these pages need login
   const protectedPages = [
     'my-notes.html',
     'checkout.html',
@@ -192,7 +227,7 @@ function setupAuthAndHeaderUI() {
     currentPage.includes(p)
   );
 
-  // ✅ Redirect ONLY protected pages
+  // Redirect unauthenticated users
   if (!token && isProtected) {
     window.location.href = isInPages
       ? './login.html'
