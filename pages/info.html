@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Gonotes — About · Privacy · Contact</title>
 
-  <meta name="description" content="About Gonotes — notes marketplace for students. Privacy policy and contact details." />
+  <meta name="description" content="About Gonotes — student notes marketplace. Privacy policy and contact details." />
 
   <!-- Google AdSense -->
   <script async
@@ -19,7 +19,6 @@
   <style>
     .info-container{max-width:980px;margin:28px auto;padding:18px}
 
-    /* NAV */
     .info-nav{
       display:flex;
       gap:10px;
@@ -36,16 +35,13 @@
       border:1px solid #ece7e1;
       transition:all .25s ease;
     }
-    .info-nav a:hover{
-      background:#f5f2ee;
-    }
+    .info-nav a:hover{background:#f5f2ee}
     .info-nav a[aria-current="true"]{
       background:var(--accent);
       color:#fff;
       border-color:var(--accent);
     }
 
-    /* SECTIONS */
     .info-section{
       background:#fff;
       border:1px solid #ece7e1;
@@ -53,13 +49,9 @@
       padding:22px;
       box-shadow:0 8px 24px rgba(16,24,40,0.04)
     }
-    .muted{color:var(--muted)}
-    .small-muted{font-size:13px;color:var(--muted)}
-    .info-section h3{margin-top:22px}
-    .info-section ul{padding-left:20px}
-    .info-section li{margin-bottom:6px}
 
-    /* CONTACT */
+    .small-muted{font-size:13px;color:var(--muted)}
+
     .contact-grid{
       display:grid;
       grid-template-columns:1fr 320px;
@@ -70,14 +62,9 @@
       padding:14px;
       border-radius:8px
     }
-    .form-row{
-      display:flex;
-      flex-direction:column;
-      gap:6px;
-      margin-bottom:10px
-    }
-    .form-row input,
-    .form-row textarea{
+
+    .form-row{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
+    .form-row input,.form-row textarea{
       padding:10px;
       border-radius:8px;
       border:1px solid #e7ded3
@@ -90,6 +77,7 @@
       border:none;
       cursor:pointer
     }
+
     @media (max-width:880px){
       .contact-grid{grid-template-columns:1fr}
     }
@@ -111,38 +99,76 @@
     <!-- ABOUT -->
     <section id="about" class="info-section" hidden>
       <h2>About Gonotes</h2>
-      <p class="small-muted">Notes marketplace for students — curated, searchable, preview-first.</p>
+      <p class="small-muted">A marketplace built for students, by students.</p>
+
       <p>
-        Gonotes helps students discover high-quality academic notes, preview them before use,
-        and learn efficiently — all in one place.
+        <strong>Gonotes</strong> is a student-focused marketplace designed to help learners
+        access high-quality academic and technical resources in one place.
+      </p>
+
+      <p>
+        We provide semester-wise notes, GATE preparation material, coding resources,
+        and learning content curated for clarity and effectiveness.
+      </p>
+
+      <p>
+        In the future, Gonotes will expand with more free resources,
+        final-year project guides, and advanced educational content.
+      </p>
+
+      <p class="small-muted">
+        Built with ❤️ by Sandip<br />
+        <a href="https://www.linkedin.com/in/sandip-paul-053a21259/" target="_blank"
+           style="display:inline-flex;align-items:center;gap:6px;">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg"
+               alt="LinkedIn"
+               width="16"
+               height="16"
+               style="filter:invert(30%)" />
+          Connect on LinkedIn
+        </a>
       </p>
     </section>
 
     <!-- PRIVACY -->
     <section id="privacy" class="info-section" hidden>
-      <h2>Privacy Policy for GoNotes</h2>
+      <h2>Privacy Policy for Gonotes</h2>
       <p class="small-muted">Effective Date: December 12, 2025</p>
 
       <p>
-        This Privacy Policy describes how <strong>GoNotes</strong> ("the Site", "we", "us", or "our")
-        uses data when you visit <a href="https://gonotes.shop" target="_blank">https://gonotes.shop</a>.
+        This Privacy Policy explains how <strong>Gonotes</strong> ("we", "our", or "us")
+        collects, uses, and protects information when you use
+        <a href="https://gonotes.shop" target="_blank">https://gonotes.shop</a>.
       </p>
 
       <h3>1. Information We Collect</h3>
       <p>
-        We do not collect personal information such as your name, address, email address, or phone number.
-        We do not require account creation or process payments.
+        When you create an account on Gonotes, we may collect:
       </p>
-
-      <h3>2. Google Analytics</h3>
       <ul class="small-muted">
-        <li>IP Address (anonymized)</li>
-        <li>Device and browser information</li>
-        <li>Pages visited and time spent</li>
-        <li>Referral sources</li>
+        <li>Email address</li>
+        <li>Phone number</li>
       </ul>
 
-      <h3>3. Your Choices</h3>
+      <h3>2. Payments & Security</h3>
+      <p>
+        Payments on Gonotes are processed securely using
+        <strong>Razorpay</strong>.
+      </p>
+      <ul class="small-muted">
+        <li>We do not store card or banking details</li>
+        <li>All transactions are handled by Razorpay</li>
+        <li>Industry-standard security practices are followed</li>
+      </ul>
+
+      <h3>3. Analytics & Cookies</h3>
+      <ul class="small-muted">
+        <li>Anonymized IP address</li>
+        <li>Browser and device information</li>
+        <li>Pages visited and usage statistics</li>
+      </ul>
+
+      <h3>4. Your Choices</h3>
       <ul class="small-muted">
         <li>Disable cookies in your browser</li>
         <li>
@@ -154,7 +180,8 @@
       </ul>
 
       <p class="small-muted">
-        Disclaimer: This policy is for informational purposes only.
+        For questions, contact us at
+        <a href="mailto:gonotes01@gmail.com">gonotes01@gmail.com</a>.
       </p>
     </section>
 
@@ -219,18 +246,13 @@
         sections.forEach(s => {
           document.getElementById(s).hidden = s !== id;
           const link = document.getElementById("link-" + s);
-          if (s === id) {
-            link.setAttribute("aria-current", "true");
-          } else {
-            link.removeAttribute("aria-current");
-          }
+          s === id
+            ? link.setAttribute("aria-current", "true")
+            : link.removeAttribute("aria-current");
         });
       }
 
-      // Initial load
       showSection(location.hash.replace("#", ""));
-
-      // On tab click / hash change
       window.addEventListener("hashchange", () => {
         showSection(location.hash.replace("#", ""));
       });
