@@ -194,7 +194,7 @@ async function startPayment() {
       message: "Please log in before making a payment.",
       type: "error",
       primaryText: "Go to Login",
-      onPrimary: () => (window.location.href = "/pages/login.html"),
+      onPrimary: () => (window.location.href = "../pages/login.html"),
       secondaryText: "Close",
     });
     return;
@@ -252,7 +252,7 @@ async function startPayment() {
           type: "success",
           autoCloseMs: 5000,
           autoRedirect: () => {
-            window.location.href = "/pages/mynotes.html";
+            window.location.href = "../pages/mynotes.html";
           },
         });
       } else {
@@ -280,6 +280,6 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("applyCouponBtn").onclick = applyCoupon;
   document.getElementById("payBtn").onclick = startPayment;
   document.getElementById("backBtn").onclick = () => {
-    window.location.href = "/pages/shop.html";
+    window.location.href = "../pages/shop.html";
   };
 });
