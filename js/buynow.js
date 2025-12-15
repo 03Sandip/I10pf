@@ -16,10 +16,28 @@ let payable = 0;
 let appliedCoupon = null; // { code, discountType, discountValue }
 
 /* =====================================================
-   CART LOADING
+   CART LOADING (UPDATED — BUY NOW SUPPORTED)
    ===================================================== */
 
 function loadCheckoutItems() {
+  // ✅ 1. BUY NOW (single item)
+  try {
+    const rawBuyNow = localStorage.getItem("gonotes_buynow");
+    if (rawBuyNow) {
+      const item = JSON.parse(rawBuyNow);
+      if (item && item.title) {
+        return [
+          {
+            title: item.title,
+            price: Number(item.price || 0),
+            qty: Number(item.qty || 1),
+          },
+        ];
+      }
+    }
+  } catch {}
+
+  // ✅ 2. FULL CHECKOUT
   try {
     const raw = localStorage.getItem("gonotes_checkout");
     if (raw) {
@@ -28,9 +46,10 @@ function loadCheckoutItems() {
     }
   } catch {}
 
-  const rawCart = localStorage.getItem("gonotes_cart");
-  if (!rawCart) return [];
+  // ✅ 3. NORMAL CART
   try {
+    const rawCart = localStorage.getItem("gonotes_cart");
+    if (!rawCart) return [];
     const parsed = JSON.parse(rawCart);
     return Array.isArray(parsed) ? parsed : [];
   } catch {
@@ -57,11 +76,12 @@ function renderOrderSummary() {
     emptyCartMsg.style.display = "block";
   } else {
     emptyCartMsg.style.display = "none";
+
     cart.forEach((item) => {
       const row = document.createElement("div");
       row.className = "order-item";
 
-      const price = Number(item.price || item.discountPrice || 0);
+      const price = Number(item.price || 0);
       const qty = Number(item.qty || 1);
 
       row.innerHTML = `
@@ -85,7 +105,7 @@ function renderOrderSummary() {
 }
 
 /* =====================================================
-   COUPON  (USES BACKEND /api/coupons/validate)
+   COUPON VALIDATION
    ===================================================== */
 
 async function applyCoupon() {
@@ -112,30 +132,23 @@ async function applyCoupon() {
     const res = await fetch(API_BASE + "/coupons/validate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        code,      // coupon code
-        subtotal,  // current subtotal amount
-      }),
+      body: JSON.stringify({ code, subtotal }),
     });
 
     const data = await res.json().catch(() => ({}));
-    console.log("[buynow] /coupons/validate =>", data);
 
     if (!res.ok || !data.success) {
       msg.textContent = data.message || "Invalid coupon.";
       msg.className = "msg error";
       msg.style.display = "block";
-
       discount = 0;
       appliedCoupon = null;
       renderOrderSummary();
       return;
     }
 
-    // ✅ Use fields directly from response (NOT data.coupon)
     discount = Number(data.discountAmount || 0);
-    payable =
-      data.payable != null ? Number(data.payable) : subtotal - discount;
+    payable = Number(data.payable || subtotal - discount);
 
     appliedCoupon = {
       code: data.code,
@@ -149,11 +162,10 @@ async function applyCoupon() {
 
     renderOrderSummary();
   } catch (err) {
-    console.error("[buynow] coupon validate error:", err);
-    msg.textContent = "Could not validate coupon. Please try again.";
+    console.error(err);
+    msg.textContent = "Coupon validation failed.";
     msg.className = "msg error";
     msg.style.display = "block";
-
     discount = 0;
     appliedCoupon = null;
     renderOrderSummary();
@@ -182,7 +194,7 @@ async function startPayment() {
       message: "Please log in before making a payment.",
       type: "error",
       primaryText: "Go to Login",
-      onPrimary: () => (window.location.href = "login.html"),
+      onPrimary: () => (window.location.href = "/pages/login.html"),
       secondaryText: "Close",
     });
     return;
@@ -199,7 +211,7 @@ async function startPayment() {
   if (!orderData.success) {
     showInteractiveToast({
       title: "Order failed",
-      message: "We could not create your order. Please try again.",
+      message: "Could not create payment order.",
       type: "error",
       secondaryText: "Close",
     });
@@ -222,9 +234,9 @@ async function startPayment() {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          ...response,   // razorpay_* fields
-          cart,          // purchased notes
-          appliedCouponCode: appliedCoupon ? appliedCoupon.code : null,
+          ...response,
+          cart,
+          appliedCouponCode: appliedCoupon?.code || null,
         }),
       });
 
@@ -232,24 +244,21 @@ async function startPayment() {
 
       if (verifyData.success) {
         localStorage.removeItem("gonotes_checkout");
+        localStorage.removeItem("gonotes_buynow");
 
         showInteractiveToast({
           title: "Payment Successful!",
-          message: "Your notes are unlocked. Redirecting to My Notes...",
+          message: "Redirecting to My Notes...",
           type: "success",
-          primaryText: "View My Notes",
-          onPrimary: () => (window.location.href = "mynotes.html"),
-          secondaryText: "Back to Shop",
-          onSecondary: () => (window.location.href = "shop.html"),
-          autoCloseMs: 6000,
+          autoCloseMs: 5000,
           autoRedirect: () => {
-            window.location.href = "mynotes.html";
+            window.location.href = "/pages/mynotes.html";
           },
         });
       } else {
         showInteractiveToast({
-          title: "Verification failed",
-          message: verifyData.message || "Payment verification failed.",
+          title: "Payment verification failed",
+          message: verifyData.message || "Please contact support.",
           type: "error",
           secondaryText: "Close",
         });
@@ -257,8 +266,7 @@ async function startPayment() {
     },
   };
 
-  const rzp = new Razorpay(options);
-  rzp.open();
+  new Razorpay(options).open();
 }
 
 /* =====================================================
@@ -271,8 +279,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("applyCouponBtn").onclick = applyCoupon;
   document.getElementById("payBtn").onclick = startPayment;
-
   document.getElementById("backBtn").onclick = () => {
-    window.location.href = "shop.html";
+    window.location.href = "/pages/shop.html";
   };
 });

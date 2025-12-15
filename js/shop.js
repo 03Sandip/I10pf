@@ -44,17 +44,18 @@
   let totalResults = 0;
   let isLoading = false;
   let currentNotes = [];
+
   function loadCartFromStorage() {
-  try {
-    const raw = localStorage.getItem('gonotes_cart');
-    if (!raw) return [];
-    const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed : [];
-  } catch (e) {
-    console.warn('Failed loading cart from storage', e);
-    return [];
+    try {
+      const raw = localStorage.getItem('gonotes_cart');
+      if (!raw) return [];
+      const parsed = JSON.parse(raw);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) {
+      console.warn('Failed loading cart from storage', e);
+      return [];
+    }
   }
-}
 
   let currentFilters = {
     departmentId: '',
@@ -265,4 +266,36 @@
     currentPage = 1;
     fetchNotes();
   };
+
+  // =====================================================
+  // ✅ BUY NOW HANDLER (ONLY ADDITION)
+  // =====================================================
+  document.addEventListener('click', (e) => {
+    const buyBtn = e.target.closest('.buy-now');
+    if (!buyBtn) return;
+
+    const card = buyBtn.closest('.note-card');
+    if (!card) return;
+
+    const title =
+      card.querySelector('.card-title')?.textContent || 'Note';
+
+    const priceText =
+      card.querySelector('.discounted-price')?.textContent ||
+      card.querySelector('.original-price')?.textContent ||
+      '₹0';
+
+    const price = Number(priceText.replace(/[^\d.]/g, ''));
+
+    localStorage.setItem(
+      'gonotes_buynow',
+      JSON.stringify({
+        title,
+        price,
+        qty: 1,
+      })
+    );
+
+    window.location.href = '/pages/buynow.html';
+  });
 })();
