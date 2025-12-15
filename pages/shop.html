@@ -43,15 +43,18 @@
             <option value="">All Semesters</option>
           </select>
 
-          <input id="shopSearch" class="search"
+          <input id="shopSearch"
+                 class="search"
                  placeholder="Search title or description..." />
 
-          <button id="resetFilters" class="btn"
+          <button id="resetFilters"
+                  class="btn"
+                  type="button"
                   style="background:#fff;color:var(--accent);border:1px solid #e5e7eb">
             Reset
           </button>
 
-          <!-- 🛒 MY CART BUTTON -->
+          <!-- 🛒 MY CART -->
           <a href="/pages/cart.html"
              class="btn primary"
              style="display:flex;align-items:center;gap:6px;text-decoration:none;">
@@ -67,7 +70,7 @@
         <div class="card-media">
           <img class="card-image" alt="Note cover" />
           <div class="discount-badge"></div>
-          <button class="preview-btn">Preview</button>
+          <button class="preview-btn" type="button">Preview</button>
         </div>
 
         <div class="card-body">
@@ -80,10 +83,12 @@
           </div>
 
           <div class="card-actions">
+            <!-- ✅ FIXED -->
             <button class="btn add-to-cart" type="button">
               Add to cart
             </button>
 
+            <!-- ✅ BUY NOW handled ONLY in shop.js -->
             <button class="btn buy-now primary" type="button">
               Buy now
             </button>
@@ -101,7 +106,7 @@
       </div>
 
       <div style="text-align:center;margin-top:18px;">
-        <button id="loadMoreBtn" class="btn" style="display:none">
+        <button id="loadMoreBtn" class="btn" type="button" style="display:none">
           Load more
         </button>
         <div id="noMore" style="display:none;color:var(--muted)">
@@ -115,20 +120,11 @@
   <!-- footer -->
   <div id="footer" aria-hidden="true"></div>
 
-  <!-- scripts -->
-  <script src="../js/server.js"></script>
-  <script src="../js/loadPartials.js" defer></script>
-  <script src="../js/components.js" defer></script>
-  <script src="../js/shop.js" defer></script>
-
-  <!-- BUY NOW REDIRECT -->
-  <script>
-    document.addEventListener("click", function (e) {
-      const buyBtn = e.target.closest(".buy-now");
-      if (!buyBtn) return;
-      window.location.href = "/pages/buynow.html";
-    });
-  </script>
+  <!-- scripts (ROOT PATHS — LIVE SAFE) -->
+  <script src="/js/server.js"></script>
+  <script src="/js/loadPartials.js" defer></script>
+  <script src="/js/components.js" defer></script>
+  <script src="/js/shop.js" defer></script>
 
 </body>
 </html>
