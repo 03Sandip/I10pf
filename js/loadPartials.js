@@ -16,7 +16,6 @@ function isRelativeAsset(url) {
 }
 
 function computeAssetPrefix() {
-  // Prefer explicit site base if provided
   const siteBase =
     (typeof window.__SITE_BASE__ === 'string' && window.__SITE_BASE__) || '';
 
@@ -24,7 +23,6 @@ function computeAssetPrefix() {
     return siteBase.endsWith('/') ? siteBase : siteBase + '/';
   }
 
-  // Fallback: detect /pages/
   const inPagesFolder = window.location.pathname.includes('/pages/');
   return inPagesFolder ? '../' : '';
 }
@@ -106,7 +104,7 @@ async function loadPartial(targetId, fileName) {
       }
 
       // ------------------------
-      // Scripts (defer execution)
+      // Scripts
       // ------------------------
       if (node.nodeType === 1 && node.tagName.toLowerCase() === 'script') {
         scriptsToHandle.push(node);
@@ -114,12 +112,11 @@ async function loadPartial(targetId, fileName) {
       }
 
       // ------------------------
-      // Asset fixing (IMPORTANT)
+      // Asset fixing
       // ------------------------
       if (node.nodeType === 1) {
-        // 🔥 FIX LOGO + IMAGES
+        // Images / Logo
         node.querySelectorAll('img').forEach((img) => {
-          // Prefer data-logo
           const dataLogo = img.getAttribute('data-logo');
           if (dataLogo) {
             img.src = isRelativeAsset(dataLogo)
@@ -128,23 +125,29 @@ async function loadPartial(targetId, fileName) {
             return;
           }
 
-          // Fallback to src
           const s = img.getAttribute('src');
           if (s && isRelativeAsset(s)) {
             img.src = assetPrefix + s;
           }
         });
 
-        // Fix anchor links
+        // Anchor links
         node.querySelectorAll('a').forEach((a) => {
           const h = a.getAttribute('href');
-          if (h && isRelativeAsset(h)) {
+          if (!h) return;
+
+          if (h.startsWith('/') || h.startsWith('#')) {
+            a.href = h;
+            return;
+          }
+
+          if (isRelativeAsset(h)) {
             a.href = assetPrefix + h;
           }
         });
       }
 
-      container.appendChild(document.importNode(node, true));
+      container.appendChild(node);
     });
 
     // ------------------------
@@ -215,7 +218,6 @@ function setupAuthAndHeaderUI() {
   const currentPage = window.location.pathname.toLowerCase();
   const isInPages = currentPage.includes('/pages/');
 
-  // 🔒 Only these pages need login
   const protectedPages = [
     'my-notes.html',
     'checkout.html',
@@ -227,7 +229,6 @@ function setupAuthAndHeaderUI() {
     currentPage.includes(p)
   );
 
-  // Redirect unauthenticated users
   if (!token && isProtected) {
     window.location.href = isInPages
       ? './login.html'
@@ -235,7 +236,6 @@ function setupAuthAndHeaderUI() {
     return;
   }
 
-  // Header elements
   const loginLink = document.getElementById('loginLink');
   const myNotesLink = document.getElementById('myNotesLink');
   const userMenu = document.getElementById('userMenu');
@@ -256,8 +256,7 @@ function setupAuthAndHeaderUI() {
     if (loginItemMobile) loginItemMobile.style.display = 'none';
 
     if (myNotesLink) myNotesLink.style.display = 'inline-flex';
-    if (myNotesItemMobile)
-      myNotesItemMobile.style.display = 'block';
+    if (myNotesItemMobile) myNotesItemMobile.style.display = 'block';
     if (userMenu) userMenu.style.display = 'inline-flex';
 
     const name = user.name || user.email || 'User';
@@ -276,10 +275,10 @@ function setupAuthAndHeaderUI() {
             ? 'none'
             : 'block';
       };
-      document.addEventListener(
-        'click',
-        () => (userDropdown.style.display = 'none')
-      );
+
+      document.addEventListener('click', () => {
+        userDropdown.style.display = 'none';
+      });
     }
 
     if (logoutBtn) {
@@ -293,12 +292,10 @@ function setupAuthAndHeaderUI() {
     }
   } else {
     if (loginLink) loginLink.style.display = 'inline-flex';
-    if (loginItemMobile)
-      loginItemMobile.style.display = 'block';
+    if (loginItemMobile) loginItemMobile.style.display = 'block';
 
     if (myNotesLink) myNotesLink.style.display = 'none';
-    if (myNotesItemMobile)
-      myNotesItemMobile.style.display = 'none';
+    if (myNotesItemMobile) myNotesItemMobile.style.display = 'none';
     if (userMenu) userMenu.style.display = 'none';
   }
 }

@@ -21,21 +21,6 @@
     <!-- Right: Buttons -->
     <div class="header-right">
 
-      <!-- Cart Button -->
-      <button id="cartBtn"
-              class="icon-btn cart-btn"
-              aria-label="View cart"
-              onclick="window.location.href='./pages/cart.html'">
-        <span class="cart-icon">
-          <svg width="22" height="22" stroke="currentColor" fill="none" stroke-width="2">
-            <circle cx="9" cy="19" r="1"></circle>
-            <circle cx="17" cy="19" r="1"></circle>
-            <path d="M1 1h3l3 12h12l3-9H6"></path>
-          </svg>
-        </span>
-        <span id="cartCount" class="cart-badge">0</span>
-      </button>
-
       <!-- My Notes (visible only when logged in) -->
       <a href="./pages/mynotes.html"
          id="myNotesLink"
@@ -76,9 +61,9 @@
             Logout
           </button>
         </div>
-      </div> 
+      </div>
 
-      <!-- Mobile hamburger   -->
+      <!-- Mobile hamburger -->
       <button id="mobileToggle"
               class="hamburger"
               aria-label="Open menu"
@@ -94,22 +79,6 @@
   <!-- Mobile menu -->
   <div id="mobileMenu" class="mobile-menu" aria-hidden="true">
     <ul class="mobile-nav">
-
-      <li>
-        <button id="cartBtnMobile"
-                class="icon-btn cart-btn"
-                aria-label="View cart"
-                onclick="window.location.href='./pages/cart.html'">
-          <span class="cart-icon">
-            <svg width="22" height="22" stroke="currentColor" fill="none" stroke-width="2">
-              <circle cx="9" cy="19" r="1"></circle>
-              <circle cx="17" cy="19" r="1"></circle>
-              <path d="M1 1h3l3 12h12l3-9H6"></path>
-            </svg>
-          </span>
-          <span id="cartCountMobile" class="cart-badge">0</span>
-        </button>
-      </li>
 
       <!-- My Notes (mobile, only when logged in) -->
       <li id="myNotesItemMobile" style="display:none;">
