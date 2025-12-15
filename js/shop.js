@@ -1,6 +1,6 @@
 (function () {
   // =====================================================
-  // CONFIG — ONLY server.js is allowed
+  // CONFIG
   // =====================================================
   if (!window.SERVER_URL) {
     throw new Error("SERVER_URL not found. Load server.js before shop.js");
@@ -19,12 +19,14 @@
     );
 
   // =====================================================
-  // DOM REFS
+  // DOM
   // =====================================================
   const notesGrid = document.getElementById("notesGrid");
   const noteCardTemplate = document.getElementById("noteCardTemplate");
   const streamSelect = document.getElementById("streamSelect");
   const semesterSelect = document.getElementById("semesterSelect");
+  const shopSearch = document.getElementById("shopSearch");
+  const resetBtn = document.getElementById("resetFilters");
   const emptyMessage = document.getElementById("emptyMessage");
   const loadMoreBtn = document.getElementById("loadMoreBtn");
   const noMoreEl = document.getElementById("noMore");
@@ -47,21 +49,19 @@
   // HELPERS
   // =====================================================
   function buildUrl(path, params) {
-    const base = NOTES_BASE + path;
-    if (!params) return base;
-
     const usp = new URLSearchParams();
-    Object.entries(params).forEach(([k, v]) => {
+    Object.entries(params || {}).forEach(([k, v]) => {
       if (v !== undefined && v !== null && v !== "") usp.set(k, v);
     });
-
-    return usp.toString() ? `${base}?${usp}` : base;
+    return usp.toString()
+      ? `${NOTES_BASE}${path}?${usp}`
+      : `${NOTES_BASE}${path}`;
   }
 
   async function safeGet(url) {
-    const res = await fetch(url, { credentials: "same-origin" });
+    const res = await fetch(url);
     const txt = await res.text();
-    if (!res.ok) throw new Error(`HTTP ${res.status}: ${txt}`);
+    if (!res.ok) throw new Error(txt);
     return txt ? JSON.parse(txt) : {};
   }
 
@@ -78,7 +78,6 @@
     const count = cart.reduce((s, i) => s + (i.qty || 1), 0);
     const badge = document.getElementById("cartCount");
     const badgeMobile = document.getElementById("cartCountMobile");
-
     if (badge) badge.textContent = count;
     if (badgeMobile) badgeMobile.textContent = count;
   }
@@ -99,8 +98,10 @@
     const price = discountPrice || originalPrice || 0;
 
     let discountPercent = n.discountPercent || 0;
-    if (!discountPercent && originalPrice && discountPrice && discountPrice < originalPrice) {
-      discountPercent = Math.round(((originalPrice - discountPrice) / originalPrice) * 100);
+    if (!discountPercent && originalPrice && discountPrice < originalPrice) {
+      discountPercent = Math.round(
+        ((originalPrice - discountPrice) / originalPrice) * 100
+      );
     }
 
     return {
@@ -117,23 +118,34 @@
   }
 
   // =====================================================
-  // LOAD DEPARTMENTS
+  // LOAD DEPARTMENTS + SEMESTERS
   // =====================================================
   async function loadDepartments() {
-    try {
-      const list = await safeGet(buildUrl("/departments"));
-      while (streamSelect.options.length > 1) streamSelect.remove(1);
+    const list = await safeGet(`${NOTES_BASE}/departments`);
+    while (streamSelect.options.length > 1) streamSelect.remove(1);
 
-      list.forEach((d) => {
-        const opt = document.createElement("option");
-        opt.value = d._id || d.id;
-        opt.textContent = d.name;
-        opt.dataset.sems = JSON.stringify(d.semesters || []);
-        streamSelect.appendChild(opt);
-      });
-    } catch (e) {
-      console.error("Failed to load departments", e);
-    }
+    list.forEach((d) => {
+      const opt = document.createElement("option");
+      opt.value = d._id || d.id;
+      opt.textContent = d.name;
+      opt.dataset.sems = JSON.stringify(d.semesters || []);
+      streamSelect.appendChild(opt);
+    });
+  }
+
+  function populateSemesters(deptId) {
+    while (semesterSelect.options.length > 1) semesterSelect.remove(1);
+    if (!deptId) return;
+
+    const opt = streamSelect.querySelector(`option[value="${deptId}"]`);
+    if (!opt) return;
+
+    JSON.parse(opt.dataset.sems || "[]").forEach((s) => {
+      const o = document.createElement("option");
+      o.value = s;
+      o.textContent = s;
+      semesterSelect.appendChild(o);
+    });
   }
 
   // =====================================================
@@ -146,13 +158,9 @@
     try {
       const data = await safeGet(
         buildUrl("/search", {
-          departmentId: currentFilters.departmentId || undefined,
-          semester: currentFilters.semester || undefined,
-          q: currentFilters.q || undefined,
+          ...currentFilters,
           page: currentPage,
           limit: PAGE_SIZE,
-          sortBy: "createdAt",
-          sortDir: "desc",
         })
       );
 
@@ -167,10 +175,14 @@
       results.forEach(renderNoteCard);
 
       totalResults = data.total || currentNotes.length;
+
       emptyMessage.style.display = currentNotes.length ? "none" : "block";
-      loadMoreBtn.style.display = currentNotes.length < totalResults ? "inline-block" : "none";
+      loadMoreBtn.style.display =
+        currentNotes.length < totalResults ? "inline-block" : "none";
       noMoreEl.style.display =
-        currentNotes.length >= totalResults && totalResults > 0 ? "block" : "none";
+        currentNotes.length >= totalResults && totalResults > 0
+          ? "block"
+          : "none";
     } catch (e) {
       console.error(e);
       notesGrid.innerHTML = `<div class="empty">Failed to load notes.</div>`;
@@ -180,26 +192,24 @@
   }
 
   // =====================================================
-  // RENDER NOTE CARD
+  // RENDER CARD
   // =====================================================
   function renderNoteCard(note) {
     const tpl = noteCardTemplate.content.cloneNode(true);
 
+    tpl.querySelector(".card-title").textContent = note.title;
+    tpl.querySelector(".card-subtitle").textContent =
+      `${note.dept}${note.sem ? " · Sem " + note.sem : ""}`;
+
     const img = tpl.querySelector(".card-image");
-    const title = tpl.querySelector(".card-title");
-    const subtitle = tpl.querySelector(".card-subtitle");
-    const original = tpl.querySelector(".original-price");
-    const discounted = tpl.querySelector(".discounted-price");
-    const badge = tpl.querySelector(".discount-badge");
-    const previewBtn = tpl.querySelector(".preview-btn");
-
-    title.textContent = note.title;
-    subtitle.textContent = `${note.dept}${note.sem ? " · Sem " + note.sem : ""}`;
-
     img.src = note.coverImage || PLACEHOLDER_IMG;
     img.onerror = () => (img.src = PLACEHOLDER_SVG);
 
-    if (note.discountPercent > 0) {
+    const original = tpl.querySelector(".original-price");
+    const discounted = tpl.querySelector(".discounted-price");
+    const badge = tpl.querySelector(".discount-badge");
+
+    if (note.discountPercent) {
       original.textContent = `₹${formatPrice(note.originalPrice)}`;
       original.style.textDecoration = "line-through";
       discounted.textContent = `₹${formatPrice(note.price)}`;
@@ -211,78 +221,100 @@
       badge.style.display = "none";
     }
 
-    if (note.previewLink) {
-      previewBtn.onclick = () => window.open(note.previewLink, "_blank");
-    } else {
-      previewBtn.disabled = true;
-      previewBtn.textContent = "No preview";
-    }
+    const previewBtn = tpl.querySelector(".preview-btn");
+    if (note.previewLink) previewBtn.onclick = () => window.open(note.previewLink);
+    else previewBtn.disabled = true;
 
     notesGrid.appendChild(tpl);
   }
 
   // =====================================================
-  // INIT
+  // EVENTS
   // =====================================================
   document.addEventListener("DOMContentLoaded", async () => {
     await loadDepartments();
     fetchNotes();
     updateCartCount();
+
+    streamSelect.onchange = () => {
+      currentFilters.departmentId = streamSelect.value;
+      currentFilters.semester = "";
+      populateSemesters(streamSelect.value);
+      currentPage = 1;
+      fetchNotes();
+    };
+
+    semesterSelect.onchange = () => {
+      currentFilters.semester = semesterSelect.value;
+      currentPage = 1;
+      fetchNotes();
+    };
+
+    let t;
+    shopSearch.oninput = (e) => {
+      clearTimeout(t);
+      t = setTimeout(() => {
+        currentFilters.q = e.target.value.trim();
+        currentPage = 1;
+        fetchNotes();
+      }, 400);
+    };
+
+    resetBtn.onclick = () => {
+      streamSelect.value = "";
+      semesterSelect.value = "";
+      shopSearch.value = "";
+      currentFilters = { departmentId: "", semester: "", q: "" };
+      populateSemesters("");
+      currentPage = 1;
+      fetchNotes();
+    };
+
+    loadMoreBtn.onclick = () => {
+      currentPage++;
+      fetchNotes({ append: true });
+    };
   });
 
   // =====================================================
   // BUY NOW
   // =====================================================
   document.addEventListener("click", (e) => {
-    const btn = e.target.closest("button.buy-now");
+    const btn = e.target.closest(".buy-now");
     if (!btn) return;
 
     const card = btn.closest(".note-card");
-    if (!card) return;
-
-    const title = card.querySelector(".card-title")?.textContent?.trim();
-    const priceText =
-      card.querySelector(".discounted-price")?.textContent ||
-      card.querySelector(".original-price")?.textContent ||
-      "₹0";
-
-    const price = Number(priceText.replace(/[^\d.]/g, ""));
-
-    if (!title || !price) return alert("Unable to process Buy Now.");
+    const title = card.querySelector(".card-title").textContent;
+    const price = Number(
+      (card.querySelector(".discounted-price")?.textContent ||
+        card.querySelector(".original-price").textContent).replace(/[^\d.]/g, "")
+    );
 
     localStorage.setItem(
       "gonotes_buynow",
-      JSON.stringify({ title, price, qty: 1, ts: Date.now() })
+      JSON.stringify({ title, price, qty: 1 })
     );
 
     window.location.href = "/pages/buynow.html";
   });
 
   // =====================================================
-  // ADD TO CART  ✅ FIX
+  // ADD TO CART
   // =====================================================
   document.addEventListener("click", (e) => {
-    const btn = e.target.closest("button.add-to-cart");
+    const btn = e.target.closest(".add-to-cart");
     if (!btn) return;
 
     const card = btn.closest(".note-card");
-    if (!card) return;
+    const title = card.querySelector(".card-title").textContent;
+    const price = Number(
+      (card.querySelector(".discounted-price")?.textContent ||
+        card.querySelector(".original-price").textContent).replace(/[^\d.]/g, "")
+    );
 
-    const title = card.querySelector(".card-title")?.textContent?.trim();
-    const priceText =
-      card.querySelector(".discounted-price")?.textContent ||
-      card.querySelector(".original-price")?.textContent ||
-      "₹0";
-
-    const price = Number(priceText.replace(/[^\d.]/g, ""));
-    if (!title || !price) return alert("Unable to add to cart.");
-
-    let cart = [];
-    try {
-      cart = JSON.parse(localStorage.getItem("gonotes_cart")) || [];
-    } catch {}
-
+    let cart = JSON.parse(localStorage.getItem("gonotes_cart")) || [];
     const found = cart.find((i) => i.title === title);
+
     if (found) found.qty += 1;
     else cart.push({ title, price, qty: 1 });
 
@@ -294,6 +326,6 @@
     setTimeout(() => {
       btn.textContent = "Add to cart";
       btn.disabled = false;
-    }, 1000);
+    }, 900);
   });
 })();
