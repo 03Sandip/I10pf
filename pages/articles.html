@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Articles | GoNotes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- ================= GLOBAL STYLES ================= -->
+  <link rel="stylesheet" href="../css/styles.css" />
+  <link rel="stylesheet" href="../css/pages/header.css" />
+
+  <!-- ================= ARTICLES PAGE ================= -->
+  <link rel="stylesheet" href="../css/pages/articles-client.css" />
+</head>
+<body>
+
+  <!-- ================= HEADER ================= -->
+  <div id="header" aria-hidden="true"></div>
+
+  <!-- ================= MAIN ================= -->
+  <main class="articles-page" role="main">
+
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="articles-sidebar" aria-label="Articles list">
+      <h3 class="sidebar-title">Articles</h3>
+
+      <ul id="articlesList" class="articles-list">
+        <li class="muted">Loading articles…</li>
+      </ul>
+    </aside>
+
+    <!-- ===== ARTICLE CONTENT ===== -->
+    <section class="article-reader">
+
+      <!-- Empty / loading state -->
+      <div id="articleLoading" class="muted article-loading">
+        Select an article to read
+      </div>
+
+      <!-- Actual article -->
+      <article
+        id="articleView"
+        class="article-view hidden"
+        aria-live="polite"
+      >
+        <h1 id="articleTitle" class="article-title"></h1>
+
+        <div class="article-meta">
+          <time id="articleDate"></time>
+        </div>
+
+        <div
+          id="articleContent"
+          class="article-content"
+        ></div>
+      </article>
+
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <div id="footer" aria-hidden="true"></div>
+
+  <!-- ================= SCRIPTS ================= -->
+  <!-- IMPORTANT: server.js MUST load before articles-client.js -->
+  <script src="../js/server.js"></script>
+  <script src="../js/loadPartials.js"></script>
+  <script src="../js/articles-client.js"></script>
+
+</body>
+</html>
