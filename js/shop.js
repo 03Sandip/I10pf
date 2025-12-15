@@ -44,7 +44,17 @@
   let totalResults = 0;
   let isLoading = false;
   let currentNotes = [];
-  let cart = loadCartFromStorage();
+  function loadCartFromStorage() {
+  try {
+    const raw = localStorage.getItem('gonotes_cart');
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (e) {
+    console.warn('Failed loading cart from storage', e);
+    return [];
+  }
+}
 
   let currentFilters = {
     departmentId: '',
