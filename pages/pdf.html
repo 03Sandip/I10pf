@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gonotes — PDF Tools</title>
+
+  <!-- global + header + page styles -->
+  <link rel="stylesheet" href="../css/styles.css" />
+  <link rel="stylesheet" href="../css/pages/header.css" />
+  <link rel="stylesheet" href="../css/pages/pdf-tools.css" />
+
+  <!-- pdf-lib (required) -->
+  <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+
+  <style>
+    .pdf-tools-container { background:#f7f7fb; padding-bottom:60px; }
+    .pdf-tools-header { text-align:center; padding:40px 20px 20px; }
+    .pdf-tools-header h1 { font-size:32px; margin-bottom:10px; }
+    .pdf-tools-header p { max-width:900px; margin:auto; color:#666; }
+
+    .pdf-tools-grid {
+      max-width:1200px;
+      margin:auto;
+      padding:0 20px;
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+      gap:20px;
+    }
+
+    .pdf-card {
+      background:#fff;
+      border-radius:14px;
+      padding:20px;
+      border:1px solid #e5e7eb;
+      cursor:pointer;
+      transition:.2s;
+    }
+
+    .pdf-card:hover {
+      transform:translateY(-4px);
+      box-shadow:0 10px 25px rgba(0,0,0,.08);
+    }
+
+    .pdf-icon {
+      width:48px;height:48px;border-radius:10px;
+      display:flex;align-items:center;justify-content:center;
+      color:#fff;font-weight:bold;margin-bottom:15px;
+    }
+
+    .merge{background:#fb6a4a}
+    .split{background:#f97316}
+    .compress{background:#22c55e}
+    .word{background:#3b82f6}
+    .ppt{background:#f59e0b}
+    .excel{background:#16a34a}
+
+    #tool-workspace {
+      display:none;
+      max-width:900px;
+      margin:40px auto;
+      background:#fff;
+      padding:30px;
+      border-radius:14px;
+      border:1px solid #e5e7eb;
+    }
+
+    .tool-panel { display:none; }
+
+    button {
+      padding:12px 20px;
+      border:none;
+      border-radius:8px;
+      background:#111827;
+      color:#fff;
+      cursor:pointer;
+    }
+
+    .back-btn {
+      background:none;
+      color:#111827;
+      border:1px solid #ddd;
+      margin-bottom:20px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="header"></div>
+
+<main class="pdf-tools-container">
+
+  <section class="pdf-tools-header">
+    <h1>Every tool you need to work with PDFs in one place</h1>
+    <p>Merge, split, compress, convert, edit PDFs easily.</p>
+  </section>
+
+  <!-- GRID -->
+  <section class="pdf-tools-grid" id="toolsGrid">
+    <div class="pdf-card" onclick="openTool('merge')">
+      <div class="pdf-icon merge">↔</div>
+      <h3>Merge PDF</h3><p>Combine PDFs in order.</p>
+    </div>
+
+    <div class="pdf-card" onclick="openTool('split')">
+      <div class="pdf-icon split">⇄</div>
+      <h3>Split PDF</h3><p>Split pages.</p>
+    </div>
+
+    <div class="pdf-card" onclick="openTool('compress')">
+      <div class="pdf-icon compress">⤢</div>
+      <h3>Compress PDF</h3><p>Reduce size.</p>
+    </div>
+
+    <div class="pdf-card" onclick="openTool('coming')">
+      <div class="pdf-icon word">W</div>
+      <h3>PDF to Word</h3><p>Convert PDF to Word.</p>
+    </div>
+
+    <div class="pdf-card" onclick="openTool('coming')">
+      <div class="pdf-icon ppt">P</div>
+      <h3>PDF to PowerPoint</h3><p>Convert PDF to PPT.</p>
+    </div>
+
+    <div class="pdf-card" onclick="openTool('coming')">
+      <div class="pdf-icon excel">X</div>
+      <h3>PDF to Excel</h3><p>Convert PDF to Excel.</p>
+    </div>
+  </section>
+
+  <!-- WORKSPACE -->
+  <section id="tool-workspace">
+    <button class="back-btn" onclick="backToGrid()">← Back to all tools</button>
+
+    <div id="tool-merge" class="tool-panel">
+      <h2>Merge PDF</h2>
+      <input type="file" id="mergeFiles" multiple accept="application/pdf"><br><br>
+      <button onclick="mergePDF()">Merge PDFs</button>
+    </div>
+
+    <div id="tool-split" class="tool-panel">
+      <h2>Split PDF</h2>
+      <input type="file" id="splitFile" accept="application/pdf"><br><br>
+      <button onclick="splitPDF()">Split PDF</button>
+    </div>
+
+    <div id="tool-compress" class="tool-panel">
+      <h2>Compress PDF</h2>
+      <input type="file" id="compressFile" accept="application/pdf"><br><br>
+      <button onclick="compressPDF()">Compress PDF</button>
+
+      <div id="compressResult" style="display:none;margin-top:20px;">
+        <p><strong>Original size:</strong> <span id="originalSize"></span></p>
+        <p><strong>Compressed size:</strong> <span id="compressedSize"></span></p>
+      </div>
+    </div>
+
+    <div id="tool-coming" class="tool-panel">
+      <h2>Coming Soon</h2>
+      <p>This tool will be available shortly.</p>
+    </div>
+  </section>
+
+</main>
+
+<div id="footer"></div>
+
+<script src="../js/loadPartials.js" defer></script>
+<script src="../js/components.js" defer></script>
+
+<!-- PDF TOOLS LOGIC -->
+<script src="../js/pdf-tools.js"></script>
+
+</body>
+</html>

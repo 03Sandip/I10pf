@@ -213,8 +213,10 @@ window.addEventListener("DOMContentLoaded", () => {
     ["quote", "quote.html"],
     ["offers", "offers.html"],
     ["newsletter", "newsletter.html"],
+    ["tools", "pdf.html"],
     ["articles", "articles.html"],
     ["footer", "footer.html"],
+    
   ].forEach(([id, file]) => loadPartial(id, file));
 });
 
