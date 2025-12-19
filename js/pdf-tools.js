@@ -1,79 +1,301 @@
-// document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
 
-//   const grid = document.getElementById("toolsGrid");
-//   const workspace = document.getElementById("tool-workspace");
+  /* =============================
+     CONFIG
+  ============================= */
+  const API = window.SERVER_URL + "/api/pdf";
+  const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50 MB
 
-//   window.openTool = function (name) {
-//     grid.style.display = "none";
-//     workspace.style.display = "block";
+  const grid = document.getElementById("toolsGrid");
+  const workspace = document.getElementById("tool-workspace");
 
-//     document.querySelectorAll(".tool-panel").forEach(p => p.style.display = "none");
-//     document.getElementById("tool-" + name).style.display = "block";
-//   };
+  /* =============================
+     UI NAVIGATION
+  ============================= */
+  window.openTool = function (name) {
+    grid.style.display = "none";
+    workspace.style.display = "block";
 
-//   window.backToGrid = function () {
-//     workspace.style.display = "none";
-//     grid.style.display = "grid";
-//   };
+    document.querySelectorAll(".tool-panel")
+      .forEach(p => p.style.display = "none");
 
-//   window.mergePDF = async function () {
-//     const files = document.getElementById("mergeFiles").files;
-//     if (files.length < 2) return alert("Select at least 2 PDFs");
+    document.getElementById("tool-" + name).style.display = "block";
+  };
 
-//     const merged = await PDFLib.PDFDocument.create();
+  window.backToGrid = function () {
+    workspace.style.display = "none";
+    grid.style.display = "grid";
+  };
 
-//     for (const f of files) {
-//       const pdf = await PDFLib.PDFDocument.load(await f.arrayBuffer());
-//       const pages = await merged.copyPages(pdf, pdf.getPageIndices());
-//       pages.forEach(p => merged.addPage(p));
-//     }
+  /* =============================
+     FILE SIZE DISPLAY + WARNING
+  ============================= */
+  const compressInput = document.getElementById("compressFile");
+  const fileSizeText = document.getElementById("fileSizeText");
+  const fileSizeWarning = document.getElementById("fileSizeWarning");
 
-//     download(await merged.save(), "merged.pdf");
-//   };
+  if (compressInput) {
+    compressInput.addEventListener("change", () => {
+      const file = compressInput.files[0];
+      if (!file) return;
 
-//   window.splitPDF = async function () {
-//     const file = document.getElementById("splitFile").files[0];
-//     if (!file) return alert("Select a PDF");
+      fileSizeText.innerText =
+        `Selected file size: ${formatBytes(file.size)}`;
 
-//     const pdf = await PDFLib.PDFDocument.load(await file.arrayBuffer());
+      fileSizeWarning.style.display =
+        file.size > MAX_FILE_SIZE ? "block" : "none";
+    });
+  }
 
-//     for (let i = 0; i < pdf.getPageCount(); i++) {
-//       const newPdf = await PDFLib.PDFDocument.create();
-//       const [page] = await newPdf.copyPages(pdf, [i]);
-//       newPdf.addPage(page);
-//       download(await newPdf.save(), `page-${i + 1}.pdf`);
-//     }
-//   };
+  /* =============================
+     PDF THUMBNAIL RENDERING
+  ============================= */
+  async function renderPDFThumbnails(file, container) {
+    container.innerHTML = "";
 
-//   window.compressPDF = async function () {
-//     const file = document.getElementById("compressFile").files[0];
-//     if (!file) return alert("Select a PDF");
+    const reader = new FileReader();
+    reader.onload = async () => {
+      const pdf = await pdfjsLib.getDocument({
+        data: new Uint8Array(reader.result)
+      }).promise;
 
-//     const originalSize = file.size;
+      for (let i = 1; i <= pdf.numPages; i++) {
+        const page = await pdf.getPage(i);
+        const viewport = page.getViewport({ scale: 0.4 });
 
-//     const pdf = await PDFLib.PDFDocument.load(await file.arrayBuffer());
-//     const compressedBytes = await pdf.save({ useObjectStreams: false });
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
 
-//     document.getElementById("compressResult").style.display = "block";
-//     document.getElementById("originalSize").innerText = formatBytes(originalSize);
-//     document.getElementById("compressedSize").innerText = formatBytes(compressedBytes.byteLength);
+        await page.render({ canvasContext: ctx, viewport }).promise;
 
-//     download(compressedBytes, "compressed.pdf");
-//   };
+        const thumb = document.createElement("div");
+        thumb.className = "pdf-thumb";
+        thumb.innerHTML = `<span>Page ${i}</span>`;
+        thumb.prepend(canvas);
 
-//   function download(bytes, filename) {
-//     const blob = new Blob([bytes], { type: "application/pdf" });
-//     const a = document.createElement("a");
-//     a.href = URL.createObjectURL(blob);
-//     a.download = filename;
-//     a.click();
-//   }
+        thumb.onclick = () => thumb.classList.toggle("selected");
 
-//   function formatBytes(bytes) {
-//     const sizes = ["Bytes", "KB", "MB"];
-//     if (bytes === 0) return "0 Bytes";
-//     const i = Math.floor(Math.log(bytes) / Math.log(1024));
-//     return (bytes / Math.pow(1024, i)).toFixed(2) + " " + sizes[i];
-//   }
+        container.appendChild(thumb);
+      }
+    };
+    reader.readAsArrayBuffer(file);
+  }
 
-// });
+  /* =============================
+     MERGE PDF – THUMBNAILS
+  ============================= */
+  const mergeInput = document.getElementById("mergeFiles");
+  const mergeThumbs = document.getElementById("mergeThumbs");
+
+  if (mergeInput) {
+    mergeInput.addEventListener("change", async () => {
+      mergeThumbs.innerHTML = "";
+
+      for (const file of mergeInput.files) {
+        const title = document.createElement("h4");
+        title.innerText = file.name;
+        title.style.fontSize = "14px";
+        mergeThumbs.appendChild(title);
+
+        await renderPDFThumbnails(file, mergeThumbs);
+      }
+    });
+  }
+
+  /* =============================
+     MERGE PDF – SERVER + PROGRESS
+  ============================= */
+  window.mergePDF = function () {
+    const files = mergeInput.files;
+    if (files.length < 2) {
+      alert("Select at least 2 PDF files");
+      return;
+    }
+
+    const form = new FormData();
+    [...files].forEach(f => form.append("files", f));
+
+    const wrap = document.querySelector("#tool-merge .progress-wrapper");
+    const bar = wrap.querySelector(".progress-bar");
+    const text = wrap.querySelector(".progress-text");
+
+    wrap.style.display = "block";
+    bar.style.width = "0%";
+    text.innerText = "Uploading…";
+
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", `${API}/merge`);
+    xhr.responseType = "blob";
+
+    xhr.upload.onprogress = e => {
+      if (e.lengthComputable) {
+        bar.style.width = Math.round(e.loaded / e.total * 100) + "%";
+      }
+    };
+
+    xhr.onload = () => {
+      if (xhr.status !== 200) {
+        alert("Merge failed");
+        wrap.style.display = "none";
+        return;
+      }
+      download(xhr.response, "merged.pdf");
+      wrap.style.display = "none";
+    };
+
+    xhr.send(form);
+  };
+
+  /* =============================
+     SPLIT PDF – THUMBNAILS
+  ============================= */
+  const splitInput = document.getElementById("splitFile");
+  const splitThumbs = document.getElementById("splitThumbs");
+
+  if (splitInput) {
+    splitInput.addEventListener("change", () => {
+      renderPDFThumbnails(splitInput.files[0], splitThumbs);
+    });
+  }
+
+  /* =============================
+     SPLIT PDF – SERVER + RANGE
+  ============================= */
+  window.splitPDF = function () {
+    const file = splitInput.files[0];
+    if (!file) {
+      alert("Select a PDF file");
+      return;
+    }
+
+    const range = document.getElementById("splitRange").value;
+
+    const form = new FormData();
+    form.append("file", file);
+    form.append("range", range);
+
+    const wrap = document.querySelector("#tool-split .progress-wrapper");
+    const bar = wrap.querySelector(".progress-bar");
+    const text = wrap.querySelector(".progress-text");
+
+    wrap.style.display = "block";
+    bar.style.width = "0%";
+    text.innerText = "Uploading…";
+
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", `${API}/split`);
+    xhr.responseType = "blob";
+
+    xhr.upload.onprogress = e => {
+      if (e.lengthComputable) {
+        bar.style.width = Math.round(e.loaded / e.total * 100) + "%";
+      }
+    };
+
+    xhr.onload = () => {
+      if (xhr.status !== 200) {
+        alert("Split failed");
+        wrap.style.display = "none";
+        return;
+      }
+      download(xhr.response, "split.pdf");
+      wrap.style.display = "none";
+    };
+
+    xhr.send(form);
+  };
+
+  /* =============================
+     COMPRESS PDF – SERVER + PROGRESS
+  ============================= */
+  window.compressPDF = function () {
+    const file = compressInput.files[0];
+    if (!file) {
+      alert("Select a PDF file");
+      return;
+    }
+
+    if (file.size > MAX_FILE_SIZE) {
+      alert("File size exceeds 50 MB limit");
+      return;
+    }
+
+    const form = new FormData();
+    form.append("file", file);
+    form.append("level",
+      document.getElementById("compressLevel").value);
+    form.append("targetSize",
+      document.getElementById("targetSize").value);
+
+    document.getElementById("originalSize").innerText =
+      formatBytes(file.size);
+
+    const wrapper = document.getElementById("progressWrapper");
+    const bar = document.getElementById("progressBar");
+    const text = document.getElementById("progressText");
+
+    wrapper.style.display = "block";
+    bar.style.width = "0%";
+    text.innerText = "Uploading…";
+
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", `${API}/compress`);
+    xhr.responseType = "blob";
+
+    xhr.upload.onprogress = e => {
+      if (e.lengthComputable) {
+        const percent = Math.round(e.loaded / e.total * 100);
+        bar.style.width = percent + "%";
+        text.innerText = `Uploading… ${percent}%`;
+      }
+    };
+
+    xhr.onload = () => {
+      if (xhr.status !== 200) {
+        alert("Compression failed");
+        wrapper.style.display = "none";
+        return;
+      }
+
+      bar.style.width = "100%";
+      text.innerText = "Done";
+
+      const blob = xhr.response;
+      document.getElementById("compressResult").style.display = "block";
+      document.getElementById("compressedSize").innerText =
+        formatBytes(blob.size);
+
+      download(blob, "compressed.pdf");
+
+      setTimeout(() => {
+        wrapper.style.display = "none";
+      }, 1000);
+    };
+
+    xhr.send(form);
+  };
+
+  /* =============================
+     HELPERS
+  ============================= */
+  function download(blob, filename) {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  function formatBytes(bytes) {
+    if (!bytes) return "0 Bytes";
+    const sizes = ["Bytes", "KB", "MB"];
+    const i = Math.floor(Math.log(bytes) / Math.log(1024));
+    return (bytes / Math.pow(1024, i)).toFixed(2) + " " + sizes[i];
+  }
+
+});

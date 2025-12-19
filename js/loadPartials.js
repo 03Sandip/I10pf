@@ -98,21 +98,31 @@ async function loadPartial(targetId, fileName) {
     const scriptsToHandle = [];
 
     Array.from(parsed.body.childNodes).forEach((node) => {
+
       // ------------------------
-      // Stylesheets
+      // Stylesheets (LINK + STYLE) ✅ FIX
       // ------------------------
-      if (
-        node.nodeType === 1 &&
-        node.tagName.toLowerCase() === "link" &&
-        (node.getAttribute("rel") || "").toLowerCase() === "stylesheet"
-      ) {
-        const href = node.getAttribute("href");
-        if (href) {
-          injectStylesheetHref(
-            shouldPrefixPath(href) ? assetPrefix + href : href
-          );
+      if (node.nodeType === 1) {
+        const tag = node.tagName.toLowerCase();
+
+        // <link rel="stylesheet">
+        if (tag === "link" && (node.getAttribute("rel") || "").toLowerCase() === "stylesheet") {
+          const href = node.getAttribute("href");
+          if (href) {
+            injectStylesheetHref(
+              shouldPrefixPath(href) ? assetPrefix + href : href
+            );
+          }
+          return;
         }
-        return;
+
+        // ✅ <style> blocks (REQUIRED for footer card)
+        if (tag === "style") {
+          const style = document.createElement("style");
+          style.textContent = node.textContent || "";
+          document.head.appendChild(style);
+          return;
+        }
       }
 
       // ------------------------
@@ -148,17 +158,11 @@ async function loadPartial(targetId, fileName) {
           const h = a.getAttribute("href");
           if (!h) return;
 
-          // Absolute paths are sacred
-          if (
-            h.startsWith("/") ||
-            h.startsWith("#") ||
-            h.startsWith("http")
-          ) {
+          if (h.startsWith("/") || h.startsWith("#") || h.startsWith("http")) {
             a.href = h;
             return;
           }
 
-          // Keep relative page links untouched
           a.href = h;
         });
       }
@@ -216,7 +220,6 @@ window.addEventListener("DOMContentLoaded", () => {
     ["tools", "pdf.html"],
     ["articles", "articles.html"],
     ["footer", "footer.html"],
-    
   ].forEach(([id, file]) => loadPartial(id, file));
 });
 

@@ -5,89 +5,348 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Gonotes — Question Papers</title>
 
-    <!-- Google AdSense -->
-  <script async
-    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5527929468197396"
-    crossorigin="anonymous">
-  </script>
-
-  <!-- global + header + page styles -->
+  <!-- Existing styles -->
   <link rel="stylesheet" href="../css/styles.css" />
   <link rel="stylesheet" href="../css/pages/header.css" />
   <link rel="stylesheet" href="../css/pages/qp.css" />
+
+  <style>
+    :root{
+      --accent:#f4b400;
+      --sidebar-dark:#0f0f0f;
+      --sidebar-mid:#1b1b1b;
+      --card-bg:#f3d3c8;
+      --table-head:#e1b2a6;
+    }
+
+    html{ scroll-behavior:smooth; }
+
+    html, body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+      background:#f6f6f4;
+      overflow-x:hidden;
+    }
+
+    /* ===== HEADER ===== */
+    #header{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      background:#fff;
+      border-bottom:1px solid #eee;
+    }
+
+    /* ===== PAGE WRAPPER ===== */
+    .page-wrapper{
+      display:flex;
+      align-items:flex-start;
+    }
+
+    /* ===== SIDEBAR ===== */
+    .sidebar-container{
+      width:260px;
+      position:sticky;
+      top:64px;
+      height:calc(100vh - 64px);
+      background:linear-gradient(180deg,var(--sidebar-mid),var(--sidebar-dark));
+      box-shadow:4px 0 12px rgba(0,0,0,.25);
+    }
+
+    .qp-sidebar{
+      color:#fff;
+      padding:24px 14px;
+      height:100%;
+      overflow-y:auto;
+    }
+
+    .qp-sidebar h3{
+      margin:0 0 20px;
+      font-size:15px;
+      letter-spacing:.5px;
+      opacity:.85;
+    }
+
+    .qp-sidebar ul{
+      list-style:none;
+      padding:0;
+      margin:0;
+    }
+
+    .qp-sidebar li{
+      padding:12px 14px 12px 18px;
+      margin-bottom:6px;
+      cursor:pointer;
+      border-radius:8px;
+      font-size:14px;
+      transition:.25s ease;
+      position:relative;
+    }
+
+    .qp-sidebar li::before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:8px;
+      bottom:8px;
+      width:4px;
+      background:transparent;
+      border-radius:4px;
+      transition:.25s;
+    }
+
+    .qp-sidebar li:hover{
+      background:rgba(255,255,255,.08);
+    }
+
+    .qp-sidebar li.active{
+      background:rgba(244,180,0,.18);
+      font-weight:600;
+    }
+
+    .qp-sidebar li.active::before{
+      background:var(--accent);
+    }
+
+    /* ===== CONTENT ===== */
+    .content-wrapper{
+      flex:1;
+      padding:32px;
+    }
+
+    .qp-container{
+      margin-bottom:60px;
+    }
+
+    .qp-department{
+      background:var(--card-bg);
+      padding:24px;
+      margin-bottom:42px;
+      border-radius:16px;
+      box-shadow:0 8px 22px rgba(0,0,0,.08);
+      border-left:6px solid transparent;
+      scroll-margin-top:90px;
+    }
+
+    .qp-department.active{
+      border-left-color:var(--accent);
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      background:#fff;
+      border-radius:12px;
+    }
+
+    th,td{
+      border:1px solid #ddd;
+      padding:14px 10px;
+      text-align:center;
+      font-size:14px;
+    }
+
+    th{
+      background:var(--table-head);
+      font-weight:600;
+    }
+
+    .year-link{
+      display:inline-block;
+      padding:7px 14px;
+      margin:6px 4px;
+      border-radius:999px;
+      background:#fff;
+      border:1px solid #d6d6d6;
+      color:#1a73e8;
+      text-decoration:none;
+      transition:.2s ease;
+    }
+
+    .year-link:hover{
+      background:#1a73e8;
+      color:#fff;
+    }
+
+    /* ===== FAQ ===== */
+    .faq-section{
+      max-width:900px;
+      margin:0 auto 60px;
+    }
+
+    .faq-item{
+      background:#fff;
+      border:1px solid #ddd;
+      border-radius:12px;
+      margin-bottom:12px;
+      overflow:hidden;
+    }
+
+    .faq-question{
+      padding:16px 18px;
+      cursor:pointer;
+      font-weight:600;
+    }
+
+    .faq-answer{
+      max-height:0;
+      overflow:hidden;
+      padding:0 18px;
+      transition:max-height .3s ease;
+    }
+
+    .faq-item.active .faq-answer{
+      max-height:200px;
+      padding-bottom:16px;
+    }
+
+    /* ===== MOBILE ===== */
+    .sidebar-toggle{
+      display:none;
+      position:fixed;
+      top:74px;
+      left:16px;
+      z-index:1200;
+      background:#111;
+      color:#fff;
+      border:none;
+      border-radius:8px;
+      padding:10px 14px;
+      font-size:18px;
+      cursor:pointer;
+    }
+
+    @media(max-width:900px){
+      .sidebar-toggle{ display:block; }
+
+      .sidebar-container{
+        position:fixed;
+        left:0;
+        transform:translateX(-100%);
+        z-index:1100;
+        transition:.3s;
+      }
+
+      .sidebar-container.open{
+        transform:translateX(0);
+      }
+
+      .page-wrapper{ flex-direction:column; }
+      .content-wrapper{ padding:20px; }
+    }
+  </style>
 </head>
+
 <body>
 
-  <!-- header partial (same as shop) -->
-  <div id="header" aria-hidden="true"></div>
+<div id="header"></div>
 
-  <!-- MAIN -->
-  <main class="qp-container">
-    <section class="qp-page-header">
-      <h1>All Question Papers</h1>
-      <p>Browse previous year question papers by stream, semester and exam year.</p>
-    </section>
+<button class="sidebar-toggle">☰</button>
 
-    <!-- FILTERS -->
-    <section class="qp-filters">
-      <div class="qp-filter-group">
-        <span class="qp-filter-label">Stream</span>
-        <select class="qp-filter-select" name="stream" id="qp-stream">
-          <option>All Streams</option>
-          <option>CSE</option>
-          <option>IT</option>
-          <option>ECE</option>
-        </select>
+<div class="page-wrapper">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar-container">
+    <aside class="qp-sidebar">
+      <h3>Departments</h3>
+      <ul id="qpDeptList"></ul>
+    </aside>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content-wrapper">
+    <main class="qp-container">
+      <section class="qp-page-header">
+        <h1>All Question Papers</h1>
+        <p>Browse previous year question papers by stream, semester and exam year.</p>
+      </section>
+
+      <div id="qpContent"></div>
+    </main>
+
+    <!-- FAQ -->
+    <section class="faq-section">
+      <h2>Frequently Asked Questions</h2>
+
+      <div class="faq-item">
+        <div class="faq-question">Are these question papers official?</div>
+        <div class="faq-answer">
+          <p>Yes, all papers are collected from official university and college sources.</p>
+        </div>
       </div>
 
-      <div class="qp-filter-group">
-        <span class="qp-filter-label">Semester</span>
-        <select class="qp-filter-select" name="semester" id="qp-semester">
-          <option>All Semesters</option>
-          <option>Sem 1</option>
-          <option>Sem 2</option>
-          <option>Sem 3</option>
-          <option>Sem 4</option>
-          <option>Sem 5</option>
-          <option>Sem 6</option>
-        </select>
+      <div class="faq-item">
+        <div class="faq-question">Can I download papers for free?</div>
+        <div class="faq-answer">
+          <p>Yes, all question papers on Gonotes are completely free.</p>
+        </div>
       </div>
-
-      <div class="qp-filter-group">
-        <span class="qp-filter-label">Year</span>
-        <select class="qp-filter-select" name="year" id="qp-year">
-          <option>All Years</option>
-          <option>2025</option>
-          <option>2024</option>
-          <option>2023</option>
-          <option>2022</option>
-        </select>
-      </div>
-
-      <input
-        class="qp-filter-input"
-        type="text"
-        name="q"
-        id="qp-search"
-        placeholder="Search subject, code or exam type..."
-      />
-
-      <button class="qp-reset-btn" type="button" id="qp-reset-btn">Reset</button>
     </section>
 
-    <!-- GRID (same as before) -->
-    <section class="qp-grid">
-      <!-- cards ... unchanged ... -->
-    </section>
-  </main>
+    <div id="footer"></div>
+  </div>
+</div>
 
-  <!-- footer if you want, same pattern -->
-  <div id="footer" aria-hidden="true"></div>
+<!-- Scripts -->
+<script src="js/server.js"></script>
+<script src="../js/loadPartials.js" defer></script>
+<script src="../js/components.js" defer></script>
+<script src="../js/data/qp-data.js"></script>
+<script src="../js/qp.js"></script>
 
-  <!-- scripts: SAME loaders as shop + qp-specific JS -->
-  <script src="js/server.js"></script>
-  <script src="../js/loadPartials.js" defer></script>
-  <script src="../js/components.js" defer></script>
-  <script src="../js/qp.js" defer></script>
+<script>
+  /* FAQ toggle */
+  document.querySelectorAll(".faq-question").forEach(q=>{
+    q.addEventListener("click",()=>q.parentElement.classList.toggle("active"));
+  });
+
+  /* Mobile sidebar toggle */
+  const toggleBtn = document.querySelector(".sidebar-toggle");
+  const sidebar = document.querySelector(".sidebar-container");
+
+  toggleBtn.addEventListener("click",()=>{
+    sidebar.classList.toggle("open");
+  });
+
+  document.addEventListener("click",e=>{
+    if(
+      window.innerWidth <= 900 &&
+      sidebar.classList.contains("open") &&
+      e.target.closest(".qp-sidebar li")
+    ){
+      sidebar.classList.remove("open");
+    }
+  });
+
+  /* ===== AUTO-HIGHLIGHT SIDEBAR ON SCROLL ===== */
+  document.addEventListener("DOMContentLoaded",()=>{
+    const sections = document.querySelectorAll(".qp-department");
+    const sidebarItems = document.querySelectorAll("#qpDeptList li");
+
+    const map = {};
+    sidebarItems.forEach(li => map[li.dataset.target] = li);
+
+    const observer = new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          sidebarItems.forEach(li=>li.classList.remove("active"));
+          sections.forEach(sec=>sec.classList.remove("active"));
+
+          const id = entry.target.id;
+          if(map[id]){
+            map[id].classList.add("active");
+            entry.target.classList.add("active");
+          }
+        }
+      });
+    },{
+      root:null,
+      rootMargin:"-120px 0px -60% 0px"
+    });
+
+    sections.forEach(sec=>observer.observe(sec));
+  });
+</script>
+
 </body>
 </html>

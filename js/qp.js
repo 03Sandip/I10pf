@@ -1,21 +1,59 @@
-// ../js/qp.js
-document.addEventListener("DOMContentLoaded", () => {
-  // Only QP filters logic – header is handled by loadPartials.js
+const deptList = document.getElementById("qpDeptList");
+const content = document.getElementById("qpContent");
 
-  const stream = document.getElementById("qp-stream");
-  const sem = document.getElementById("qp-semester");
-  const year = document.getElementById("qp-year");
-  const search = document.getElementById("qp-search");
-  const resetBtn = document.getElementById("qp-reset-btn");
+/* Render */
+qpDepartments.forEach(dep => {
 
-  if (!resetBtn) return;
+  /* Sidebar */
+  const li = document.createElement("li");
+  li.textContent = dep.short;
+  li.dataset.target = dep.id;
+  deptList.appendChild(li);
 
-  resetBtn.addEventListener("click", () => {
-    if (stream) stream.selectedIndex = 0;
-    if (sem) sem.selectedIndex = 0;
-    if (year) year.selectedIndex = 0;
-    if (search) search.value = "";
-  });
+  /* Section */
+  const section = document.createElement("section");
+  section.className = "qp-department";
+  section.id = dep.id;
 
-  // later we can add real filtering here if you want
+  section.innerHTML = `
+    <h2>${dep.title}</h2>
+    ${buildTable(dep.semesters)}
+  `;
+  content.appendChild(section);
 });
+
+/* Sidebar interaction */
+deptList.addEventListener("click", e => {
+  if (e.target.tagName !== "LI") return;
+
+  const id = e.target.dataset.target;
+
+  document.querySelectorAll(".qp-sidebar li").forEach(x => x.classList.remove("active"));
+  document.querySelectorAll(".qp-department").forEach(x => x.classList.remove("active"));
+
+  e.target.classList.add("active");
+  const section = document.getElementById(id);
+  section.classList.add("active");
+  section.scrollIntoView({ behavior: "smooth" });
+});
+
+/* Table builder */
+function buildTable(semesters) {
+  let html = `<table><tr>`;
+  for (let i = 1; i <= 8; i++) html += `<th>${i} SEM</th>`;
+  html += `</tr><tr>`;
+
+  for (let i = 1; i <= 8; i++) {
+    html += `<td>`;
+    if (semesters[i]) {
+      for (const year in semesters[i]) {
+        html += `<a class="year-link" href="${semesters[i][year]}" target="_blank">${year}</a>`;
+      }
+    } else {
+      html += `-`;
+    }
+    html += `</td>`;
+  }
+  html += `</tr></table>`;
+  return html;
+}

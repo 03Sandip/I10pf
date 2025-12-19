@@ -10,8 +10,8 @@
   <link rel="stylesheet" href="../css/pages/header.css" />
   <link rel="stylesheet" href="../css/pages/pdf-tools.css" />
 
-  <!-- pdf-lib (required) -->
-  <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+  <!-- PDF.js (for thumbnails) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 
   <style>
     .pdf-tools-container { background:#f7f7fb; padding-bottom:60px; }
@@ -51,9 +51,6 @@
     .merge{background:#fb6a4a}
     .split{background:#f97316}
     .compress{background:#22c55e}
-    .word{background:#3b82f6}
-    .ppt{background:#f59e0b}
-    .excel{background:#16a34a}
 
     #tool-workspace {
       display:none;
@@ -82,6 +79,31 @@
       border:1px solid #ddd;
       margin-bottom:20px;
     }
+
+    select, input {
+      padding:10px;
+      margin-top:8px;
+    }
+
+    /* Thumbnail styling */
+    .pdf-thumb {
+      width:120px;
+      border:1px solid #e5e7eb;
+      border-radius:10px;
+      padding:8px;
+      background:#fff;
+      text-align:center;
+      font-size:12px;
+    }
+
+    .pdf-thumb canvas {
+      width:100%;
+      border-radius:6px;
+    }
+
+    .pdf-thumb.selected {
+      border:2px solid #22c55e;
+    }
   </style>
 </head>
 
@@ -91,85 +113,133 @@
 
 <main class="pdf-tools-container">
 
+  <!-- HEADER -->
   <section class="pdf-tools-header">
     <h1>Every tool you need to work with PDFs in one place</h1>
-    <p>Merge, split, compress, convert, edit PDFs easily.</p>
+    <p>Merge, split, compress, and convert PDFs easily.</p>
   </section>
 
-  <!-- GRID -->
+  <!-- TOOLS GRID -->
   <section class="pdf-tools-grid" id="toolsGrid">
+
+    <div class="pdf-card" onclick="openTool('compress')">
+      <div class="pdf-icon compress">⤢</div>
+      <h3>Compress PDF</h3>
+      <p>Reduce file size.</p>
+    </div>
+
     <div class="pdf-card" onclick="openTool('merge')">
       <div class="pdf-icon merge">↔</div>
-      <h3>Merge PDF</h3><p>Combine PDFs in order.</p>
+      <h3>Merge PDF</h3>
+      <p>Combine PDFs in order.</p>
     </div>
 
     <div class="pdf-card" onclick="openTool('split')">
       <div class="pdf-icon split">⇄</div>
-      <h3>Split PDF</h3><p>Split pages.</p>
+      <h3>Split PDF</h3>
+      <p>Split pages.</p>
     </div>
 
-    <div class="pdf-card" onclick="openTool('compress')">
-      <div class="pdf-icon compress">⤢</div>
-      <h3>Compress PDF</h3><p>Reduce size.</p>
-    </div>
-
-    <div class="pdf-card" onclick="openTool('coming')">
-      <div class="pdf-icon word">W</div>
-      <h3>PDF to Word</h3><p>Convert PDF to Word.</p>
-    </div>
-
-    <div class="pdf-card" onclick="openTool('coming')">
-      <div class="pdf-icon ppt">P</div>
-      <h3>PDF to PowerPoint</h3><p>Convert PDF to PPT.</p>
-    </div>
-
-    <div class="pdf-card" onclick="openTool('coming')">
-      <div class="pdf-icon excel">X</div>
-      <h3>PDF to Excel</h3><p>Convert PDF to Excel.</p>
-    </div>
   </section>
 
   <!-- WORKSPACE -->
   <section id="tool-workspace">
+
     <button class="back-btn" onclick="backToGrid()">← Back to all tools</button>
 
+    <!-- MERGE -->
     <div id="tool-merge" class="tool-panel">
       <h2>Merge PDF</h2>
+
       <input type="file" id="mergeFiles" multiple accept="application/pdf"><br><br>
+
+      <!-- Thumbnails -->
+      <div id="mergeThumbs" style="display:flex;gap:12px;flex-wrap:wrap;"></div>
+
+      <!-- Progress -->
+      <div class="progress-wrapper" style="display:none;margin-top:15px;">
+        <div style="background:#e5e7eb;border-radius:8px;">
+          <div class="progress-bar" style="height:10px;width:0%;background:#fb6a4a;"></div>
+        </div>
+        <p class="progress-text">Uploading…</p>
+      </div>
+
+      <br>
       <button onclick="mergePDF()">Merge PDFs</button>
     </div>
 
+    <!-- SPLIT -->
     <div id="tool-split" class="tool-panel">
       <h2>Split PDF</h2>
+
       <input type="file" id="splitFile" accept="application/pdf"><br><br>
+
+      <label>Pages to split (optional)</label><br>
+      <input type="text" id="splitRange"
+             placeholder="Example: 1-3,5"
+             style="width:260px"><br><br>
+
+      <!-- Thumbnails -->
+      <div id="splitThumbs" style="display:flex;gap:12px;flex-wrap:wrap;"></div>
+
+      <!-- Progress -->
+      <div class="progress-wrapper" style="display:none;margin-top:15px;">
+        <div style="background:#e5e7eb;border-radius:8px;">
+          <div class="progress-bar" style="height:10px;width:0%;background:#f97316;"></div>
+        </div>
+        <p class="progress-text">Uploading…</p>
+      </div>
+
+      <br>
       <button onclick="splitPDF()">Split PDF</button>
     </div>
 
+    <!-- COMPRESS -->
     <div id="tool-compress" class="tool-panel">
       <h2>Compress PDF</h2>
-      <input type="file" id="compressFile" accept="application/pdf"><br><br>
-      <button onclick="compressPDF()">Compress PDF</button>
 
-      <div id="compressResult" style="display:none;margin-top:20px;">
-        <p><strong>Original size:</strong> <span id="originalSize"></span></p>
-        <p><strong>Compressed size:</strong> <span id="compressedSize"></span></p>
+      <input type="file" id="compressFile" accept="application/pdf"><br>
+
+      <p id="fileSizeText"></p>
+      <p id="fileSizeWarning" style="display:none;color:#dc2626;">
+        File size exceeds 50 MB limit
+      </p><br>
+
+      <label>Compression level</label><br>
+      <select id="compressLevel">
+        <option value="low">Low</option>
+        <option value="medium" selected>Medium</option>
+        <option value="high">High</option>
+      </select><br><br>
+
+      <label>Target size (MB – optional)</label><br>
+      <input type="number" id="targetSize" min="1" placeholder="e.g. 5"><br><br>
+
+      <!-- Progress -->
+      <div id="progressWrapper" style="display:none;">
+        <div style="background:#e5e7eb;border-radius:8px;">
+          <div id="progressBar" style="height:10px;width:0%;background:#22c55e;"></div>
+        </div>
+        <p id="progressText">Uploading…</p>
       </div>
+
+      <button onclick="compressPDF()">Compress PDF</button>
     </div>
 
-    <div id="tool-coming" class="tool-panel">
-      <h2>Coming Soon</h2>
-      <p>This tool will be available shortly.</p>
-    </div>
   </section>
 
 </main>
 
 <div id="footer"></div>
 
+<!-- SERVER CONFIG -->
+<script src="../js/server.js"></script>
+
+<!-- PARTIALS -->
 <script src="../js/loadPartials.js" defer></script>
 <script src="../js/components.js" defer></script>
 
-<!-- PDF TOOLS LOGIC -->
+<!-- PDF TOOLS SCRIPT -->
 <script src="../js/pdf-tools.js"></script>
 
 </body>
