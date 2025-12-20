@@ -559,28 +559,62 @@ body{
   .code-window { font-size: 12px; }
 }
 /* ====================================
-   TESTIMONIALS (Isolated & Slider Safe)
+   TESTIMONIALS — CLEAN & PREMIUM
 ==================================== */
 
 .gn-testimonials {
-  padding: 80px 0;
+  padding: 100px 0;
+  background: #fbf8f3;
 }
 
+/* heading */
 .gn-testimonials h2 {
   text-align: center;
   font-family: Georgia, "Times New Roman", serif;
   font-size: 36px;
-  margin-bottom: 56px;
+  margin-bottom: 64px;
   color: #1f1b18;
 }
 
 /* ====================================
-   SLIDER LAYOUT (replaces grid)
+   GLOW CONTAINER (KEY FIX)
+==================================== */
+
+.gn-glow-wrap {
+  position: relative;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 70px 60px;
+}
+
+/* 🔥 REAL OMEGA-STYLE GLOW */
+.gn-glow-wrap::before {
+  content: "";
+  position: absolute;
+
+  /* 🔧 tighter glow */
+  inset: -60px;
+
+  background: linear-gradient(
+    120deg,
+    rgba(147,197,253,0.4),
+    rgba(196,181,253,0.4),
+    rgba(253,224,71,0.4)
+  );
+
+  filter: blur(80px);      /* 🔧 reduced blur */
+  border-radius: 32px;     /* 🔧 card-like radius */
+  z-index: 0;
+}
+
+/* ====================================
+   SLIDER
 ==================================== */
 
 .gn-slider {
   position: relative;
   overflow: hidden;
+  z-index: 1;
 }
 
 .gn-slider-track {
@@ -590,136 +624,97 @@ body{
 
 .gn-slide {
   min-width: 100%;
-  padding: 0 6px;
 }
 
 /* ====================================
-   CARD
+   CARD — FIXED WIDTH
 ==================================== */
 
 .gn-testimonial-card {
-  background: #fff;
-  border-radius: 14px;
-  padding: 28px;
-  box-shadow: var(--shadow);
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 40px 44px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.08);
+  max-width: 820px;
+  margin: 0 auto;
+  min-height: 260px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 300px;
 }
 
 /* stars */
 .gn-stars {
   color: #f4b400;
   letter-spacing: 3px;
-  margin-bottom: 14px;
   font-size: 14px;
+  margin-bottom: 16px;
 }
 
-/* text */
+/* review */
 .gn-review {
-  font-size: 16px;
-  line-height: 1.7;
+  font-size: 17px;
+  line-height: 1.75;
   color: #1f1b18;
+  max-width: 620px;
 }
 
 /* ====================================
-   USER
+   USER ROW
 ==================================== */
 
 .gn-user {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-top: 22px;
+  gap: 14px;
+  margin-top: 28px;
 }
 
 .gn-user img {
-  width: 42px;
-  height: 42px;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
   object-fit: cover;
-  flex-shrink: 0;
 }
 
-.gn-user strong {
-  font-size: 15px;
-}
-
-.gn-role {
-  font-size: 13px;
-  color: var(--muted);
-  display: block;
-}
-
-/* ====================================
-   DOTS NAVIGATION
-==================================== */
-
-.gn-dots {
-  margin-top: 26px;
+.gn-name-row {
   display: flex;
-  justify-content: center;
+  align-items: center;
   gap: 8px;
 }
 
-.gn-dots button {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  border: none;
-  background: #d6cfc8;
-  cursor: pointer;
-  transition: background 0.2s ease;
+.gn-name-row strong {
+  font-size: 15px;
+  font-weight: 600;
 }
 
-.gn-dots button.active {
-  background: var(--accent);
+/* LinkedIn icon */
+.gn-linkedin-icon img {
+  width: 16px;
+  height: 16px;
+  display: block;
 }
 
-/* ====================================
-   OMEGA-STYLE GLOW PANEL
-==================================== */
-
-.gn-glow-wrap {
-  position: relative;
-  margin-top: 48px;
-}
-
-.gn-glow-panel {
-  position: absolute;
-  inset: -70px -50px;
-  border-radius: 32px;
-  background: linear-gradient(
-    90deg,
-    rgba(125, 211, 252, 0.35),
-    rgba(196, 181, 253, 0.35),
-    rgba(253, 230, 138, 0.35)
-  );
-  filter: blur(90px);
-  z-index: 0;
-  pointer-events: none;
-}
-
-/* keep slider above glow */
-.gn-slider {
-  position: relative;
-  z-index: 1;
+/* role */
+.gn-role {
+  font-size: 13px;
+  color: #7b6f6a;
 }
 
 /* ====================================
    RESPONSIVE
 ==================================== */
 
-@media (max-width: 900px) {
-  .gn-testimonials h2 {
-    font-size: 28px;
+@media (max-width: 768px) {
+  .gn-testimonial-card {
+    padding: 28px;
   }
 
-  .gn-testimonial-card {
-    min-height: auto;
+  .gn-review {
+    font-size: 16px;
   }
 }
+
 
 /* ------------------------------------
    QUOTE SLIDER CSS
