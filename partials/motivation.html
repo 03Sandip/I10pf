@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Words That Matter</title>
+
+<style>
+/* ====== RESET ====== */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+/* ====== HEADING ====== */
+.heading__h1{
+  text-align:center;
+  margin:40px 0 20px;
+  font-size:36px;
+  color:#222;
+}
+
+/* ====== CONTAINER ====== */
+.quote-container{
+  width:100%;
+  max-width:900px;
+  margin:0 auto;
+  overflow:hidden;
+  position:relative;
+}
+
+/* ====== SLIDER ====== */
+.slider-width{
+  display:flex;
+  transition:transform 0.6s ease-in-out;
+}
+
+/* ====== QUOTE CARD ====== */
+.quote{
+  min-width:100%;
+  padding:50px 40px;
+  text-align:center;
+  background:#f9f9f9;
+  border-radius:12px;
+}
+
+/* ====== QUOTE TEXT ====== */
+.quote__qut{
+  font-size:26px;
+  line-height:1.6;
+  color:#333;
+}
+
+/* ====== HIGHLIGHT WORD ====== */
+.quote__qut--joy{
+  color:#ff6b35;
+  font-weight:600;
+}
+
+/* ====== PERSON ====== */
+.quote__person{
+  margin-top:25px;
+}
+
+.quote__name{
+  font-size:18px;
+  font-weight:600;
+  color:#111;
+}
+
+.quote__knownfor{
+  font-size:14px;
+  color:#666;
+}
+
+/* ====== RESPONSIVE ====== */
+@media(max-width:600px){
+  .quote__qut{
+    font-size:20px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<h1 class="heading__h1">Words That Matter</h1>
+
+<div class="quote-container">
+  <div class="slider-width" id="slide">
+
+    <!-- Swami Vivekananda -->
+    <div class="quote">
+      <h3 class="quote__qut">
+        Arise, awake, and stop not till the
+        <span class="quote__qut--joy">goal</span> is reached
+      </h3>
+      <h4 class="quote__person">
+        <span class="quote__name">— Swami Vivekananda</span><br>
+        <span class="quote__knownfor">Indian Philosopher</span>
+      </h4>
+    </div>
+
+    <!-- Mahatma Gandhi -->
+    <div class="quote">
+  <h3 class="quote__qut">
+    Happiness is when what you
+    <span class="quote__qut--joy">think</span>,
+    what you <span class="quote__qut--joy">say</span>,
+    and what you <span class="quote__qut--joy">do</span>
+    are in harmony
+  </h3>
+  <h4 class="quote__person">
+    <span class="quote__name">— Premananda Maharaj</span><br>
+    <span class="quote__knownfor">Indian Spiritual Teacher</span>
+  </h4>
+</div>
+
+
+    <!-- Lord Krishna -->
+    <div class="quote">
+      <h3 class="quote__qut">
+        You have the right to
+        <span class="quote__qut--joy">work</span>,
+        but never to the fruits of work
+      </h3>
+      <h4 class="quote__person">
+        <span class="quote__name">— Lord Krishna</span><br>
+        <span class="quote__knownfor">Bhagavad Gita</span>
+      </h4>
+    </div>
+
+    <!-- Adi Shankaracharya -->
+    <div class="quote">
+      <h3 class="quote__qut">
+        The world is
+        <span class="quote__qut--joy">temporary</span>,
+        truth alone is eternal
+      </h3>
+      <h4 class="quote__person">
+        <span class="quote__name">— Adi Shankaracharya</span><br>
+        <span class="quote__knownfor">Advaita Vedanta Philosopher</span>
+      </h4>
+    </div>
+
+    <!-- Chanakya -->
+    <div class="quote">
+      <h3 class="quote__qut">
+        A person should not be too
+        <span class="quote__qut--joy">honest</span>.
+        Straight trees are cut first
+      </h3>
+      <h4 class="quote__person">
+        <span class="quote__name">— Chanakya</span><br>
+        <span class="quote__knownfor">Indian Philosopher & Strategist</span>
+      </h4>
+    </div>
+
+    <!-- Ramana Maharshi -->
+    <div class="quote">
+      <h3 class="quote__qut">
+        Your own
+        <span class="quote__qut--joy">Self-realization</span>
+        is the greatest service
+      </h3>
+      <h4 class="quote__person">
+        <span class="quote__name">— Ramana Maharshi</span><br>
+        <span class="quote__knownfor">Indian Sage</span>
+      </h4>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const slide = document.getElementById("slide");
+const slides = document.querySelectorAll(".quote");
+
+let index = 0;
+const total = slides.length;
+
+function goToSlide(i){
+  slide.style.transform = `translateX(-${i * 100}%)`;
+}
+
+// Auto slide
+setInterval(() => {
+  index = (index + 1) % total;
+  goToSlide(index);
+}, 4500);
+</script>
+
+</body>
+</html>

@@ -214,6 +214,7 @@ window.addEventListener("DOMContentLoaded", () => {
     ["featured", "featured.html"],
     ["spotlight", "spotlight.html"],
     ["popular", "popular.html"],
+    ["motivation", "motivation.html"],
     ["quote", "quote.html"],
     ["offers", "offers.html"],
     ["newsletter", "newsletter.html"],

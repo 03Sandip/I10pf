@@ -1,4 +1,214 @@
-<section class="quote container">
-  <blockquote id="quote">"Study smarter, not harder."</blockquote>
-  <cite>- Gonotes</cite>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Testimonials Slider</title>
+
+<link rel="stylesheet" href="styles.css">
+
+<style>
+/* ===== TESTIMONIAL SLIDER ===== */
+.gn-testimonials {
+  padding: 80px 0;
+}
+
+.gn-testimonials h2 {
+  text-align: center;
+  font-size: 36px;
+  margin-bottom: 56px;
+}
+
+.gn-slider {
+  position: relative;
+  overflow: hidden;
+}
+
+.gn-slider-track {
+  display: flex;
+  transition: transform 0.6s ease;
+}
+
+.gn-slide {
+  min-width: 100%;
+  padding: 0 6px;
+}
+
+.gn-testimonial-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 28px;
+  box-shadow: 0 8px 30px rgba(16,24,40,0.06);
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.gn-stars {
+  color: #f4b400;
+  letter-spacing: 3px;
+}
+
+.gn-review {
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+/* ===== USER ROW ===== */
+.gn-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.gn-user img.avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.gn-name-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.gn-name-row strong {
+  font-size: 15px;
+}
+
+/* 🔒 LINKEDIN ICON — BULLETPROOF */
+.gn-linkedin-icon img {
+  width: 14px;
+  height: 14px;
+  display: block;
+  flex-shrink: 0;
+  margin-top: 2px;   /* 👈 ADD THIS LINE */
+}
+
+.gn-role {
+  font-size: 13px;
+  color: #7b6f6a;
+}
+</style>
+</head>
+
+<body>
+
+<section class="gn-testimonials container">
+  <h2>What people say about us</h2>
+
+  <div class="gn-slider">
+    <div class="gn-slider-track">
+
+      <!-- Slide 1 -->
+      <div class="gn-slide">
+        <div class="gn-testimonial-card">
+          <div>
+            <div class="gn-stars">★★★★★</div>
+            <p class="gn-review">“Very helpful platform for students.”</p>
+          </div>
+          <div class="gn-user">
+            <img class="avatar" src="https://i.pravatar.cc/100?img=18">
+            <div>
+              <div class="gn-name-row">
+                <strong>Arpan Dey</strong>
+                <a class="gn-linkedin-icon" target="_blank" href="https://www.linkedin.com/">
+                  <img src="images/icons8-linkedin.svg" alt="LinkedIn">
+                </a>
+              </div>
+              <span class="gn-role">CSE Student</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 2 -->
+      <div class="gn-slide">
+        <div class="gn-testimonial-card">
+          <div>
+            <div class="gn-stars">★★★★★</div>
+            <p class="gn-review">“Clean UI and very easy to use.”</p>
+          </div>
+          <div class="gn-user">
+            <img class="avatar" src="https://i.pravatar.cc/100?img=47">
+            <div>
+              <div class="gn-name-row">
+                <strong>Ankita Ganguli</strong>
+                <a class="gn-linkedin-icon" target="_blank" href="https://www.linkedin.com/">
+                  <img src="images/icons8-linkedin.svg" alt="LinkedIn">
+                </a>
+              </div>
+              <span class="gn-role">CSE Final Year</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 3 -->
+      <div class="gn-slide">
+        <div class="gn-testimonial-card">
+          <div>
+            <div class="gn-stars">★★★★★</div>
+            <p class="gn-review">“Great for interview preparation.”</p>
+          </div>
+          <div class="gn-user">
+            <img class="avatar" src="https://i.pravatar.cc/100?img=18">
+            <div>
+              <div class="gn-name-row">
+                <strong>Soumyadiptya</strong>
+                <a class="gn-linkedin-icon" target="_blank" href="https://www.linkedin.com/">
+                  <img src="images/icons8-linkedin.svg" alt="LinkedIn">
+                </a>
+              </div>
+              <span class="gn-role">Final Year Student</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Slide 3 -->
+      <div class="gn-slide">
+        <div class="gn-testimonial-card">
+          <div>
+            <div class="gn-stars">★★★★★</div>
+            <p class="gn-review">“Great for interview preparation.”</p>
+          </div>
+          <div class="gn-user">
+            <img class="avatar" src="https://i.pravatar.cc/100?img=18">
+            <div>
+              <div class="gn-name-row">
+                <strong>Apurba</strong>
+                <a class="gn-linkedin-icon" target="_blank" href="https://www.linkedin.com/">
+                  <img src="images/icons8-linkedin.svg" alt="LinkedIn">
+                </a>
+              </div>
+              <span class="gn-role">Final Year Student</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Icons8 attribution -->
 </section>
+
+<script>
+(function(){
+  const track = document.querySelector(".gn-slider-track");
+  const slides = document.querySelectorAll(".gn-slide");
+  let index = 0;
+
+  setInterval(() => {
+    index = (index + 1) % slides.length;
+    track.style.transform = `translateX(-${index * 100}%)`;
+  }, 4500);
+})();
+</script>
+
+</body>
+</html>
