@@ -1,0 +1,1400 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- ================= BASIC SEO ================= -->
+  <title>DevSecOps Roadmap 2025 | Complete Guide with Free Resources – GoNotes</title>
+
+  <meta name="description" content="Complete DevSecOps Roadmap 2025 with free resources. Learn Git, CI/CD, Cloud Security, Infrastructure as Code, SAST, DAST, Threat Modeling, Security as Code, and Compliance as Code." />
+
+  <meta name="keywords" content="DevSecOps roadmap, DevSecOps learning path, DevSecOps tutorial, CI/CD security, SAST DAST, Infrastructure as Code, Cloud Security, Threat Modeling, Security as Code, Compliance as Code" />
+
+  <meta name="author" content="GoNotes" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- ================= CANONICAL ================= -->
+  <link rel="canonical" href="https://gonotes.shop/pages/devsecops-roadmap.html" />
+
+  <!-- ================= OPEN GRAPH ================= -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="DevSecOps Roadmap 2025 – Complete Learning Guide" />
+  <meta property="og:description" content="A complete DevSecOps roadmap with curated videos, blogs, tools and hands-on labs." />
+  <meta property="og:url" content="https://gonotes.shop/pages/devsecops-roadmap.html" />
+  <meta property="og:image" content="https://gonotes.shop/images/devsecops-roadmap.png" />
+  <meta property="og:site_name" content="GoNotes" />
+
+  <!-- ================= TWITTER ================= -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="DevSecOps Roadmap 2025 | Learn DevSecOps Step by Step" />
+  <meta name="twitter:description" content="Master DevSecOps using a structured roadmap with free learning resources." />
+  <meta name="twitter:image" content="https://gonotes.shop/images/devsecops-roadmap.png" />
+
+  <!-- ================= MOBILE ================= -->
+  <meta name="theme-color" content="#4f46e5" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+
+  <!-- ================= STRUCTURED DATA ================= -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "EducationalArticle",
+    "headline": "DevSecOps Roadmap 2025 – Complete Learning Guide",
+    "description": "A complete DevSecOps roadmap with curated videos, blogs, tools, and hands-on labs.",
+    "author": {
+      "@type": "Organization",
+      "name": "GoNotes"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "GoNotes",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://gonotes.shop/images/logo.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://gonotes.shop/pages/devsecops-roadmap.html"
+    }
+  }
+  </script>
+
+<style>
+*{box-sizing:border-box}
+
+:root{
+  --bg:#fbf8f3;
+  --text:#111;
+  --muted:#666;
+  --accent:#4f46e5;
+  --border:#e5e7eb;
+  --card:#fff;
+  --shadow:0 12px 32px rgba(0,0,0,.08);
+}
+
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+}
+
+.container{
+  max-width:1100px;
+  margin:0 auto;
+  padding:56px 20px;
+}
+
+/* ================= PAGE TITLE ================= */
+.page-title{
+  text-align:center;
+  margin-bottom:70px;
+}
+
+.page-title h1{
+  font-size:46px;
+  margin-bottom:12px;
+  background:linear-gradient(90deg,#4f46e5,#06b6d4);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.page-title p{
+  color:var(--muted);
+  max-width:760px;
+  margin:0 auto;
+}
+
+/* ================= SECTION ================= */
+.section{
+  background:var(--card);
+  border-radius:18px;
+  padding:38px 36px;
+  box-shadow:var(--shadow);
+  border:1px solid var(--border);
+  margin-bottom:64px;
+  transition:.25s;
+}
+
+.section:hover{
+  transform:translateY(-3px);
+}
+
+.section h2{
+  font-size:26px;
+  margin-bottom:8px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.section h2::before{
+  content:"";
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:var(--accent);
+}
+
+.section p{
+  color:var(--muted);
+  max-width:900px;
+}
+
+/* ================= FILTERS ================= */
+.filters{
+  display:flex;
+  gap:10px;
+  margin:22px 0;
+  background:#f1f5f9;
+  padding:10px;
+  border-radius:999px;
+  width:max-content;
+}
+
+.filter{
+  padding:6px 16px;
+  font-size:14px;
+  border-radius:999px;
+  border:1px solid transparent;
+  background:#fff;
+  color:#333;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.filter.active{
+  background:var(--accent);
+  color:#fff;
+}
+
+.filter:hover{
+  background:#e0e7ff;
+}
+
+/* ================= RESOURCE CARDS ================= */
+.resource-list{
+  list-style:none;
+  padding:0;
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:16px;
+}
+
+.resource-list li{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:16px;
+  display:flex;
+  gap:12px;
+  transition:.2s;
+}
+
+.resource-list li:hover{
+  box-shadow:0 10px 26px rgba(0,0,0,.08);
+  transform:translateY(-2px);
+}
+
+.tag{
+  font-size:11px;
+  font-weight:700;
+  padding:4px 8px;
+  border-radius:999px;
+  background:#eef2ff;
+  color:var(--accent);
+  height:max-content;
+}
+
+.resource-content{
+  font-size:14px;
+  color:#333;
+}
+
+.resource-link{
+  display:inline-block;
+  margin-top:6px;
+  font-size:13px;
+  font-weight:600;
+  color:var(--accent);
+  text-decoration:none;
+}
+
+.resource-link:hover{
+  text-decoration:underline;
+}
+
+.hidden{display:none}
+
+/* ================= MOBILE ================= */
+@media(max-width:600px){
+  .page-title h1{font-size:34px}
+  .section{padding:26px 22px}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div id="header" aria-hidden="true"></div>
+
+<main class="container">
+
+<!-- INTRO -->
+<section class="page-title">
+  <h1>DevSecOps Roadmap with Resouces</h1>
+  <p>
+    A comprehensive collection of DevSecOps learning resources including
+    videos, blogs, tools, and hands-on labs.
+  </p>
+</section>
+
+<!-- ========1. Git (Version Control System)============== -->
+<section class="section">
+  <h2>1. Git (Version Control System)</h2>
+  <p>DevSecOps relies on Everything as Code (EaC). Git is the most widely used VCS.</p>
+
+  <div class="filters">
+    <button type="button" class="filter active" data-type="videos">Videos</button>
+    <button type="button" class="filter" data-type="blogs">Blogs & Tutorials</button>
+  </div>
+
+  <!-- VIDEOS -->
+  <ul class="resource-list" data-content="videos">
+    <li data-link=""><span class="tag">VIDEO</span> Git & GitHub Crash Course – Traversy Media <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Visual Git Tutorial – JavaScript Mastery <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Git Tutorial for Beginners – Intellipaat <a href="#" class="resource-link">Watch</a></li>
+  </ul>
+
+  <!-- BLOGS -->
+  <ul class="resource-list hidden" data-content="blogs">
+    <li data-link=""><span class="tag">BLOG</span> Git Handbook – GitHub <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Git Cheat Sheet – Atlassian <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Git Strategies for DevOps – Ahmad Iqbal Ali <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Learn the Basics of Git in Under 10 Minutes – Gowtham Venkatesan <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Understanding Git: Explain It Like I’m Five – Kevin Cooper <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Git – The Simple Guide – Roger Dudler <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> The Git Supremacy – Mayank Arya <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Version Controlling with Git in VS Code & Azure DevOps – Azure <a href="#" class="resource-link">Read</a></li>
+    <li><span class="tag">BLOG</span> Git branching strategies</li>
+    <li><span class="tag">BLOG</span> Rebase vs Merge explained</li>
+  </ul>
+
+</section>
+
+
+<!-- ==========2. CI/CD (Continuous Integration & Delivery)=========== -->
+<section class="section">
+  <h2>2. CI/CD (Continuous Integration & Delivery)</h2>
+  <p>
+    CI/CD pipelines are the backbone of modern DevOps and Cloud-Native systems.
+  </p>
+
+  <div class="filters">
+    <button type="button" class="filter active" data-type="videos">Videos</button>
+    <button type="button" class="filter" data-type="blogs">Blogs & Tutorials</button>
+    <button type="button" class="filter" data-type="handson">Hands-on</button>
+  </div>
+
+  <!-- VIDEOS -->
+  <ul class="resource-list" data-content="videos">
+    <li data-link=""><span class="tag">VIDEO</span> GitLab Beginner Tutorial – Raghav Pal <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Introduction to Jenkins, CI/CD, and DevOps – Valentin Despa <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Best Practices for Securing CI/CD Pipelines – Victoria Almazova <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> CI/CD Platform in AWS – Mohamed Labouardy <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Continuous Delivery from First Principles – Tom <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Let's Build a CI/CD Pipeline – Jean De Klerk <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Intro to CI/CD with Python – Chris Arceneaux <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> GitLab CI/CD – Johan Duran <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> CI/CD Pipeline in Azure – Benjamin Hodge <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Continuous Integration with GitLab CI – Pete Johanson <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> GitLab Workflow – GitLab <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> From Dev to Prod with GitLab CI – Stephan Hochdorfer <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Scaling Continuous Deployment – Tony Savor <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Continuous Delivery with Jenkins – Gianluca Arbezzano <a href="#" class="resource-link">Watch</a></li>
+  </ul>
+
+  <!-- BLOGS -->
+  <ul class="resource-list hidden" data-content="blogs">
+    <li data-link=""><span class="tag">BLOG</span> What is CI/CD — Concepts in Continuous Integration and Deployment – Sanjay Nair <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Absolute Beginner’s Guide to Continuous Delivery – Erin Snyder <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Introduction to CI, CD & Deployment – Justin Ellingwood <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Getting Started in CI/CD for Beginners – Samsha <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Beginner’s Cheat Sheet Before Applying CI/CD – Katalon <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> CI/CD Best Practices – Justin Ellingwood <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> CI/CD on Google Cloud – Google <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Modern CI/CD Pipeline – PureStorage <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> List of Continuous Integration Services – Awesome CI <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> CI/CD by Docker <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> GitLab CI/CD Crash Course – Avicenna Wisesa <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Automate Your Work with GitLab CI/CD – Marcin Nowacki <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Beginner-Friendly GitLab CI/CD – Zuri Hunter <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> GitLab CI/CD Examples – GitLab <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> CI Pipelines with GitLab CI on Ubuntu – Justin Ellingwood <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Modern CI/CD for Adobe Experience Platform – Jaemi Bremner <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> How We Build Code at Netflix – Netflix <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Beginner’s Guide to DevOps Pipelines – Bryant Son <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Rapid Release at Massive Scale – Chuck Rossi <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> CI/CD Pipeline in AWS in 5 Minutes – Allen Helton <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Security Challenges in CI/CD Workflow – Meera Rao <a href="#" class="resource-link">Read</a></li>
+  </ul>
+
+  <!-- HANDS-ON -->
+  <ul class="resource-list hidden" data-content="handson">
+    <li data-link=""><span class="tag">HANDS-ON LAB</span> Python CI/CD Workshop – Datapunks <a href="#" class="resource-link">Start</a></li>
+    <li data-link=""><span class="tag">HANDS-ON LAB</span> GitLab Git Workshop – GitLab <a href="#" class="resource-link">Start</a></li>
+    <li data-link=""><span class="tag">HANDS-ON LAB</span> GitLab Training – Netways <a href="#" class="resource-link">Start</a></li>
+    <li data-link=""><span class="tag">HANDS-ON LAB</span> GitLab CI Training – Ondrej Sikathis <a href="#" class="resource-link">Start</a></li>
+  </ul>
+</section>
+
+
+<!-- =========3. Artifact Management============= -->
+<section class="section">
+  <h2>3. Artifact Management</h2>
+  <p>Artifact repositories store and control deployable binaries securely.</p>
+
+  <div class="filters">
+    <button type="button" class="filter active" data-type="videos">Videos</button>
+    <button type="button" class="filter" data-type="blogs">Blogs & Tutorials</button>
+  </div>
+
+  <!-- VIDEOS -->
+  <ul class="resource-list" data-content="videos">
+    <li data-link=""><span class="tag">VIDEO</span> Introduction to Artifactory on the JFrog Platform – Melissa <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> How to Integrate Nexus with Jenkins and Upload Artifacts – Madhu Sudhan Reddy <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Six Reasons to Use a Repository Manager Now – Tim O’Brien <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Sample DevOps Project: Nexus–Artifactory Uploader Jenkins Pipeline – Madhu Sudhan Reddy <a href="#" class="resource-link">Watch</a></li>
+  </ul>
+
+  <!-- BLOGS -->
+  <ul class="resource-list hidden" data-content="blogs">
+    <li data-link=""><span class="tag">BLOG</span> DevOps Artifacts: Artifactory, Sonatype Nexus, Maven & Apache Archiva – BogoToBogo <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Artifactory Repository Manager – Tutorial – Simon Scholz <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Nexus Repository Manager – Tutorial – Simon Scholz <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> DevOps: 8 Reasons for DevOps to Use a Binary Repository <a href="#" class="resource-link">Read</a></li>
+  </ul>
+
+</section>
+
+<!-- ==========4. Infrastructure as Code (IaC)=========== -->
+<section class="section">
+  <h2>4. Infrastructure as Code (IaC)</h2>
+  <p>Infrastructure is treated like software to enable speed and consistency.</p>
+
+  <div class="filters">
+    <button type="button" class="filter active" data-type="videos">Videos</button>
+    <button type="button" class="filter" data-type="blogs">Blogs & Tutorials</button>
+    <button type="button" class="filter" data-type="tools">Tools</button>
+  </div>
+
+  <!-- VIDEOS -->
+  <ul class="resource-list" data-content="videos">
+    <li data-link=""><span class="tag">VIDEO</span> Holistic Configuration Management at Facebook – Chunqiang Tang <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> SaltStack Is More Than Just Configuration Management – Thomas Hatch <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> DSC in the Configuration Management Tool World – Ben Gelens <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Evolution of Configuration Management in a DevOps World – Marisa Sawatphadungkij <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Integrating Configuration Management into Your Ecosystem – Sascha Bates <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Configuration Management with SaltStack: Zero to Hero – Wesley Whetstone <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Cloud-Native Configuration Management 2020 and Beyond – Eric Sorenson <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Puppet Automation Journey: Configuration Management & Cloud – Brendan Rosewarne <a href="#" class="resource-link">Watch</a></li>
+  </ul>
+
+  <!-- BLOGS -->
+  <ul class="resource-list hidden" data-content="blogs">
+    <li data-link=""><span class="tag">BLOG</span> Configuration Management in DevOps – BMC Blog <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Top 10 Configuration Management Tools – UpGuard <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Modern Configuration Management: Configuration as Code – Chef <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Writing Ansible Playbooks – Erika Heidi <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Configuration Management & Continuous Deployment – Anilkumar Patel <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Change & Configuration Management the DevOps Way – Isaac Ndung'u <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Beginner’s Guide to Configuration Management Tools – Ofer Velich <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Automating Configuration Management for DevOps – Capgemini <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Beginner’s Guide to Chef – Linode <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Automation & Configuration Management with Chef – Sudhi <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> All About Chef Configuration Tool – Mitesh Soni <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Writing Chef Recipes – Erika Heidi <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Chef vs Puppet – Asaf Yigal <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Chef vs Puppet Detailed Comparison – Spec India <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Configuration Management Approaches: Chef, Ansible & Kubernetes – Kublr <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Writing Puppet Manifests – Erika Heidi <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Puppet Tutorial for Beginners – Guru99 <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Beginner’s Guide to Salt – Linode <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Getting Started with SaltStack – Ben Hosmer <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Using Salt for Basic Configuration Management – Bejoy Abraham Mathews <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> SaltStack Concepts & Terminology – Justin Ellingwood <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Configuration Management on Google Cloud – Google <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Holistic Configuration Management at Facebook – Chunqiang Tang et al. <a href="#" class="resource-link">Read</a></li>
+  </ul>
+
+  <!-- TOOLS -->
+  <ul class="resource-list hidden" data-content="tools">
+    <li><span class="tag">TOOL</span> Ansible – Open-source configuration management, deployment & orchestration tool</li>
+    <li><span class="tag">TOOL</span> Chef – Automation platform for defining infrastructure as code</li>
+    <li><span class="tag">TOOL</span> Vagrant – Tool for building and managing VM environments</li>
+    <li><span class="tag">TOOL</span> Puppet – Enterprise-grade configuration management platform</li>
+  </ul>
+
+</section>
+
+
+<!-- ===========5. Cloud Service Provider Platform============= -->
+<section class="section">
+  <h2>5. Cloud Service Provider Platform</h2>
+  <p>Modern development needs elastic, on-demand cloud platforms.</p>
+
+  <div class="filters">
+    <button type="button" class="filter active" data-type="videos">Videos</button>
+    <button type="button" class="filter" data-type="blogs">Tutorials & Blogs</button>
+    <button type="button" class="filter" data-type="tools">Tools</button>
+    <button type="button" class="filter" data-type="labs">Hands-on Labs</button>
+  </div>
+
+  <!-- VIDEOS -->
+  <ul class="resource-list" data-content="videos">
+    <li data-link=""><span class="tag">VIDEO</span> Introduction to AWS Security – Bill Reid <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> AWS Security by Design – Shafreen Sayyed <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Advanced Security Best Practices Masterclass – Ian Massingham <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Fundamentals of AWS Cloud Security – Becky Weiss <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Security Best Practices: Well-Architected Way – Ben Potter <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Introduction to AWS Security Hub – Ely Kahn <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Cloud Security Architecture Workshop – Dave Shackleford <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Implementing DevSecOps in the Cloud – Jimmy Jenis <a href="#" class="resource-link">Watch</a></li>
+  </ul>
+
+  <!-- BLOGS -->
+  <ul class="resource-list hidden" data-content="blogs">
+    <li data-link=""><span class="tag">BLOG</span> AWS Security Checklist – AWS <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> AWS Security Pillar – AWS <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> AWS Security Blog – AWS <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> AWS Security Primer – Michael Wittig <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Fundamental Security Concepts in AWS (Part 1) – Tom Porter <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> AWS Security Fundamentals – AWS <a href="#" class="resource-link">Read</a></li>
+  </ul>
+
+  <!-- TOOLS -->
+  <ul class="resource-list hidden" data-content="tools">
+    <li><span class="tag">TOOL</span> AWS Security Hub</li>
+    <li><span class="tag">TOOL</span> AWS IAM</li>
+    <li><span class="tag">TOOL</span> AWS GuardDuty</li>
+    <li><span class="tag">TOOL</span> AWS CloudTrail</li>
+  </ul>
+
+  <!-- LABS -->
+  <ul class="resource-list hidden" data-content="labs">
+    <li><span class="tag">HANDS-ON LAB</span> AWS Security Hands-on Labs</li>
+    <li><span class="tag">HANDS-ON LAB</span> AWS Well-Architected Security Labs</li>
+  </ul>
+</section>
+
+
+<!-- ==========6. Threat Modeling================= -->
+<section class="section">
+  <h2>6. Threat Modeling</h2>
+  <p>Threat modeling helps quantify and reduce security risks.</p>
+
+  <div class="filters">
+    <button type="button" class="filter active" data-type="books">Books</button>
+    <button type="button" class="filter" data-type="courses">Courses</button>
+    <button type="button" class="filter" data-type="blogs">Blogs & Tutorials</button>
+    <button type="button" class="filter" data-type="tools">Tools</button>
+  </div>
+
+  <!-- BOOKS -->
+  <ul class="resource-list" data-content="books">
+    <li data-link=""><span class="tag">BOOK</span> Threat Modeling: Designing for Security – Adam Shostack <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BOOK</span> Threat Modeling – Frank Swiderski & Window Snyder <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BOOK</span> Risk-Centric Threat Modeling – Tony UcedaVelez & Marco M. Morana <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BOOK</span> Threat Modeling – Matthew J. Coles & Izar Tarandach <a href="#" class="resource-link">Read</a></li>
+  </ul>
+
+  <!-- COURSES -->
+  <ul class="resource-list hidden" data-content="courses">
+    <li data-link=""><span class="tag">FREE COURSE</span> Threat Modeling Workshop – Robert Hurlbut <a href="#" class="resource-link">Start</a></li>
+    <li data-link=""><span class="tag">PAID COURSE</span> Certified Threat Modeling Professional (CTMP) – Practical DevSecOps <a href="#" class="resource-link">Start</a></li>
+    <li data-link=""><span class="tag">PAID COURSE</span> DevSecOps Expert – Practical DevSecOps <a href="#" class="resource-link">Start</a></li>
+    <li data-link=""><span class="tag">PAID COURSE</span> Threat Modeling Fundamentals – Pluralsight <a href="#" class="resource-link">Start</a></li>
+    <li data-link=""><span class="tag">PAID COURSE</span> CyberSec First Responder: Threat Detection & Response (CFR210) – Stone River eLearning <a href="#" class="resource-link">Start</a></li>
+    <li data-link=""><span class="tag">PAID COURSE</span> Learning Threat Modeling for Security Professionals – Adam Shostack <a href="#" class="resource-link">Start</a></li>
+    <li data-link=""><span class="tag">PAID COURSE</span> Threat Modeling: Spoofing In Depth – Adam Shostack <a href="#" class="resource-link">Start</a></li>
+    <li data-link=""><span class="tag">PAID COURSE</span> Threat Modeling: Tampering in Depth – Adam Shostack <a href="#" class="resource-link">Start</a></li>
+  </ul>
+
+  <!-- BLOGS -->
+  <ul class="resource-list hidden" data-content="blogs">
+    <li data-link=""><span class="tag">BLOG</span> What Is Security Threat Modeling? – Lawrence C. Miller & Peter H. Gregory <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Threat Modeling Cheat Sheet – OWASP <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Threat Modeling in the Enterprise (Part 1) – Stiliyana Simeonova <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Threat Modeling for Dummies – Adam Englander <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> DevSecOps, Threat Modeling & STRIDE – Bruno Amaro Almeida <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Threat Modeling: Why, How, When & Tools – Debarghya Pandit <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Threat Modeling Datasheet – Synopsys <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Threat Modeling Blog – Security Innovation <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Threat Modeling: 6 Common Mistakes – Jeff Petters <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Threat Modeling for Cloud Infrastructure – Pat Cable <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Why You Should Care About Threat Modeling – Suresh Marisetty <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Threat Modeling Methods Whitepaper – Nataliya Shevchenko et al. <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Threat Modeling Toolkit – ThoughtWorks <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> How to Get Started with Threat Modeling – HackerNoon <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Threat Modeling Tutorial – GeeksforGeeks <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Analyzing Application Security with Threat Modeling – Goran Aviani <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Tactical Threat Modeling – SafeCode <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Power of a Tailored Threat Model – Looking Glass <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Where Is My Threat Model? – Abhishek Datta <a href="#" class="resource-link">Read</a></li>
+  </ul>
+
+  <!-- TOOLS -->
+  <ul class="resource-list hidden" data-content="tools">
+    <li data-link=""><span class="tag">FREE TOOL</span> OWASP Threat Dragon – Online threat modeling with diagrams & rule engine <a href="#" class="resource-link">Use</a></li>
+    <li data-link=""><span class="tag">FREE TOOL</span> Microsoft Threat Modeling Tool – Design-phase threat discovery tool <a href="#" class="resource-link">Use</a></li>
+    <li data-link=""><span class="tag">FREE TOOL</span> OWASP Threat Dragon (GitLab Fork) – GitLab-integrated threat modeling tool <a href="#" class="resource-link">Use</a></li>
+    <li data-link=""><span class="tag">FREE TOOL</span> Raindance – Attack map modeling for SDLC <a href="#" class="resource-link">Use</a></li>
+    <li data-link=""><span class="tag">FREE TOOL</span> ThreatSpec – Embed threat modeling into development workflows <a href="#" class="resource-link">Use</a></li>
+    <li data-link=""><span class="tag">PAID TOOL</span> IriusRisk – Questionnaire-driven adaptive threat modeling <a href="#" class="resource-link">Use</a></li>
+    <li data-link=""><span class="tag">PAID TOOL</span> SD Elements – Automated threat modeling platform <a href="#" class="resource-link">Use</a></li>
+  </ul>
+</section>
+
+
+<!-- ===========7. Static Application Security Testing (SAST)=========== -->
+<section class="section">
+  <h2>7. Static Application Security Testing (SAST)</h2>
+  <p>SAST analyzes source code to identify security vulnerabilities early in the SDLC.</p>
+
+  <div class="filters">
+    <button type="button" class="filter active" data-type="videos">Videos</button>
+    <button type="button" class="filter" data-type="blogs">Blogs & Tutorials</button>
+    <button type="button" class="filter" data-type="tools">Tools</button>
+  </div>
+
+  <!-- VIDEOS -->
+  <ul class="resource-list" data-content="videos">
+    <li data-link=""><span class="tag">VIDEO</span> Static Analysis Security Testing for Dummies… and You – Kevin Fealey <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Application Security Testing – Semi Yulianto <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Static Analysis for Dynamic Assessments – Greg Patton <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Static Code Analysis: Scan All Your Code for Bugs – Jared DeMott <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Bug Hunting with Static Code Analysis – Nick Jones <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> SAST with CI/CD Pipelines Using WhiteSource – Mohamad Radwan <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> GitLab APEX SAST Walkthrough for Salesforce – Lucas C <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> AST in CI/CD: How to Make It Work – Ofer Maor <a href="#" class="resource-link">Watch</a></li>
+  </ul>
+
+  <!-- BLOGS -->
+  <ul class="resource-list hidden" data-content="blogs">
+    <li data-link=""><span class="tag">BLOG</span> How to Integrate SAST into the DevSecOps Pipeline in 5 Steps – Meera Rao <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> SAST vs DAST – Why SAST? – Sharon Solomon <a href="#" class="resource-link">Read</a></li>
+  </ul>
+
+  <!-- TOOLS -->
+  <ul class="resource-list hidden" data-content="tools">
+    <li data-link=""><span class="tag">TOOL</span> SAST Tools – OWASP <a href="#" class="resource-link">Explore</a></li>
+    <li><span class="tag">TOOL</span> GitLab SAST</li>
+    <li><span class="tag">TOOL</span> SonarQube</li>
+    <li><span class="tag">TOOL</span> Semgrep</li>
+  </ul>
+</section>
+
+
+<!-- =======8. Dynamic Application Security Testing (DAST)=========== -->
+<section class="section">
+  <h2>8. Dynamic Application Security Testing (DAST)</h2>
+  <p>DAST tests running applications to identify security vulnerabilities from the outside.</p>
+
+  <div class="filters">
+    <button type="button" class="filter active" data-type="videos">Videos</button>
+    <button type="button" class="filter" data-type="blogs">Blogs & Tutorials</button>
+    <button type="button" class="filter" data-type="tools">Tools</button>
+  </div>
+
+  <!-- VIDEOS -->
+  <ul class="resource-list" data-content="videos">
+    <li data-link=""><span class="tag">VIDEO</span> Dynamic Security Testing with OWASP ZAP – Omer Levi Hevroni <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Practical Dynamic Application Security Testing in the Enterprise – Nicholas Kenney <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Baby Steps to Security Testing – Christina Thalayasingam <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Automated Static & Dynamic Security Analysis of Mobile Apps – Raveendar & Rajesh <a href="#" class="resource-link">Watch</a></li>
+  </ul>
+
+  <!-- BLOGS -->
+  <ul class="resource-list hidden" data-content="blogs">
+    <li data-link=""><span class="tag">BLOG</span> Dynamic Application Security Testing (DAST) – PortSwigger <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Integrating Web Vulnerability Scanners in CI/CD – Davor Petreski <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Dynamic Application Security Testing (DAST) – GitLab <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> DAST Scan Automation in CI/CD Pipeline – Satish Govindappa <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Veracode Dynamic Analysis + Jenkins – Marina Kvitnitsky <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Integrating OWASP ZAP in DevSecOps Pipeline – BreachLock <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> DAST vs SAST – Case for Dynamic Testing – Ian Muscat <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Automating DAST Scans with Jenkins, Arachni & ThreadFix – Matthias Rohr <a href="#" class="resource-link">Read</a></li>
+  </ul>
+
+  <!-- TOOLS -->
+  <ul class="resource-list hidden" data-content="tools">
+    <li data-link=""><span class="tag">FREE TOOL</span> W3af – Web Application Attack & Audit Framework <a href="#" class="resource-link">Use</a></li>
+    <li data-link=""><span class="tag">FREE TOOL</span> Wapiti – Web application vulnerability scanner <a href="#" class="resource-link">Use</a></li>
+    <li data-link=""><span class="tag">FREE TOOL</span> Vega – Open-source web security scanner <a href="#" class="resource-link">Use</a></li>
+    <li data-link=""><span class="tag">FREE TOOL</span> Nikto – Open-source web server vulnerability scanner <a href="#" class="resource-link">Use</a></li>
+    <li data-link=""><span class="tag">PAID TOOL</span> Burp Suite – Integrated web application security testing platform <a href="#" class="resource-link">Use</a></li>
+    <li data-link=""><span class="tag">PAID TOOL</span> Detectify – Automated security & asset monitoring <a href="#" class="resource-link">Use</a></li>
+    <li data-link=""><span class="tag">PAID TOOL</span> Netsparker – Enterprise-grade web application security scanner <a href="#" class="resource-link">Use</a></li>
+  </ul>
+</section>
+
+
+<!-- ==========9. Security as Code=============== -->
+<section class="section">
+  <h2>9. Security as Code</h2>
+  <p>Security as Code embeds security controls, policies, and checks directly into code and pipelines.</p>
+
+  <div class="filters">
+    <button type="button" class="filter active" data-type="videos">Videos</button>
+    <button type="button" class="filter" data-type="blogs">Blogs & Tutorials</button>
+  </div>
+
+  <!-- VIDEOS -->
+  <ul class="resource-list" data-content="videos">
+    <li data-link=""><span class="tag">VIDEO</span> Security as Code Webinar – Ellie Mae <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Implementing Security as Code – Julio Faerman <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Security as Code: A SecDevOps Use Case – Ed Bellis <a href="#" class="resource-link">Watch</a></li>
+  </ul>
+
+  <!-- BLOGS -->
+  <ul class="resource-list hidden" data-content="blogs">
+    <li data-link=""><span class="tag">BLOG</span> What Is Security as Code (SaC)? – Ziad Ghalleb <a href="#" class="resource-link">Read</a></li>
+  </ul>
+</section>
+
+
+<!-- ===================================================== -->
+<section class="section">
+  <h2>10. Compliance as Code</h2>
+  <p>
+    If hardening can be done using Infrastructure as Code tools,
+    why can’t compliance be automated as code?
+  </p>
+
+  <div class="filters">
+    <button type="button" class="filter active" data-type="videos">Videos</button>
+    <button type="button" class="filter" data-type="blogs">Blogs & Tutorials</button>
+  </div>
+
+  <!-- VIDEOS -->
+  <ul class="resource-list" data-content="videos">
+    <li><span class="tag">VIDEO</span>Compliance as Code: Automate Compliance Using Open Source Technology – RedHat</li>
+    <li><span class="tag">VIDEO</span>Continuous Assurance and Continuous Compliance via Data, Graph, Query and Code – Erkang Zheng</li>
+    <li><span class="tag">VIDEO</span>Managing Compliance as Code: Using Chef InSpec for All Its Possibilities – Chef</li>
+    <li><span class="tag">VIDEO</span>Compliance as Code – Lessons Learned From Regulated Organizations – Sergiu Bodiu</li>
+    <li><span class="tag">VIDEO</span>Compliance As Code – Webinar – Anitian</li>
+    <li><span class="tag">VIDEO</span>Exception Handling: Compliance as Code – Chef</li>
+    <li><span class="tag">VIDEO</span>Infrastructure and Compliance as Code for Universities – Blake Dworaczyk, Adam Mikeal, Nick Rycar</li>
+    <li><span class="tag">VIDEO</span>DevSecOps Delight with Compliance as Code – Anthony Rees</li>
+    <li><span class="tag">VIDEO</span>InSpec Compliance as Code – Kent Picat Gruber</li>
+  </ul>
+
+  <!-- BLOGS -->
+  <ul class="resource-list hidden" data-content="blogs">
+    <li data-link=""><span class="tag">BLOG</span> What’s the Fuss with “Compliance as Code”? – Mario Platt <a href="#" class="resource-link">Read</a></li>
+  <li data-link=""><span class="tag">BLOG</span> Why Building Compliance into Your Code Benefits the Entire Company – Vanessa Wegner <a href="#" class="resource-link">Read</a></li>
+  <li data-link=""><span class="tag">BLOG</span> Compliance as Code with InSpec – Michael Ducy <a href="#" class="resource-link">Read</a></li>
+  <li data-link=""><span class="tag">BLOG</span> 6 Benefits of Compliance as Code for the Enterprise – Cliff Almond <a href="#" class="resource-link">Read</a></li>
+  <li data-link=""><span class="tag">BLOG</span> Codifying Your Configuration Standards – Phil Dorczuk <a href="#" class="resource-link">Read</a></li>
+  </ul>
+
+</section>
+</main>
+
+<div id="footer" aria-hidden="true"></div>
+<!-- SCRIPTS -->
+<script src="/js/server.js"></script>
+<script src="/js/loadPartials.js" defer></script>
+<script src="/js/components.js" defer></script>
+
+<script defer>
+document.addEventListener("click", e => {
+  if (!e.target.classList.contains("filter")) return;
+  const section = e.target.closest(".section");
+  const type = e.target.dataset.type;
+
+  section.querySelectorAll(".filter").forEach(b => b.classList.remove("active"));
+  e.target.classList.add("active");
+
+  section.querySelectorAll(".resource-list").forEach(l => l.classList.add("hidden"));
+  const active = section.querySelector(`.resource-list[data-content="${type}"]`);
+  if (active) active.classList.remove("hidden");
+});
+</script>
+
+</body>
+</html>
+
+  <!-- ROOT styles -->
+  <link rel="stylesheet" href="/css/styles.css" />
+  <link rel="stylesheet" href="/css/pages/header.css" />
+
+<style>
+*{box-sizing:border-box}
+
+:root{
+  --bg:#fbf8f3;
+  --text:#111;
+  --muted:#666;
+  --accent:#4f46e5;
+  --border:#e5e7eb;
+  --card:#fff;
+  --shadow:0 12px 32px rgba(0,0,0,.08);
+}
+
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+}
+
+.container{
+  max-width:1100px;
+  margin:0 auto;
+  padding:56px 20px;
+}
+
+/* ================= PAGE TITLE ================= */
+.page-title{
+  text-align:center;
+  margin-bottom:70px;
+}
+
+.page-title h1{
+  font-size:46px;
+  margin-bottom:12px;
+  background:linear-gradient(90deg,#4f46e5,#06b6d4);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.page-title p{
+  color:var(--muted);
+  max-width:760px;
+  margin:0 auto;
+}
+
+/* ================= SECTION ================= */
+.section{
+  background:var(--card);
+  border-radius:18px;
+  padding:38px 36px;
+  box-shadow:var(--shadow);
+  border:1px solid var(--border);
+  margin-bottom:64px;
+  transition:.25s;
+}
+
+.section:hover{
+  transform:translateY(-3px);
+}
+
+.section h2{
+  font-size:26px;
+  margin-bottom:8px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.section h2::before{
+  content:"";
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:var(--accent);
+}
+
+.section p{
+  color:var(--muted);
+  max-width:900px;
+}
+
+/* ================= FILTERS ================= */
+.filters{
+  display:flex;
+  gap:10px;
+  margin:22px 0;
+  background:#f1f5f9;
+  padding:10px;
+  border-radius:999px;
+  width:max-content;
+}
+
+.filter{
+  padding:6px 16px;
+  font-size:14px;
+  border-radius:999px;
+  border:1px solid transparent;
+  background:#fff;
+  color:#333;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.filter.active{
+  background:var(--accent);
+  color:#fff;
+}
+
+.filter:hover{
+  background:#e0e7ff;
+}
+
+/* ================= RESOURCE CARDS ================= */
+.resource-list{
+  list-style:none;
+  padding:0;
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:16px;
+}
+
+.resource-list li{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:16px;
+  display:flex;
+  gap:12px;
+  transition:.2s;
+}
+
+.resource-list li:hover{
+  box-shadow:0 10px 26px rgba(0,0,0,.08);
+  transform:translateY(-2px);
+}
+
+.tag{
+  font-size:11px;
+  font-weight:700;
+  padding:4px 8px;
+  border-radius:999px;
+  background:#eef2ff;
+  color:var(--accent);
+  height:max-content;
+}
+
+.resource-content{
+  font-size:14px;
+  color:#333;
+}
+
+.resource-link{
+  display:inline-block;
+  margin-top:6px;
+  font-size:13px;
+  font-weight:600;
+  color:var(--accent);
+  text-decoration:none;
+}
+
+.resource-link:hover{
+  text-decoration:underline;
+}
+
+.hidden{display:none}
+
+/* ================= MOBILE ================= */
+@media(max-width:600px){
+  .page-title h1{font-size:34px}
+  .section{padding:26px 22px}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div id="header" aria-hidden="true"></div>
+
+<main class="container">
+
+<!-- INTRO -->
+<section class="page-title">
+  <h1>DevSecOps Roadmap with Resouces</h1>
+  <p>
+    A comprehensive collection of DevSecOps learning resources including
+    videos, blogs, tools, and hands-on labs.
+  </p>
+</section>
+
+<!-- ========1. Git (Version Control System)============== -->
+<section class="section">
+  <h2>1. Git (Version Control System)</h2>
+  <p>DevSecOps relies on Everything as Code (EaC). Git is the most widely used VCS.</p>
+
+  <div class="filters">
+    <button type="button" class="filter active" data-type="videos">Videos</button>
+    <button type="button" class="filter" data-type="blogs">Blogs & Tutorials</button>
+  </div>
+
+  <!-- VIDEOS -->
+  <ul class="resource-list" data-content="videos">
+    <li data-link=""><span class="tag">VIDEO</span> Git & GitHub Crash Course – Traversy Media <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Visual Git Tutorial – JavaScript Mastery <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Git Tutorial for Beginners – Intellipaat <a href="#" class="resource-link">Watch</a></li>
+  </ul>
+
+  <!-- BLOGS -->
+  <ul class="resource-list hidden" data-content="blogs">
+    <li data-link=""><span class="tag">BLOG</span> Git Handbook – GitHub <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Git Cheat Sheet – Atlassian <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Git Strategies for DevOps – Ahmad Iqbal Ali <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Learn the Basics of Git in Under 10 Minutes – Gowtham Venkatesan <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Understanding Git: Explain It Like I’m Five – Kevin Cooper <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Git – The Simple Guide – Roger Dudler <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> The Git Supremacy – Mayank Arya <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Version Controlling with Git in VS Code & Azure DevOps – Azure <a href="#" class="resource-link">Read</a></li>
+    <li><span class="tag">BLOG</span> Git branching strategies</li>
+    <li><span class="tag">BLOG</span> Rebase vs Merge explained</li>
+  </ul>
+
+</section>
+
+
+<!-- ==========2. CI/CD (Continuous Integration & Delivery)=========== -->
+<section class="section">
+  <h2>2. CI/CD (Continuous Integration & Delivery)</h2>
+  <p>
+    CI/CD pipelines are the backbone of modern DevOps and Cloud-Native systems.
+  </p>
+
+  <div class="filters">
+    <button type="button" class="filter active" data-type="videos">Videos</button>
+    <button type="button" class="filter" data-type="blogs">Blogs & Tutorials</button>
+    <button type="button" class="filter" data-type="handson">Hands-on</button>
+  </div>
+
+  <!-- VIDEOS -->
+  <ul class="resource-list" data-content="videos">
+    <li data-link=""><span class="tag">VIDEO</span> GitLab Beginner Tutorial – Raghav Pal <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Introduction to Jenkins, CI/CD, and DevOps – Valentin Despa <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Best Practices for Securing CI/CD Pipelines – Victoria Almazova <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> CI/CD Platform in AWS – Mohamed Labouardy <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Continuous Delivery from First Principles – Tom <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Let's Build a CI/CD Pipeline – Jean De Klerk <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Intro to CI/CD with Python – Chris Arceneaux <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> GitLab CI/CD – Johan Duran <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> CI/CD Pipeline in Azure – Benjamin Hodge <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Continuous Integration with GitLab CI – Pete Johanson <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> GitLab Workflow – GitLab <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> From Dev to Prod with GitLab CI – Stephan Hochdorfer <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Scaling Continuous Deployment – Tony Savor <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Continuous Delivery with Jenkins – Gianluca Arbezzano <a href="#" class="resource-link">Watch</a></li>
+  </ul>
+
+  <!-- BLOGS -->
+  <ul class="resource-list hidden" data-content="blogs">
+    <li data-link=""><span class="tag">BLOG</span> What is CI/CD — Concepts in Continuous Integration and Deployment – Sanjay Nair <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Absolute Beginner’s Guide to Continuous Delivery – Erin Snyder <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Introduction to CI, CD & Deployment – Justin Ellingwood <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Getting Started in CI/CD for Beginners – Samsha <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Beginner’s Cheat Sheet Before Applying CI/CD – Katalon <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> CI/CD Best Practices – Justin Ellingwood <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> CI/CD on Google Cloud – Google <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Modern CI/CD Pipeline – PureStorage <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> List of Continuous Integration Services – Awesome CI <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> CI/CD by Docker <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> GitLab CI/CD Crash Course – Avicenna Wisesa <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Automate Your Work with GitLab CI/CD – Marcin Nowacki <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Beginner-Friendly GitLab CI/CD – Zuri Hunter <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> GitLab CI/CD Examples – GitLab <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> CI Pipelines with GitLab CI on Ubuntu – Justin Ellingwood <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Modern CI/CD for Adobe Experience Platform – Jaemi Bremner <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> How We Build Code at Netflix – Netflix <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Beginner’s Guide to DevOps Pipelines – Bryant Son <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Rapid Release at Massive Scale – Chuck Rossi <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> CI/CD Pipeline in AWS in 5 Minutes – Allen Helton <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Security Challenges in CI/CD Workflow – Meera Rao <a href="#" class="resource-link">Read</a></li>
+  </ul>
+
+  <!-- HANDS-ON -->
+  <ul class="resource-list hidden" data-content="handson">
+    <li data-link=""><span class="tag">HANDS-ON LAB</span> Python CI/CD Workshop – Datapunks <a href="#" class="resource-link">Start</a></li>
+    <li data-link=""><span class="tag">HANDS-ON LAB</span> GitLab Git Workshop – GitLab <a href="#" class="resource-link">Start</a></li>
+    <li data-link=""><span class="tag">HANDS-ON LAB</span> GitLab Training – Netways <a href="#" class="resource-link">Start</a></li>
+    <li data-link=""><span class="tag">HANDS-ON LAB</span> GitLab CI Training – Ondrej Sikathis <a href="#" class="resource-link">Start</a></li>
+  </ul>
+</section>
+
+
+<!-- =========3. Artifact Management============= -->
+<section class="section">
+  <h2>3. Artifact Management</h2>
+  <p>Artifact repositories store and control deployable binaries securely.</p>
+
+  <div class="filters">
+    <button type="button" class="filter active" data-type="videos">Videos</button>
+    <button type="button" class="filter" data-type="blogs">Blogs & Tutorials</button>
+  </div>
+
+  <!-- VIDEOS -->
+  <ul class="resource-list" data-content="videos">
+    <li data-link=""><span class="tag">VIDEO</span> Introduction to Artifactory on the JFrog Platform – Melissa <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> How to Integrate Nexus with Jenkins and Upload Artifacts – Madhu Sudhan Reddy <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Six Reasons to Use a Repository Manager Now – Tim O’Brien <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Sample DevOps Project: Nexus–Artifactory Uploader Jenkins Pipeline – Madhu Sudhan Reddy <a href="#" class="resource-link">Watch</a></li>
+  </ul>
+
+  <!-- BLOGS -->
+  <ul class="resource-list hidden" data-content="blogs">
+    <li data-link=""><span class="tag">BLOG</span> DevOps Artifacts: Artifactory, Sonatype Nexus, Maven & Apache Archiva – BogoToBogo <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Artifactory Repository Manager – Tutorial – Simon Scholz <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Nexus Repository Manager – Tutorial – Simon Scholz <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> DevOps: 8 Reasons for DevOps to Use a Binary Repository <a href="#" class="resource-link">Read</a></li>
+  </ul>
+
+</section>
+
+<!-- ==========4. Infrastructure as Code (IaC)=========== -->
+<section class="section">
+  <h2>4. Infrastructure as Code (IaC)</h2>
+  <p>Infrastructure is treated like software to enable speed and consistency.</p>
+
+  <div class="filters">
+    <button type="button" class="filter active" data-type="videos">Videos</button>
+    <button type="button" class="filter" data-type="blogs">Blogs & Tutorials</button>
+    <button type="button" class="filter" data-type="tools">Tools</button>
+  </div>
+
+  <!-- VIDEOS -->
+  <ul class="resource-list" data-content="videos">
+    <li data-link=""><span class="tag">VIDEO</span> Holistic Configuration Management at Facebook – Chunqiang Tang <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> SaltStack Is More Than Just Configuration Management – Thomas Hatch <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> DSC in the Configuration Management Tool World – Ben Gelens <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Evolution of Configuration Management in a DevOps World – Marisa Sawatphadungkij <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Integrating Configuration Management into Your Ecosystem – Sascha Bates <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Configuration Management with SaltStack: Zero to Hero – Wesley Whetstone <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Cloud-Native Configuration Management 2020 and Beyond – Eric Sorenson <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Puppet Automation Journey: Configuration Management & Cloud – Brendan Rosewarne <a href="#" class="resource-link">Watch</a></li>
+  </ul>
+
+  <!-- BLOGS -->
+  <ul class="resource-list hidden" data-content="blogs">
+    <li data-link=""><span class="tag">BLOG</span> Configuration Management in DevOps – BMC Blog <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Top 10 Configuration Management Tools – UpGuard <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Modern Configuration Management: Configuration as Code – Chef <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Writing Ansible Playbooks – Erika Heidi <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Configuration Management & Continuous Deployment – Anilkumar Patel <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Change & Configuration Management the DevOps Way – Isaac Ndung'u <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Beginner’s Guide to Configuration Management Tools – Ofer Velich <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Automating Configuration Management for DevOps – Capgemini <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Beginner’s Guide to Chef – Linode <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Automation & Configuration Management with Chef – Sudhi <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> All About Chef Configuration Tool – Mitesh Soni <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Writing Chef Recipes – Erika Heidi <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Chef vs Puppet – Asaf Yigal <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Chef vs Puppet Detailed Comparison – Spec India <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Configuration Management Approaches: Chef, Ansible & Kubernetes – Kublr <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Writing Puppet Manifests – Erika Heidi <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Puppet Tutorial for Beginners – Guru99 <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Beginner’s Guide to Salt – Linode <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Getting Started with SaltStack – Ben Hosmer <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Using Salt for Basic Configuration Management – Bejoy Abraham Mathews <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> SaltStack Concepts & Terminology – Justin Ellingwood <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Configuration Management on Google Cloud – Google <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Holistic Configuration Management at Facebook – Chunqiang Tang et al. <a href="#" class="resource-link">Read</a></li>
+  </ul>
+
+  <!-- TOOLS -->
+  <ul class="resource-list hidden" data-content="tools">
+    <li><span class="tag">TOOL</span> Ansible – Open-source configuration management, deployment & orchestration tool</li>
+    <li><span class="tag">TOOL</span> Chef – Automation platform for defining infrastructure as code</li>
+    <li><span class="tag">TOOL</span> Vagrant – Tool for building and managing VM environments</li>
+    <li><span class="tag">TOOL</span> Puppet – Enterprise-grade configuration management platform</li>
+  </ul>
+
+</section>
+
+
+<!-- ===========5. Cloud Service Provider Platform============= -->
+<section class="section">
+  <h2>5. Cloud Service Provider Platform</h2>
+  <p>Modern development needs elastic, on-demand cloud platforms.</p>
+
+  <div class="filters">
+    <button type="button" class="filter active" data-type="videos">Videos</button>
+    <button type="button" class="filter" data-type="blogs">Tutorials & Blogs</button>
+    <button type="button" class="filter" data-type="tools">Tools</button>
+    <button type="button" class="filter" data-type="labs">Hands-on Labs</button>
+  </div>
+
+  <!-- VIDEOS -->
+  <ul class="resource-list" data-content="videos">
+    <li data-link=""><span class="tag">VIDEO</span> Introduction to AWS Security – Bill Reid <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> AWS Security by Design – Shafreen Sayyed <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Advanced Security Best Practices Masterclass – Ian Massingham <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Fundamentals of AWS Cloud Security – Becky Weiss <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Security Best Practices: Well-Architected Way – Ben Potter <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Introduction to AWS Security Hub – Ely Kahn <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Cloud Security Architecture Workshop – Dave Shackleford <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Implementing DevSecOps in the Cloud – Jimmy Jenis <a href="#" class="resource-link">Watch</a></li>
+  </ul>
+
+  <!-- BLOGS -->
+  <ul class="resource-list hidden" data-content="blogs">
+    <li data-link=""><span class="tag">BLOG</span> AWS Security Checklist – AWS <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> AWS Security Pillar – AWS <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> AWS Security Blog – AWS <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> AWS Security Primer – Michael Wittig <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Fundamental Security Concepts in AWS (Part 1) – Tom Porter <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> AWS Security Fundamentals – AWS <a href="#" class="resource-link">Read</a></li>
+  </ul>
+
+  <!-- TOOLS -->
+  <ul class="resource-list hidden" data-content="tools">
+    <li><span class="tag">TOOL</span> AWS Security Hub</li>
+    <li><span class="tag">TOOL</span> AWS IAM</li>
+    <li><span class="tag">TOOL</span> AWS GuardDuty</li>
+    <li><span class="tag">TOOL</span> AWS CloudTrail</li>
+  </ul>
+
+  <!-- LABS -->
+  <ul class="resource-list hidden" data-content="labs">
+    <li><span class="tag">HANDS-ON LAB</span> AWS Security Hands-on Labs</li>
+    <li><span class="tag">HANDS-ON LAB</span> AWS Well-Architected Security Labs</li>
+  </ul>
+</section>
+
+
+<!-- ==========6. Threat Modeling================= -->
+<section class="section">
+  <h2>6. Threat Modeling</h2>
+  <p>Threat modeling helps quantify and reduce security risks.</p>
+
+  <div class="filters">
+    <button type="button" class="filter active" data-type="books">Books</button>
+    <button type="button" class="filter" data-type="courses">Courses</button>
+    <button type="button" class="filter" data-type="blogs">Blogs & Tutorials</button>
+    <button type="button" class="filter" data-type="tools">Tools</button>
+  </div>
+
+  <!-- BOOKS -->
+  <ul class="resource-list" data-content="books">
+    <li data-link=""><span class="tag">BOOK</span> Threat Modeling: Designing for Security – Adam Shostack <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BOOK</span> Threat Modeling – Frank Swiderski & Window Snyder <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BOOK</span> Risk-Centric Threat Modeling – Tony UcedaVelez & Marco M. Morana <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BOOK</span> Threat Modeling – Matthew J. Coles & Izar Tarandach <a href="#" class="resource-link">Read</a></li>
+  </ul>
+
+  <!-- COURSES -->
+  <ul class="resource-list hidden" data-content="courses">
+    <li data-link=""><span class="tag">FREE COURSE</span> Threat Modeling Workshop – Robert Hurlbut <a href="#" class="resource-link">Start</a></li>
+    <li data-link=""><span class="tag">PAID COURSE</span> Certified Threat Modeling Professional (CTMP) – Practical DevSecOps <a href="#" class="resource-link">Start</a></li>
+    <li data-link=""><span class="tag">PAID COURSE</span> DevSecOps Expert – Practical DevSecOps <a href="#" class="resource-link">Start</a></li>
+    <li data-link=""><span class="tag">PAID COURSE</span> Threat Modeling Fundamentals – Pluralsight <a href="#" class="resource-link">Start</a></li>
+    <li data-link=""><span class="tag">PAID COURSE</span> CyberSec First Responder: Threat Detection & Response (CFR210) – Stone River eLearning <a href="#" class="resource-link">Start</a></li>
+    <li data-link=""><span class="tag">PAID COURSE</span> Learning Threat Modeling for Security Professionals – Adam Shostack <a href="#" class="resource-link">Start</a></li>
+    <li data-link=""><span class="tag">PAID COURSE</span> Threat Modeling: Spoofing In Depth – Adam Shostack <a href="#" class="resource-link">Start</a></li>
+    <li data-link=""><span class="tag">PAID COURSE</span> Threat Modeling: Tampering in Depth – Adam Shostack <a href="#" class="resource-link">Start</a></li>
+  </ul>
+
+  <!-- BLOGS -->
+  <ul class="resource-list hidden" data-content="blogs">
+    <li data-link=""><span class="tag">BLOG</span> What Is Security Threat Modeling? – Lawrence C. Miller & Peter H. Gregory <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Threat Modeling Cheat Sheet – OWASP <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Threat Modeling in the Enterprise (Part 1) – Stiliyana Simeonova <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Threat Modeling for Dummies – Adam Englander <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> DevSecOps, Threat Modeling & STRIDE – Bruno Amaro Almeida <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Threat Modeling: Why, How, When & Tools – Debarghya Pandit <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Threat Modeling Datasheet – Synopsys <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Threat Modeling Blog – Security Innovation <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Threat Modeling: 6 Common Mistakes – Jeff Petters <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Threat Modeling for Cloud Infrastructure – Pat Cable <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Why You Should Care About Threat Modeling – Suresh Marisetty <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Threat Modeling Methods Whitepaper – Nataliya Shevchenko et al. <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Threat Modeling Toolkit – ThoughtWorks <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> How to Get Started with Threat Modeling – HackerNoon <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Threat Modeling Tutorial – GeeksforGeeks <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Analyzing Application Security with Threat Modeling – Goran Aviani <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Tactical Threat Modeling – SafeCode <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Power of a Tailored Threat Model – Looking Glass <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Where Is My Threat Model? – Abhishek Datta <a href="#" class="resource-link">Read</a></li>
+  </ul>
+
+  <!-- TOOLS -->
+  <ul class="resource-list hidden" data-content="tools">
+    <li data-link=""><span class="tag">FREE TOOL</span> OWASP Threat Dragon – Online threat modeling with diagrams & rule engine <a href="#" class="resource-link">Use</a></li>
+    <li data-link=""><span class="tag">FREE TOOL</span> Microsoft Threat Modeling Tool – Design-phase threat discovery tool <a href="#" class="resource-link">Use</a></li>
+    <li data-link=""><span class="tag">FREE TOOL</span> OWASP Threat Dragon (GitLab Fork) – GitLab-integrated threat modeling tool <a href="#" class="resource-link">Use</a></li>
+    <li data-link=""><span class="tag">FREE TOOL</span> Raindance – Attack map modeling for SDLC <a href="#" class="resource-link">Use</a></li>
+    <li data-link=""><span class="tag">FREE TOOL</span> ThreatSpec – Embed threat modeling into development workflows <a href="#" class="resource-link">Use</a></li>
+    <li data-link=""><span class="tag">PAID TOOL</span> IriusRisk – Questionnaire-driven adaptive threat modeling <a href="#" class="resource-link">Use</a></li>
+    <li data-link=""><span class="tag">PAID TOOL</span> SD Elements – Automated threat modeling platform <a href="#" class="resource-link">Use</a></li>
+  </ul>
+</section>
+
+
+<!-- ===========7. Static Application Security Testing (SAST)=========== -->
+<section class="section">
+  <h2>7. Static Application Security Testing (SAST)</h2>
+  <p>SAST analyzes source code to identify security vulnerabilities early in the SDLC.</p>
+
+  <div class="filters">
+    <button type="button" class="filter active" data-type="videos">Videos</button>
+    <button type="button" class="filter" data-type="blogs">Blogs & Tutorials</button>
+    <button type="button" class="filter" data-type="tools">Tools</button>
+  </div>
+
+  <!-- VIDEOS -->
+  <ul class="resource-list" data-content="videos">
+    <li data-link=""><span class="tag">VIDEO</span> Static Analysis Security Testing for Dummies… and You – Kevin Fealey <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Application Security Testing – Semi Yulianto <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Static Analysis for Dynamic Assessments – Greg Patton <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Static Code Analysis: Scan All Your Code for Bugs – Jared DeMott <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Bug Hunting with Static Code Analysis – Nick Jones <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> SAST with CI/CD Pipelines Using WhiteSource – Mohamad Radwan <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> GitLab APEX SAST Walkthrough for Salesforce – Lucas C <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> AST in CI/CD: How to Make It Work – Ofer Maor <a href="#" class="resource-link">Watch</a></li>
+  </ul>
+
+  <!-- BLOGS -->
+  <ul class="resource-list hidden" data-content="blogs">
+    <li data-link=""><span class="tag">BLOG</span> How to Integrate SAST into the DevSecOps Pipeline in 5 Steps – Meera Rao <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> SAST vs DAST – Why SAST? – Sharon Solomon <a href="#" class="resource-link">Read</a></li>
+  </ul>
+
+  <!-- TOOLS -->
+  <ul class="resource-list hidden" data-content="tools">
+    <li data-link=""><span class="tag">TOOL</span> SAST Tools – OWASP <a href="#" class="resource-link">Explore</a></li>
+    <li><span class="tag">TOOL</span> GitLab SAST</li>
+    <li><span class="tag">TOOL</span> SonarQube</li>
+    <li><span class="tag">TOOL</span> Semgrep</li>
+  </ul>
+</section>
+
+
+<!-- =======8. Dynamic Application Security Testing (DAST)=========== -->
+<section class="section">
+  <h2>8. Dynamic Application Security Testing (DAST)</h2>
+  <p>DAST tests running applications to identify security vulnerabilities from the outside.</p>
+
+  <div class="filters">
+    <button type="button" class="filter active" data-type="videos">Videos</button>
+    <button type="button" class="filter" data-type="blogs">Blogs & Tutorials</button>
+    <button type="button" class="filter" data-type="tools">Tools</button>
+  </div>
+
+  <!-- VIDEOS -->
+  <ul class="resource-list" data-content="videos">
+    <li data-link=""><span class="tag">VIDEO</span> Dynamic Security Testing with OWASP ZAP – Omer Levi Hevroni <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Practical Dynamic Application Security Testing in the Enterprise – Nicholas Kenney <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Baby Steps to Security Testing – Christina Thalayasingam <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Automated Static & Dynamic Security Analysis of Mobile Apps – Raveendar & Rajesh <a href="#" class="resource-link">Watch</a></li>
+  </ul>
+
+  <!-- BLOGS -->
+  <ul class="resource-list hidden" data-content="blogs">
+    <li data-link=""><span class="tag">BLOG</span> Dynamic Application Security Testing (DAST) – PortSwigger <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Integrating Web Vulnerability Scanners in CI/CD – Davor Petreski <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Dynamic Application Security Testing (DAST) – GitLab <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> DAST Scan Automation in CI/CD Pipeline – Satish Govindappa <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Veracode Dynamic Analysis + Jenkins – Marina Kvitnitsky <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Integrating OWASP ZAP in DevSecOps Pipeline – BreachLock <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> DAST vs SAST – Case for Dynamic Testing – Ian Muscat <a href="#" class="resource-link">Read</a></li>
+    <li data-link=""><span class="tag">BLOG</span> Automating DAST Scans with Jenkins, Arachni & ThreadFix – Matthias Rohr <a href="#" class="resource-link">Read</a></li>
+  </ul>
+
+  <!-- TOOLS -->
+  <ul class="resource-list hidden" data-content="tools">
+    <li data-link=""><span class="tag">FREE TOOL</span> W3af – Web Application Attack & Audit Framework <a href="#" class="resource-link">Use</a></li>
+    <li data-link=""><span class="tag">FREE TOOL</span> Wapiti – Web application vulnerability scanner <a href="#" class="resource-link">Use</a></li>
+    <li data-link=""><span class="tag">FREE TOOL</span> Vega – Open-source web security scanner <a href="#" class="resource-link">Use</a></li>
+    <li data-link=""><span class="tag">FREE TOOL</span> Nikto – Open-source web server vulnerability scanner <a href="#" class="resource-link">Use</a></li>
+    <li data-link=""><span class="tag">PAID TOOL</span> Burp Suite – Integrated web application security testing platform <a href="#" class="resource-link">Use</a></li>
+    <li data-link=""><span class="tag">PAID TOOL</span> Detectify – Automated security & asset monitoring <a href="#" class="resource-link">Use</a></li>
+    <li data-link=""><span class="tag">PAID TOOL</span> Netsparker – Enterprise-grade web application security scanner <a href="#" class="resource-link">Use</a></li>
+  </ul>
+</section>
+
+
+<!-- ==========9. Security as Code=============== -->
+<section class="section">
+  <h2>9. Security as Code</h2>
+  <p>Security as Code embeds security controls, policies, and checks directly into code and pipelines.</p>
+
+  <div class="filters">
+    <button type="button" class="filter active" data-type="videos">Videos</button>
+    <button type="button" class="filter" data-type="blogs">Blogs & Tutorials</button>
+  </div>
+
+  <!-- VIDEOS -->
+  <ul class="resource-list" data-content="videos">
+    <li data-link=""><span class="tag">VIDEO</span> Security as Code Webinar – Ellie Mae <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Implementing Security as Code – Julio Faerman <a href="#" class="resource-link">Watch</a></li>
+    <li data-link=""><span class="tag">VIDEO</span> Security as Code: A SecDevOps Use Case – Ed Bellis <a href="#" class="resource-link">Watch</a></li>
+  </ul>
+
+  <!-- BLOGS -->
+  <ul class="resource-list hidden" data-content="blogs">
+    <li data-link=""><span class="tag">BLOG</span> What Is Security as Code (SaC)? – Ziad Ghalleb <a href="#" class="resource-link">Read</a></li>
+  </ul>
+</section>
+
+
+<!-- ===================================================== -->
+<section class="section">
+  <h2>10. Compliance as Code</h2>
+  <p>
+    If hardening can be done using Infrastructure as Code tools,
+    why can’t compliance be automated as code?
+  </p>
+
+  <div class="filters">
+    <button type="button" class="filter active" data-type="videos">Videos</button>
+    <button type="button" class="filter" data-type="blogs">Blogs & Tutorials</button>
+  </div>
+
+  <!-- VIDEOS -->
+  <ul class="resource-list" data-content="videos">
+    <li><span class="tag">VIDEO</span>Compliance as Code: Automate Compliance Using Open Source Technology – RedHat</li>
+    <li><span class="tag">VIDEO</span>Continuous Assurance and Continuous Compliance via Data, Graph, Query and Code – Erkang Zheng</li>
+    <li><span class="tag">VIDEO</span>Managing Compliance as Code: Using Chef InSpec for All Its Possibilities – Chef</li>
+    <li><span class="tag">VIDEO</span>Compliance as Code – Lessons Learned From Regulated Organizations – Sergiu Bodiu</li>
+    <li><span class="tag">VIDEO</span>Compliance As Code – Webinar – Anitian</li>
+    <li><span class="tag">VIDEO</span>Exception Handling: Compliance as Code – Chef</li>
+    <li><span class="tag">VIDEO</span>Infrastructure and Compliance as Code for Universities – Blake Dworaczyk, Adam Mikeal, Nick Rycar</li>
+    <li><span class="tag">VIDEO</span>DevSecOps Delight with Compliance as Code – Anthony Rees</li>
+    <li><span class="tag">VIDEO</span>InSpec Compliance as Code – Kent Picat Gruber</li>
+  </ul>
+
+  <!-- BLOGS -->
+  <ul class="resource-list hidden" data-content="blogs">
+    <li data-link=""><span class="tag">BLOG</span> What’s the Fuss with “Compliance as Code”? – Mario Platt <a href="#" class="resource-link">Read</a></li>
+  <li data-link=""><span class="tag">BLOG</span> Why Building Compliance into Your Code Benefits the Entire Company – Vanessa Wegner <a href="#" class="resource-link">Read</a></li>
+  <li data-link=""><span class="tag">BLOG</span> Compliance as Code with InSpec – Michael Ducy <a href="#" class="resource-link">Read</a></li>
+  <li data-link=""><span class="tag">BLOG</span> 6 Benefits of Compliance as Code for the Enterprise – Cliff Almond <a href="#" class="resource-link">Read</a></li>
+  <li data-link=""><span class="tag">BLOG</span> Codifying Your Configuration Standards – Phil Dorczuk <a href="#" class="resource-link">Read</a></li>
+  </ul>
+
+</section>
+</main>
+
+<div id="footer" aria-hidden="true"></div>
+<!-- SCRIPTS -->
+<script src="/js/server.js"></script>
+<script src="/js/loadPartials.js" defer></script>
+<script src="/js/components.js" defer></script>
+
+<script defer>
+document.addEventListener("click", e => {
+  if (!e.target.classList.contains("filter")) return;
+  const section = e.target.closest(".section");
+  const type = e.target.dataset.type;
+
+  section.querySelectorAll(".filter").forEach(b => b.classList.remove("active"));
+  e.target.classList.add("active");
+
+  section.querySelectorAll(".resource-list").forEach(l => l.classList.add("hidden"));
+  const active = section.querySelector(`.resource-list[data-content="${type}"]`);
+  if (active) active.classList.remove("hidden");
+});
+</script>
+
+</body>
+</html>

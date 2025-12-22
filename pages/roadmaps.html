@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gonotes — Learning Roadmaps</title>
+
+  <!-- Existing global styles -->
+  <link rel="stylesheet" href="../css/styles.css" />
+  <link rel="stylesheet" href="../css/pages/header.css" />
+
+  <style>
+    :root{
+      --accent:#f4b400;
+      --card:#ffffff;
+      --muted:#666;
+      --bg:#f6f6f4;
+      --shadow:0 10px 28px rgba(0,0,0,.08);
+
+      --ease:cubic-bezier(.22,.61,.36,1);
+    }
+
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+      background:var(--bg);
+      color:#111;
+    }
+
+    /* ===== PAGE ===== */
+    .roadmap-container{
+      max-width:1100px;
+      margin:0 auto;
+      padding:56px 20px 80px;
+      animation: pageEnter .8s var(--ease) both;
+    }
+
+    @keyframes pageEnter{
+      from{ opacity:0; transform:translateY(20px); }
+      to{ opacity:1; transform:translateY(0); }
+    }
+
+    .page-title{
+      text-align:center;
+      margin-bottom:48px;
+    }
+
+    .page-title h1{
+      font-size:38px;
+      margin-bottom:8px;
+    }
+
+    .page-title p{
+      color:var(--muted);
+      max-width:620px;
+      margin:0 auto;
+      font-size:16px;
+    }
+
+    /* ===== GRID ===== */
+    .roadmap-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      gap:28px;
+      margin-top:48px;
+    }
+
+    /* ===== CARD (FIXED) ===== */
+    .roadmap-card{
+      background:var(--card);
+      border-radius:18px;
+      padding:28px 22px;
+      box-shadow:var(--shadow);
+      text-decoration:none;
+      color:inherit;
+      position:relative;
+      overflow:hidden;
+
+      /* entrance animation only */
+      opacity:0;
+      transform:translateY(30px);
+      animation: cardEnter .6s var(--ease) forwards;
+
+      /* hover transition only */
+      transition:
+        transform .35s var(--ease),
+        box-shadow .35s var(--ease);
+    }
+
+    @keyframes cardEnter{
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    /* stagger entrance */
+    .roadmap-card:nth-child(1){ animation-delay:.1s }
+    .roadmap-card:nth-child(2){ animation-delay:.2s }
+    .roadmap-card:nth-child(3){ animation-delay:.3s }
+    .roadmap-card:nth-child(4){ animation-delay:.4s }
+    .roadmap-card:nth-child(5){ animation-delay:.5s }
+    .roadmap-card:nth-child(6){ animation-delay:.6s }
+
+    /* accent bar */
+    .roadmap-card::before{
+      content:"";
+      position:absolute;
+      top:0;
+      left:0;
+      width:0%;
+      height:6px;
+      background:linear-gradient(90deg,var(--accent),#ffce54);
+      transition:width .6s var(--ease);
+    }
+
+    .roadmap-card:hover::before{
+      width:100%;
+    }
+
+    .roadmap-card:hover{
+      transform:translateY(-10px) scale(1.02);
+      box-shadow:0 22px 48px rgba(0,0,0,.14);
+    }
+
+    /* ===== ICON ===== */
+    .roadmap-icon{
+      font-size:36px;
+      margin-bottom:14px;
+      transition:transform .4s var(--ease);
+    }
+
+    .roadmap-card:hover .roadmap-icon{
+      transform:scale(1.15) rotate(-3deg);
+    }
+
+    /* ===== TEXT ===== */
+    .roadmap-card h3{
+      margin:0 0 6px;
+      font-size:18px;
+      transition:color .25s ease;
+    }
+
+    .roadmap-card:hover h3{
+      color:var(--accent);
+    }
+
+    .roadmap-card p{
+      margin:0;
+      font-size:14px;
+      color:var(--muted);
+      line-height:1.5;
+    }
+
+    /* ===== FOOTER SPACE ===== */
+    #footer{
+      margin-top:80px;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div id="header"></div>
+
+<main class="roadmap-container">
+
+  <div class="page-title">
+    <h1>Career Roadmaps</h1>
+    <p>
+      Step-by-step learning paths to help you master in-demand tech roles —
+      from beginner to advanced.
+    </p>
+  </div>
+
+  <section class="roadmap-grid">
+
+    <a href="./pages/devops-roadmap.html" class="roadmap-card">
+      <div class="roadmap-icon">🚀</div>
+      <h3>DevOps Roadmap</h3>
+      <p>Linux, Git, CI/CD, Docker, Kubernetes, Cloud & monitoring.</p>
+    </a>
+
+    <a href="/pages/devsecops-university.html" class="roadmap-card">
+      <div class="roadmap-icon">🔐</div>
+      <h3>DevSecOps Roadmap</h3>
+      <p>Security in CI/CD, SAST, DAST, IaC security, compliance.</p>
+    </a>
+
+    <a href="/pages/aiml-roadmap.html" class="roadmap-card">
+      <div class="roadmap-icon">🤖</div>
+      <h3>AI / ML Roadmap</h3>
+      <p>Python, ML algorithms, deep learning, projects & deployment.</p>
+    </a>
+
+    <a href="./pages/cloud-roadmap.html" class="roadmap-card">
+      <div class="roadmap-icon">☁️</div>
+      <h3>Cloud Engineer</h3>
+      <p>AWS, Azure, GCP, networking, IAM, architecture basics.</p>
+    </a>
+
+    <a href="./pages/backend-roadmap.html" class="roadmap-card">
+      <div class="roadmap-icon">💻</div>
+      <h3>Backend Developer</h3>
+      <p>Node.js, databases, APIs, authentication, system design.</p>
+    </a>
+
+    <a href="./pages/cybersecurity-roadmap.html" class="roadmap-card">
+      <div class="roadmap-icon">🛡️</div>
+      <h3>Cyber Security</h3>
+      <p>Networking, Linux, pentesting, SOC, blue & red team.</p>
+    </a>
+
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<div id="footer"></div>
+
+<!-- Scripts -->
+<script src="js/server.js"></script>
+<script src="../js/loadPartials.js" defer></script>
+
+</body>
+</html>

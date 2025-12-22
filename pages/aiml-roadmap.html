@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AIML Roadmap with Resouces</title>
+
+<!-- Global styles -->
+<link rel="stylesheet" href="../css/styles.css" />
+<link rel="stylesheet" href="../css/pages/header.css" />
+
+<style>
+*{box-sizing:border-box}
+
+:root{
+  --bg:#fbf8f3;
+  --text:#111;
+  --muted:#666;
+  --accent:#4f46e5;
+  --border:#e5e7eb;
+  --card:#fff;
+  --shadow:0 12px 32px rgba(0,0,0,.08);
+}
+
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+}
+
+.container{
+  max-width:1100px;
+  margin:0 auto;
+  padding:56px 20px;
+}
+
+/* ================= PAGE TITLE ================= */
+.page-title{
+  text-align:center;
+  margin-bottom:70px;
+}
+
+.page-title h1{
+  font-size:46px;
+  margin-bottom:12px;
+  background:linear-gradient(90deg,#4f46e5,#06b6d4);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.page-title p{
+  color:var(--muted);
+  max-width:760px;
+  margin:0 auto;
+}
+
+/* ================= SECTION ================= */
+.section{
+  background:var(--card);
+  border-radius:18px;
+  padding:38px 36px;
+  box-shadow:var(--shadow);
+  border:1px solid var(--border);
+  margin-bottom:64px;
+  transition:.25s;
+}
+
+.section:hover{
+  transform:translateY(-3px);
+}
+
+.section h2{
+  font-size:26px;
+  margin-bottom:8px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.section h2::before{
+  content:"";
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:var(--accent);
+}
+
+.section p{
+  color:var(--muted);
+  max-width:900px;
+}
+
+/* ================= FILTERS ================= */
+.filters{
+  display:flex;
+  gap:10px;
+  margin:22px 0;
+  background:#f1f5f9;
+  padding:10px;
+  border-radius:999px;
+  width:max-content;
+}
+
+.filter{
+  padding:6px 16px;
+  font-size:14px;
+  border-radius:999px;
+  border:1px solid transparent;
+  background:#fff;
+  color:#333;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.filter.active{
+  background:var(--accent);
+  color:#fff;
+}
+
+.filter:hover{
+  background:#e0e7ff;
+}
+
+/* ================= RESOURCE CARDS ================= */
+.resource-list{
+  list-style:none;
+  padding:0;
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:16px;
+}
+
+.resource-list li{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:16px;
+  display:flex;
+  gap:12px;
+  transition:.2s;
+}
+
+.resource-list li:hover{
+  box-shadow:0 10px 26px rgba(0,0,0,.08);
+  transform:translateY(-2px);
+}
+
+.tag{
+  font-size:11px;
+  font-weight:700;
+  padding:4px 8px;
+  border-radius:999px;
+  background:#eef2ff;
+  color:var(--accent);
+  height:max-content;
+}
+
+.hidden{display:none}
+
+/* ================= MOBILE ================= */
+@media(max-width:600px){
+  .page-title h1{font-size:34px}
+  .section{padding:26px 22px}
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div id="header"></div>
+
+<main class="container">
+
+<!-- INTRO -->
+<section class="page-title">
+  <h1>AIML Roadmap with Resouces</h1>
+  <p>
+    A complete, structured roadmap to master Artificial Intelligence,
+    Machine Learning, Deep Learning, Generative AI, and MLOps.
+  </p>
+</section>
+
+<!-- ================== 1. PYTHON ================== -->
+<section class="section">
+  <h2>1. Python for AI / ML</h2>
+  <p>Python is the foundation of AI, ML, and data science.</p>
+
+  <div class="filters">
+    <button class="filter active" data-type="videos">Videos</button>
+    <button class="filter" data-type="blogs">Blogs</button>
+    <button class="filter" data-type="tools">Tools</button>
+    <button class="filter" data-type="handson">Hands-on</button>
+  </div>
+
+  <!-- VIDEOS -->
+  <ul class="resource-list" data-content="videos">
+    <li data-link="https://www.youtube.com/watch?v=rfscVS0vtbw"><span class="tag">VIDEO</span> Python Full Course – freeCodeCamp <a href="https://www.youtube.com/watch?v=rfscVS0vtbw" class="resource-link" target="_blank">Watch</a></li>
+    <li data-link="https://www.youtube.com/playlist?list=PL-osiE80TeTsqhIuOqKhwlXsIBIdSeYtc"><span class="tag">VIDEO</span> Python OOP – Corey Schafer <a href="https://www.youtube.com/playlist?list=PL-osiE80TeTsqhIuOqKhwlXsIBIdSeYtc" class="resource-link" target="_blank">Watch</a></li>
+    <li data-link="https://www.youtube.com/c/KrishNaik"><span class="tag">VIDEO</span> Python for Data Science – Krish Naik <a href="https://www.youtube.com/c/KrishNaik" class="resource-link" target="_blank">Watch</a></li>
+    <li data-link="https://www.youtube.com/c/TechWithTim"><span class="tag">VIDEO</span> Python Tips & Tricks – Tech With Tim <a href="https://www.youtube.com/c/TechWithTim" class="resource-link" target="_blank">Watch</a></li>
+    <li data-link="https://www.youtube.com/watch?v=LHBE6Q9XlzI"><span class="tag">VIDEO</span> Python for Beginners – Programming with Mosh <a href="https://www.youtube.com/watch?v=LHBE6Q9XlzI" class="resource-link" target="_blank">Watch</a></li>
+    <li data-link="https://www.youtube.com/watch?v=HGOBQPFzWKo"><span class="tag">VIDEO</span> Python for Machine Learning – Sentdex <a href="https://www.youtube.com/watch?v=HGOBQPFzWKo" class="resource-link" target="_blank">Watch</a></li>
+  </ul>
+
+  <!-- BLOGS -->
+  <ul class="resource-list hidden" data-content="blogs">
+    <li data-link="https://docs.python.org/3/"><span class="tag">BLOG</span> Python Official Documentation <a href="https://docs.python.org/3/" class="resource-link" target="_blank">Read</a></li>
+    <li data-link="https://realpython.com/"><span class="tag">BLOG</span> Real Python – Advanced Python Tutorials <a href="https://realpython.com/" class="resource-link" target="_blank">Read</a></li>
+    <li data-link="https://peps.python.org/pep-0008/"><span class="tag">BLOG</span> Python PEP 8 Style Guide <a href="https://peps.python.org/pep-0008/" class="resource-link" target="_blank">Read</a></li>
+    <li data-link="https://www.geeksforgeeks.org/python-programming-language/"><span class="tag">BLOG</span> Python Programming – GeeksforGeeks <a href="https://www.geeksforgeeks.org/python-programming-language/" class="resource-link" target="_blank">Read</a></li>
+    <li data-link="https://towardsdatascience.com/"><span class="tag">BLOG</span> Python for Data Science – Towards Data Science <a href="https://towardsdatascience.com/" class="resource-link" target="_blank">Read</a></li>
+  </ul>
+
+  <!-- TOOLS -->
+  <ul class="resource-list hidden" data-content="tools">
+    <li data-link="https://www.python.org/"><span class="tag">TOOL</span> Python <a href="https://www.python.org/" class="resource-link" target="_blank">Use</a></li>
+    <li data-link="https://jupyter.org/"><span class="tag">TOOL</span> Jupyter Notebook <a href="https://jupyter.org/" class="resource-link" target="_blank">Use</a></li>
+    <li data-link="https://code.visualstudio.com/"><span class="tag">TOOL</span> VS Code <a href="https://code.visualstudio.com/" class="resource-link" target="_blank">Use</a></li>
+    <li data-link="https://www.anaconda.com/"><span class="tag">TOOL</span> Conda / Anaconda <a href="https://www.anaconda.com/" class="resource-link" target="_blank">Use</a></li>
+    <li data-link="https://colab.research.google.com/"><span class="tag">TOOL</span> Google Colab <a href="https://colab.research.google.com/" class="resource-link" target="_blank">Use</a></li>
+  </ul>
+
+  <!-- HANDS-ON -->
+  <ul class="resource-list hidden" data-content="handson">
+    <li><span class="tag">PROJECT</span> Data Analyzer using Pandas</li>
+    <li><span class="tag">PROJECT</span> Web Scraper with BeautifulSoup</li>
+    <li><span class="tag">PROJECT</span> Automation Scripts with Python</li>
+    <li><span class="tag">PROJECT</span> REST API using Flask or FastAPI</li>
+    <li><span class="tag">PROJECT</span> ML Model Training Pipeline</li>
+  </ul>
+</section>
+
+<!-- ================== 2. MATH ================== -->
+<section class="section">
+  <h2>2. Mathematics for Machine Learning</h2>
+  <p>Math builds intuition behind machine learning algorithms.</p>
+
+  <div class="filters">
+    <button class="filter active" data-type="videos">Videos</button>
+    <button class="filter" data-type="blogs">Blogs</button>
+  </div>
+
+  <!-- VIDEOS -->
+  <ul class="resource-list" data-content="videos">
+    <li data-link="https://www.youtube.com/watch?v=kjBOesZCoqc"><span class="tag">VIDEO</span> Linear Algebra – 3Blue1Brown <a href="https://www.youtube.com/watch?v=kjBOesZCoqc" class="resource-link" target="_blank">Watch</a></li>
+    <li data-link="https://www.youtube.com/playlist?list=PLblh5JKOoLUICTaGLRoHQDuF_7q2GfuJF"><span class="tag">VIDEO</span> Probability & Statistics – StatQuest <a href="https://www.youtube.com/playlist?list=PLblh5JKOoLUICTaGLRoHQDuF_7q2GfuJF" class="resource-link" target="_blank">Watch</a></li>
+    <li data-link="https://www.khanacademy.org/math/multivariable-calculus"><span class="tag">VIDEO</span> Calculus for Machine Learning – Khan Academy <a href="https://www.khanacademy.org/math/multivariable-calculus" class="resource-link" target="_blank">Watch</a></li>
+    <li data-link="https://www.youtube.com/watch?v=IpGxLWOIZy4"><span class="tag">VIDEO</span> Math for Machine Learning – freeCodeCamp <a href="https://www.youtube.com/watch?v=IpGxLWOIZy4" class="resource-link" target="_blank">Watch</a></li>
+    <li data-link="https://www.youtube.com/watch?v=aircAruvnKk"><span class="tag">VIDEO</span> Gradient Descent Explained Visually – 3Blue1Brown <a href="https://www.youtube.com/watch?v=aircAruvnKk" class="resource-link" target="_blank">Watch</a></li>
+  </ul>
+
+  <!-- BLOGS -->
+  <ul class="resource-list hidden" data-content="blogs">
+    <li data-link="https://www.coursera.org/specializations/mathematics-machine-learning"><span class="tag">BLOG</span> Mathematics for Machine Learning – Imperial College London <a href="https://www.coursera.org/specializations/mathematics-machine-learning" class="resource-link" target="_blank">Read</a></li>
+    <li data-link="https://towardsdatascience.com/gradient-descent-explained-9b953fc0d2c"><span class="tag">BLOG</span> Gradient Descent Explained <a href="https://towardsdatascience.com/gradient-descent-explained-9b953fc0d2c" class="resource-link" target="_blank">Read</a></li>
+    <li data-link="https://scott.fortmann-roe.com/docs/BiasVariance.html"><span class="tag">BLOG</span> Bias–Variance Tradeoff Explained <a href="https://scott.fortmann-roe.com/docs/BiasVariance.html" class="resource-link" target="_blank">Read</a></li>
+    <li data-link="https://machinelearningmastery.com/linear-algebra-machine-learning/"><span class="tag">BLOG</span> Linear Algebra for Machine Learning – Jason Brownlee <a href="https://machinelearningmastery.com/linear-algebra-machine-learning/" class="resource-link" target="_blank">Read</a></li>
+    <li data-link="https://machinelearningmastery.com/probability-for-machine-learning/"><span class="tag">BLOG</span> Probability for Machine Learning – Jason Brownlee <a href="https://machinelearningmastery.com/probability-for-machine-learning/" class="resource-link" target="_blank">Read</a></li>
+  </ul>
+</section>
+
+<!-- ================== 3. DATA ANALYSIS ================== -->
+<section class="section">
+<h2>3. Data Analysis & Visualization</h2>
+
+<div class="filters">
+  <button class="filter active" data-type="videos">Videos</button>
+  <button class="filter" data-type="tools">Tools</button>
+  <button class="filter" data-type="handson">Hands-on</button>
+</div>
+
+<ul class="resource-list" data-content="videos">
+  <li><span class="tag">VIDEO</span> Pandas Full Course – freeCodeCamp</li>
+  <li><span class="tag">VIDEO</span> EDA – Krish Naik</li>
+  <li><span class="tag">VIDEO</span> Data Visualization – Corey Schafer</li>
+</ul>
+
+<ul class="resource-list hidden" data-content="tools">
+  <li><span class="tag">TOOL</span> Pandas</li>
+  <li><span class="tag">TOOL</span> NumPy</li>
+  <li><span class="tag">TOOL</span> Matplotlib</li>
+  <li><span class="tag">TOOL</span> Seaborn</li>
+  <li><span class="tag">TOOL</span> Plotly</li>
+</ul>
+
+<ul class="resource-list hidden" data-content="handson">
+  <li><span class="tag">PROJECT</span> Kaggle EDA Notebook</li>
+  <li><span class="tag">PROJECT</span> COVID-19 Data Analysis</li>
+</ul>
+</section>
+
+<!-- ================== 4. MACHINE LEARNING ================== -->
+<section class="section">
+<h2>4. Machine Learning</h2>
+
+<div class="filters">
+  <button class="filter active" data-type="videos">Videos</button>
+  <button class="filter" data-type="blogs">Blogs</button>
+  <button class="filter" data-type="handson">Hands-on</button>
+</div>
+
+<ul class="resource-list" data-content="videos">
+  <li><span class="tag">VIDEO</span> Machine Learning – Andrew Ng</li>
+  <li><span class="tag">VIDEO</span> ML Algorithms – StatQuest</li>
+  <li><span class="tag">VIDEO</span> ML with Python – freeCodeCamp</li>
+</ul>
+
+<ul class="resource-list hidden" data-content="blogs">
+  <li><span class="tag">BLOG</span> Scikit-learn Documentation</li>
+  <li><span class="tag">BLOG</span> Model Evaluation Metrics</li>
+  <li><span class="tag">BLOG</span> Overfitting vs Underfitting</li>
+</ul>
+
+<ul class="resource-list hidden" data-content="handson">
+  <li><span class="tag">PROJECT</span> Titanic Classification</li>
+  <li><span class="tag">PROJECT</span> House Price Prediction</li>
+  <li><span class="tag">PROJECT</span> Credit Risk Model</li>
+</ul>
+</section>
+
+<!-- ================== 5. DEEP LEARNING ================== -->
+<section class="section">
+<h2>5. Deep Learning</h2>
+
+<ul class="resource-list">
+  <li><span class="tag">VIDEO</span> Deep Learning Specialization – Andrew Ng</li>
+  <li><span class="tag">VIDEO</span> PyTorch Full Course – freeCodeCamp</li>
+  <li><span class="tag">BLOG</span> Backpropagation Explained</li>
+  <li><span class="tag">TOOL</span> TensorFlow</li>
+  <li><span class="tag">TOOL</span> PyTorch</li>
+</ul>
+</section>
+
+<!-- ================== 6. NLP ================== -->
+<section class="section">
+<h2>6. Natural Language Processing (NLP)</h2>
+
+<ul class="resource-list">
+  <li><span class="tag">VIDEO</span> NLP Full Course – freeCodeCamp</li>
+  <li><span class="tag">VIDEO</span> Transformers Explained – Jay Alammar</li>
+  <li><span class="tag">TOOL</span> NLTK</li>
+  <li><span class="tag">TOOL</span> spaCy</li>
+  <li><span class="tag">TOOL</span> HuggingFace Transformers</li>
+</ul>
+</section>
+
+<!-- ================== 7. GEN AI ================== -->
+<section class="section">
+<h2>7. Generative AI & LLMs</h2>
+
+<ul class="resource-list">
+  <li><span class="tag">VIDEO</span> Generative AI – freeCodeCamp</li>
+  <li><span class="tag">VIDEO</span> LLMs from Scratch – Andrej Karpathy</li>
+  <li><span class="tag">BLOG</span> OpenAI Cookbook</li>
+  <li><span class="tag">TOOL</span> OpenAI API</li>
+  <li><span class="tag">TOOL</span> LangChain</li>
+  <li><span class="tag">PROJECT</span> AI Chatbot</li>
+  <li><span class="tag">PROJECT</span> RAG Document Q&A</li>
+</ul>
+</section>
+
+<!-- ================== 8. MLOPS ================== -->
+<section class="section">
+<h2>8. MLOps & Deployment</h2>
+
+<ul class="resource-list">
+  <li><span class="tag">VIDEO</span> MLOps Full Course – freeCodeCamp</li>
+  <li><span class="tag">VIDEO</span> ML in Production – Google</li>
+  <li><span class="tag">TOOL</span> MLflow</li>
+  <li><span class="tag">TOOL</span> Docker</li>
+  <li><span class="tag">TOOL</span> FastAPI</li>
+  <li><span class="tag">TOOL</span> Kubernetes</li>
+</ul>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<div id="footer"></div>
+
+<!-- SCRIPTS -->
+<script src="../js/server.js"></script>
+<script src="../js/loadPartials.js" defer></script>
+
+<script>
+document.addEventListener("click", e => {
+  if (!e.target.classList.contains("filter")) return;
+  const section = e.target.closest(".section");
+  const type = e.target.dataset.type;
+
+  section.querySelectorAll(".filter").forEach(b => b.classList.remove("active"));
+  e.target.classList.add("active");
+
+  section.querySelectorAll(".resource-list").forEach(l => l.classList.add("hidden"));
+  const active = section.querySelector(`.resource-list[data-content="${type}"]`);
+  if (active) active.classList.remove("hidden");
+});
+</script>
+
+</body>
+</html>
