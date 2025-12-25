@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Homepage -->
+  <url>
+    <loc>https://gonotes.shop/</loc>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Main Content Pages -->
+  <url>
+    <loc>https://gonotes.shop/pages/shop.html</loc>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://gonotes.shop/pages/qp.html</loc>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://gonotes.shop/pages/gate.html</loc>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://gonotes.shop/pages/syllabus.html</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://gonotes.shop/pages/org.html</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://gonotes.shop/pages/pdf.html</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://gonotes.shop/pages/pdf-compressor.html</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Roadmaps -->
+  <url>
+    <loc>https://gonotes.shop/pages/roadmaps.html</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://gonotes.shop/pages/aiml-roadmap.html</loc>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://gonotes.shop/pages/devsecops-university.html</loc>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Learning / Interview -->
+  <url>
+    <loc>https://gonotes.shop/pages/coding.html</loc>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://gonotes.shop/pages/interview.html</loc>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://gonotes.shop/pages/articles.html</loc>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Utility / Projects -->
+  <url>
+    <loc>https://gonotes.shop/pages/project.html</loc>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://gonotes.shop/pages/company-list.html</loc>
+    <priority>0.6</priority>
+  </url>
+
+</urlset>

@@ -3,13 +3,22 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Gonotes — Shop</title>
+
+  <title>GoNotes Shop – Buy Study Notes, PDFs & Semester-Wise Materials</title>
+
+  <!-- ✅ CANONICAL (MOST IMPORTANT) -->
+  <link rel="canonical" href="https://gonotes.shop/pages/shop.html" />
+
+  <!-- Meta description -->
+  <meta name="description"
+        content="Buy high-quality study notes, semester-wise PDFs and subject-wise materials on GoNotes. Preview notes before purchasing." />
 
   <!-- styles -->
   <link rel="stylesheet" href="/css/styles.css" />
   <link rel="stylesheet" href="/css/pages/header.css" />
   <link rel="stylesheet" href="/css/pages/shop.css" />
 </head>
+
 <body>
 
   <!-- header partial -->
@@ -23,7 +32,9 @@
            style="display:flex;gap:18px;align-items:center;justify-content:space-between;flex-wrap:wrap;">
 
         <div>
-          <h2 id="shopTitle" style="margin:0 0 6px">All Notes</h2>
+          <h1 id="shopTitle" style="margin:0 0 6px">
+            All Notes
+          </h1>
           <div style="color:#666;font-size:14px">
             Browse notes by stream and semester — preview before buying.
           </div>
@@ -83,12 +94,10 @@
           </div>
 
           <div class="card-actions">
-            <!-- ✅ FIXED -->
             <button class="btn add-to-cart" type="button">
               Add to cart
             </button>
 
-            <!-- ✅ BUY NOW handled ONLY in shop.js -->
             <button class="btn buy-now primary" type="button">
               Buy now
             </button>
@@ -120,7 +129,7 @@
   <!-- footer -->
   <div id="footer" aria-hidden="true"></div>
 
-  <!-- scripts (ROOT PATHS — LIVE SAFE) -->
+  <!-- scripts -->
   <script src="/js/server.js"></script>
   <script src="/js/loadPartials.js" defer></script>
   <script src="/js/components.js" defer></script>

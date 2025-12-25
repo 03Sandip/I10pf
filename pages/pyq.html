@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>GATE PYQs – GoNotes</title>
+
+  <link rel="stylesheet" href="../css/styles.css" />
+  <link rel="stylesheet" href="../css/pages/header.css" />
+
+   <!-- ✅ CANONICAL -->
+  <link rel="canonical" href="https://gonotes.shop/pages/pyq.html" />
+
+  <!-- Meta description -->
+  <meta name="description"
+        content="Practice GATE previous year questions with filters by department, subject, topic, year and question type. Interactive PYQs with solutions on GoNotes." />
+
+
+  <style>
+    :root{
+      --accent:#4f46e5;
+      --border:#e5e7eb;
+      --muted:#6b7280;
+      --bg:#f9fafb;
+      --card:#ffffff;
+    }
+
+    body{ background:var(--bg); }
+
+    .pyq-container{
+      max-width:1100px;
+      margin:32px auto;
+      padding:0 16px 80px;
+    }
+
+    /* ================= DEPARTMENT BAR ================= */
+    .dept-bar{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:18px;
+    }
+
+    .dept-tab{
+      padding:8px 18px;
+      border-radius:999px;
+      font-size:14px;
+      border:1px solid var(--border);
+      background:#fff;
+      cursor:pointer;
+    }
+
+    .dept-tab.active{
+      background:var(--accent);
+      color:#fff;
+      border-color:var(--accent);
+    }
+
+    /* ================= FILTER BAR ================= */
+    .filter-bar{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:24px;
+      background:#fff;
+      padding:14px;
+      border-radius:14px;
+      border:1px solid var(--border);
+    }
+
+    select{
+      padding:8px 12px;
+      border-radius:10px;
+      border:1px solid var(--border);
+    }
+
+    /* ================= QUESTION CARD ================= */
+    .question-card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:18px 20px;
+      margin-bottom:20px;
+    }
+
+    .q-header{
+      display:flex;
+      justify-content:space-between;
+      font-size:13px;
+      color:var(--muted);
+      margin-bottom:10px;
+    }
+
+    .q-type{
+      padding:3px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:600;
+      background:#eef2ff;
+      color:#3730a3;
+    }
+
+    .q-text{
+      font-size:15px;
+      line-height:1.6;
+      margin-bottom:10px;
+    }
+
+    .q-image{
+      display:flex;
+      justify-content:center;
+      margin:12px 0 16px;
+    }
+
+    .q-image img{
+      max-width:250px;
+      width:100%;
+      border-radius:6px;
+      border:1px solid var(--border);
+      background:#fff;
+      padding:4px;
+    }
+
+    .option{
+      padding:8px 10px;
+      border-radius:8px;
+      background:#f3f4f6;
+      margin-bottom:6px;
+      cursor:pointer;
+    }
+
+    .option.selected{
+      background:#dbeafe;
+      border:1px solid #3b82f6;
+    }
+
+    .nat-input{
+      padding:8px 12px;
+      border-radius:8px;
+      border:1px solid var(--border);
+      width:140px;
+    }
+
+    .btn{
+      background:var(--accent);
+      color:#fff;
+      border:none;
+      padding:6px 14px;
+      border-radius:10px;
+      cursor:pointer;
+      margin-top:10px;
+    }
+
+    
+
+    .answer{
+      margin-top:12px;
+      padding:10px 12px;
+      border-radius:10px;
+      display:none;
+    }
+
+    .answer.correct{ background:#ecfdf5; color:#065f46; }
+    .answer.wrong{ background:#fef2f2; color:#7f1d1d; }
+  </style>
+</head>
+
+<body>
+
+<div id="header"></div>
+
+<main class="pyq-container">
+  <h1>📘 GATE Previous Year Questions</h1>
+
+  <!-- 🔹 DEPARTMENT TABS (TOP) -->
+  <div class="dept-bar" id="deptTabs"></div>
+
+  <!-- 🔹 FILTERS (BELOW, DEPENDENT ON DEPARTMENT) -->
+  <div class="filter-bar">
+    <select id="filterSubject"><option value="">All Subjects</option></select>
+    <select id="filterTopic"><option value="">All Topics</option></select>
+    <select id="filterYear"><option value="">All Years</option></select>
+    <select id="filterType">
+      <option value="">All Types</option>
+      <option value="MCQ">MCQ</option>
+      <option value="MSQ">MSQ</option>
+      <option value="NAT">NAT</option>
+    </select>
+  </div>
+
+  <div id="pyqList"></div>
+</main>
+
+<script src="../js/loadPartials.js"></script>
+<!-- ✅ MUST COME FIRST -->
+<script src="../js/server.js"></script>
+<script src="../js/pyq-user.js"></script>
+</body>
+</html>
