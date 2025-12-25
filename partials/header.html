@@ -36,6 +36,15 @@
         Log In
       </a>
 
+      <!-- 🌙 DARK MODE TOGGLE -->
+      <button id="themeToggle"
+              class="theme-toggle-btn"
+              type="button"
+              aria-label="Toggle dark mode"
+              title="Toggle dark mode">
+        🌙
+      </button>
+
       <!-- User icon + dropdown (shown only when logged in) -->
       <div id="userMenu" class="user-menu" style="display:none;">
         <button id="userMenuToggle"
@@ -80,12 +89,10 @@
   <div id="mobileMenu" class="mobile-menu" aria-hidden="true">
     <ul class="mobile-nav">
 
-      <!-- My Notes (mobile, only when logged in) -->
       <li id="myNotesItemMobile" style="display:none;">
         <a href="/pages/mynotes.html">My Notes</a>
       </li>
 
-      <!-- Mobile LOGIN LINK (hidden when logged in) -->
       <li id="loginItemMobile">
         <a href="/pages/login.html">Log In</a>
       </li>

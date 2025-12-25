@@ -855,3 +855,71 @@ body{
     padding-left:4.4rem;
   }
 }
+
+/* ===================================
+   AMOLED DARK MODE (PURE BLACK)
+=================================== */
+body.dark {
+  --bg: #000000;              /* true black */
+  --card: #0b0b0b;            /* lifted black */
+  --muted: #9ca3af;
+  --accent: #d4af37;          /* premium gold */
+  --accent-2: #b8962e;
+
+  --page-bg: #000000;
+  --text-main: #e5e7eb;
+  --text-muted: #9ca3af;
+  --text-light: #6b7280;
+}
+
+body.dark {
+  background: var(--bg);
+  color: var(--text-main);
+}
+
+/* cards & sections */
+body.dark .card,
+body.dark .article,
+body.dark .benefit,
+body.dark .newsletter,
+body.dark .spotlight-card,
+body.dark .gn-testimonial-card,
+body.dark .product-item,
+body.dark .browser-card,
+body.dark .modal-content {
+  background: var(--card);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.06);
+}
+
+/* header */
+body.dark .site-header {
+  background: #000;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+/* inputs */
+body.dark input,
+body.dark select,
+body.dark .search {
+  background: #050505;
+  color: #e5e7eb;
+  border-color: #222;
+}
+
+/* links */
+body.dark a {
+  color: #e5e7eb;
+}
+
+/* code window */
+body.dark .code-window {
+  background: #020202;
+  color: #e5e7eb;
+}
+
+/* smooth transitions */
+* {
+  transition: background-color .25s ease,
+              color .25s ease,
+              border-color .25s ease;
+}

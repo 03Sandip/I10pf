@@ -197,6 +197,10 @@ async function loadPartial(targetId, fileName) {
         window[fn](el);
       }
     });
+// ✅ Dark mode toggle init (IMPORTANT)
+if (fileName === "header.html" && typeof initThemeToggle === "function") {
+  initThemeToggle();
+}
   } catch (e) {
     console.error("[loadPartials] error:", e);
   }

@@ -166,3 +166,166 @@
     min-width: 200px;
   }
 }
+
+
+/* ======================================
+   SYLLABUS — DARK MODE (BLUE + RED)
+   Clean • Modern • Techy
+====================================== */
+
+/* Background with cool tones */
+body.dark .sy-page {
+  background:
+    radial-gradient(900px 500px at 15% -10%, rgba(59,130,246,0.18), transparent 45%),
+    radial-gradient(700px 400px at 90% 10%, rgba(239,68,68,0.15), transparent 45%),
+    #000;
+  color: #e5e7eb;
+}
+
+/* Header */
+body.dark .sy-page-header h1 {
+  color: #f9fafb;
+  text-shadow:
+    0 0 22px rgba(59,130,246,0.25),
+    0 0 32px rgba(239,68,68,0.12);
+}
+
+body.dark .sy-page-header p {
+  color: #9ca3af;
+}
+
+/* =========================
+   FILTERS — GLASS + NEON
+========================= */
+body.dark .sy-filter-select,
+body.dark .sy-filter-input,
+body.dark .sy-reset-btn {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.14);
+  color: #e5e7eb;
+  backdrop-filter: blur(10px);
+}
+
+body.dark .sy-filter-select:focus,
+body.dark .sy-filter-input:focus {
+  border-color: #3b82f6;
+  box-shadow:
+    0 0 0 2px rgba(59,130,246,0.35),
+    0 0 18px rgba(59,130,246,0.25);
+}
+
+/* =========================
+   CARD — COOL NEON DEPTH
+========================= */
+body.dark .sy-card {
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.04), rgba(0,0,0,0.95));
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow:
+    0 18px 45px rgba(0,0,0,0.85);
+  transition:
+    transform .35s ease,
+    box-shadow .35s ease,
+    border-color .35s ease;
+}
+
+/* Neon border on hover */
+body.dark .sy-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 22px;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(59,130,246,0.45),
+    rgba(239,68,68,0.35),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity .35s ease;
+  pointer-events: none;
+}
+
+body.dark .sy-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  border-color: rgba(59,130,246,0.5);
+  box-shadow:
+    0 30px 70px rgba(0,0,0,0.95),
+    0 0 40px rgba(59,130,246,0.25);
+}
+
+body.dark .sy-card:hover::before {
+  opacity: 1;
+}
+
+/* Badge */
+body.dark .sy-card-badge {
+  background: rgba(59,130,246,0.18);
+  color: #93c5fd;
+  box-shadow: 0 0 14px rgba(59,130,246,0.5);
+}
+
+/* Image glow */
+body.dark .sy-card-image {
+  background:
+    radial-gradient(circle at center,
+      rgba(59,130,246,0.25),
+      rgba(0,0,0,0.95)
+    );
+}
+
+/* =========================
+   TEXT
+========================= */
+body.dark .sy-card-title {
+  color: #f9fafb;
+  letter-spacing: 0.3px;
+}
+
+body.dark .sy-card-meta {
+  color: #9ca3af;
+}
+
+/* =========================
+   BUTTON — BLUE → RED
+========================= */
+body.dark .sy-btn-download {
+  background: linear-gradient(
+    135deg,
+    #3b82f6,
+    #6366f1,
+    #ef4444
+  );
+  color: #fff;
+  box-shadow:
+    0 8px 26px rgba(59,130,246,0.55),
+    inset 0 -2px 0 rgba(0,0,0,0.35);
+  transition:
+    transform .25s ease,
+    box-shadow .25s ease;
+}
+
+body.dark .sy-btn-download:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 14px 40px rgba(239,68,68,0.55),
+    0 0 30px rgba(59,130,246,0.45);
+}
+
+/* Small link */
+body.dark .sy-small-link {
+  color: #93c5fd;
+}
+
+body.dark .sy-small-link::after {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #3b82f6,
+    #ef4444,
+    transparent
+  );
+}
