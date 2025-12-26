@@ -166,3 +166,124 @@
     max-width: 100%;
   }
 }
+
+
+/* =====================================
+   ARTICLES PAGE — AMOLED DARK MODE
+===================================== */
+
+body.dark {
+  --bg:#000000;
+  --card:#0b0b0b;
+  --text:#ffffff;
+  --muted:#9ca3af;
+
+  /* 🔵🔴 brand accents */
+  --accent-blue:#3b82f6;
+  --accent-red:#ef4444;
+}
+
+/* Page background */
+body.dark {
+  background:#000;
+  color:var(--text);
+}
+
+/* ================= SIDEBAR ================= */
+
+body.dark .sidebar-title {
+  color:#93c5fd; /* soft blue */
+}
+
+body.dark .articles-list a {
+  color:#e5e7eb;
+}
+
+body.dark .articles-list a:hover {
+  background:rgba(59,130,246,0.12);
+}
+
+/* 🔥 ACTIVE ARTICLE */
+body.dark .articles-list a.active {
+  background:linear-gradient(
+    90deg,
+    rgba(59,130,246,0.28),
+    rgba(239,68,68,0.22)
+  );
+  color:#ffffff;
+  font-weight:700;
+}
+
+/* ================= ARTICLE READER ================= */
+
+body.dark #articleTitle {
+  color:#ffffff;
+}
+
+body.dark .article-meta {
+  color:var(--muted);
+}
+
+/* ================= ARTICLE CONTENT ================= */
+
+body.dark .article-content {
+  color:#e5e7eb;
+}
+
+body.dark .article-content h2,
+body.dark .article-content h3 {
+  color:#ffffff;
+}
+
+/* paragraphs */
+body.dark .article-content p {
+  color:#e5e7eb;
+}
+
+/* lists */
+body.dark .article-content li {
+  color:#e5e7eb;
+}
+
+/* images */
+body.dark .article-content img {
+  box-shadow:0 10px 30px rgba(0,0,0,0.6);
+}
+
+/* tables */
+body.dark .article-content table {
+  border-color:#222;
+}
+
+body.dark .article-content th,
+body.dark .article-content td {
+  border-color:#222;
+  background:#050505;
+  color:#e5e7eb;
+}
+
+body.dark .article-content th {
+  background:#0f172a; /* deep blue */
+}
+
+/* blockquote */
+body.dark .article-content blockquote {
+  border-left:4px solid var(--accent-blue);
+  color:#c7d2fe;
+}
+
+/* loading / muted */
+body.dark .muted {
+  color:#9ca3af;
+}
+
+/* ================= TRANSITIONS ================= */
+.articles-list a,
+.article-content,
+.article-content h2,
+.article-content h3 {
+  transition:
+    background-color .25s ease,
+    color .25s ease,
+    border-color .25s ease;
+}

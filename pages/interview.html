@@ -99,6 +99,96 @@ body{
   color:#fff;
   border-color:var(--accent);
 }
+
+/* =====================================
+   TOP INTERVIEW 150 — AMOLED DARK MODE
+===================================== */
+
+body.dark {
+  --bg:#000000;
+  --card:#0b0b0b;
+  --text:#ffffff;
+  --muted:#9ca3af;
+
+  /* 🔵🔴 Brand */
+  --accent:#3b82f6;
+  --accent-red:#ef4444;
+
+  --border:rgba(255,255,255,0.08);
+}
+
+/* Page base */
+body.dark {
+  background:#000;
+  color:var(--text);
+}
+
+/* Layout cards */
+body.dark .ti150-sidebar,
+body.dark .ti150-content {
+  background:var(--card);
+  box-shadow:0 0 0 1px rgba(255,255,255,0.06);
+}
+
+/* Sidebar topics */
+body.dark .ti150-topic {
+  color:#e5e7eb;
+}
+
+body.dark .ti150-topic:hover {
+  background:#0f0f0f;
+}
+
+body.dark .ti150-topic.active {
+  background:linear-gradient(
+    90deg,
+    rgba(59,130,246,0.25),
+    rgba(239,68,68,0.18)
+  );
+  color:#ffffff;
+  font-weight:700;
+}
+
+/* Section heading */
+body.dark h2 {
+  color:#ffffff;
+}
+
+/* Problem row */
+body.dark .problem-item {
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+
+body.dark .problem-title {
+  color:#e5e7eb;
+}
+
+/* Solve button */
+body.dark .solve-btn {
+  background:#050505;
+  color:#ffffff;
+  border-color:#222;
+}
+
+body.dark .solve-btn:hover {
+  background:linear-gradient(90deg,#3b82f6,#ef4444);
+  color:#fff;
+  border-color:transparent;
+}
+
+/* Smooth transitions */
+.ti150-sidebar,
+.ti150-content,
+.ti150-topic,
+.problem-item,
+.solve-btn {
+  transition:
+    background-color .25s ease,
+    color .25s ease,
+    border-color .25s ease,
+    box-shadow .25s ease;
+}
+
 </style>
 </head>
 
@@ -122,6 +212,7 @@ body{
 
 <!-- ✅ SAME SCRIPTS AS coding.html -->
 <script src="../js/server.js"></script>
+<script src="../js/theme.js" defer></script>
 <script src="../js/loadPartials.js" defer></script>
 <script src="../js/components.js" defer></script>
 
