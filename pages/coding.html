@@ -98,6 +98,139 @@
     /* responsive */
     @media (max-width:880px){.row{grid-template-columns:40px 1fr 90px auto} .day-header{padding:10px}}
     @media (max-width:720px){ .row{grid-template-columns:32px 1fr auto} .controls{flex-direction:column;align-items:stretch} }
+
+    /* =====================================
+   SDE SHEET — AMOLED DARK MODE
+===================================== */
+
+body.dark {
+  --bg:#000000;
+  --card:#0b0b0b;
+  --text:#ffffff;
+  --muted:#9ca3af;
+
+  /* 🔵🔴 Brand */
+  --accent:#3b82f6;
+  --accent-red:#ef4444;
+
+  --border:rgba(255,255,255,0.08);
+}
+
+/* Base */
+body.dark {
+  background:#000;
+  color:var(--text);
+}
+
+/* Header card */
+body.dark .qp-page-header {
+  background:var(--card);
+  border-color:var(--border);
+  box-shadow:0 0 0 1px rgba(255,255,255,0.06);
+}
+
+body.dark .qp-page-header h1 {
+  color:#ffffff;
+}
+
+body.dark .qp-page-header p,
+body.dark .small-muted {
+  color:var(--muted);
+}
+
+/* Controls */
+body.dark .controls input,
+body.dark .btn {
+  background:#050505;
+  color:#ffffff;
+  border-color:#222;
+}
+
+body.dark .btn:hover {
+  background:#0b0b0b;
+}
+
+/* Accordion day card */
+body.dark .day {
+  background:var(--card);
+  border-color:var(--border);
+}
+
+body.dark .day:hover {
+  box-shadow:0 0 0 1px rgba(59,130,246,0.25);
+}
+
+body.dark .day-title {
+  color:#ffffff;
+}
+
+body.dark .day-sub {
+  color:var(--muted);
+}
+
+/* Table rows */
+body.dark .row {
+  border-top:1px solid rgba(255,255,255,0.05);
+}
+
+body.dark .row:hover {
+  background:#0f0f0f;
+}
+
+/* Text */
+body.dark .muted {
+  color:var(--muted);
+}
+
+/* Solve link */
+body.dark a.link {
+  color:#60a5fa;
+}
+body.dark a.link:hover {
+  color:#93c5fd;
+  text-decoration:underline;
+}
+
+/* Difficulty chips */
+body.dark .chip {
+  background:#0b0b0b;
+  border-color:rgba(255,255,255,0.1);
+  color:#e5e7eb;
+}
+
+body.dark .chip.easy {
+  color:#22c55e;
+}
+body.dark .chip.medium {
+  color:#f59e0b;
+}
+body.dark .chip.hard {
+  color:#ef4444;
+}
+
+/* Search highlight */
+body.dark mark.match {
+  background:linear-gradient(90deg,#3b82f6,#ef4444);
+  color:#fff;
+}
+
+/* Chevron */
+body.dark .chev {
+  color:#9ca3af;
+}
+
+/* Smooth transitions */
+.day,
+.row,
+.btn,
+.chip,
+a.link {
+  transition:background-color .25s ease,
+             color .25s ease,
+             border-color .25s ease,
+             box-shadow .25s ease;
+}
+
   </style>
 
   <!-- Structured data (ItemList) for SEO - includes first 20 items to avoid big payload -->
@@ -157,6 +290,7 @@
 
   <!-- scripts: SAME loaders as shop + qp-specific JS -->
   <script src="../js/server.js"></script>
+  <script src="../js/theme.js" defer></script>
   <script src="../js/loadPartials.js" defer></script>
   <script src="../js/components.js" defer></script>
   <script>

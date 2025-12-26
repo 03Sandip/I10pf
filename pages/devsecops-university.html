@@ -244,6 +244,122 @@ body{
   .page-title h1{font-size:34px}
   .section{padding:26px 22px}
 }
+
+/* =====================================
+   DEVSECOPS ROADMAP — DARK MODE
+===================================== */
+
+body.dark {
+  --bg: #000000;
+  --card: #0b0b0b;
+  --text: #ffffff;
+  --muted: #9ca3af;
+  --border: #222;
+  --accent: #3b82f6; /* 🔵 blue */
+}
+
+/* Page background */
+body.dark {
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* Page title */
+body.dark .page-title h1 {
+  background: linear-gradient(90deg, #3b82f6, #ef4444);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+body.dark .page-title p {
+  color: var(--muted);
+}
+
+/* Sections */
+body.dark .section {
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.06);
+}
+
+body.dark .section:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.12),
+              0 18px 40px rgba(0,0,0,.9);
+}
+
+/* Section headings */
+body.dark .section h2 {
+  color: #ffffff;
+}
+
+body.dark .section h2::before {
+  background: #ef4444; /* 🔴 red dot */
+}
+
+body.dark .section p {
+  color: var(--muted);
+}
+
+/* Filters */
+body.dark .filters {
+  background: #050505;
+}
+
+body.dark .filter {
+  background: #0b0b0b;
+  color: #e5e7eb;
+  border: 1px solid #222;
+}
+
+body.dark .filter:hover {
+  background: #111827;
+}
+
+body.dark .filter.active {
+  background: linear-gradient(90deg, #2563eb, #dc2626);
+  color: #fff;
+}
+
+/* Resource cards */
+body.dark .resource-list li {
+  background: #0b0b0b;
+  border: 1px solid #222;
+  color: #e5e7eb;
+}
+
+body.dark .resource-list li:hover {
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.12),
+              0 12px 30px rgba(0,0,0,.9);
+}
+
+/* Tags */
+body.dark .tag {
+  background: rgba(59,130,246,.15);
+  color: #60a5fa;
+}
+
+/* Links */
+body.dark .resource-link {
+  color: #ef4444;
+}
+
+body.dark .resource-link:hover {
+  color: #f87171;
+  text-decoration: underline;
+}
+
+/* Smooth transitions */
+.section,
+.filter,
+.resource-list li {
+  transition: background-color .25s ease,
+              color .25s ease,
+              border-color .25s ease,
+              box-shadow .25s ease,
+              transform .2s ease;
+}
+
 </style>
 </head>
 <body>
@@ -1388,6 +1504,7 @@ body{
 <div id="footer" aria-hidden="true"></div>
 <!-- SCRIPTS -->
 <script src="/js/server.js"></script>
+<script src="/js/theme.js"></script>
 <script src="/js/loadPartials.js" defer></script>
 <script src="/js/components.js" defer></script>
 

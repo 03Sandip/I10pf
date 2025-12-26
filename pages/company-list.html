@@ -125,6 +125,145 @@
       .acceptance { min-width:unset; }
       .company-item.active::before{ left: 10px; } /* adjust for smaller padding */
     }
+
+    /* =====================================
+   COMPANY LIST — AMOLED DARK MODE
+===================================== */
+
+body.dark {
+  --bg:#000000;
+  --card:#0b0b0b;
+  --text:#ffffff;
+  --muted:#9ca3af;
+
+  /* 🔵🔴 Brand colors */
+  --accent-blue:#3b82f6;
+  --accent-red:#ef4444;
+
+  --shadow:0 0 0 1px rgba(255,255,255,0.06);
+}
+
+/* Page base */
+body.dark {
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* Panels */
+body.dark .panel {
+  background: var(--card);
+  box-shadow: var(--shadow);
+}
+
+/* Header text */
+body.dark header h1,
+body.dark #sectionTitle {
+  color: #ffffff;
+}
+
+/* Company list item */
+body.dark .company-item {
+  background: #050505;
+  border-color: rgba(255,255,255,0.06);
+}
+
+body.dark .company-item:hover {
+  background: #0f0f0f;
+}
+
+/* Active company (VERY IMPORTANT) */
+body.dark .company-item.active {
+  background: linear-gradient(
+    90deg,
+    rgba(59,130,246,0.15),
+    rgba(239,68,68,0.12)
+  );
+  border-color: rgba(59,130,246,0.4);
+  box-shadow: 0 0 0 1px rgba(59,130,246,0.4);
+}
+
+/* Active accent bar */
+body.dark .company-item.active::before {
+  background: linear-gradient(180deg, #3b82f6, #ef4444);
+  box-shadow: 0 0 12px rgba(59,130,246,0.6);
+}
+
+/* Company name + count */
+body.dark .company-item .cname {
+  color: #ffffff;
+}
+body.dark .company-item .ccount {
+  color: var(--muted);
+}
+
+/* Toolbar inputs */
+body.dark .toolbar input,
+body.dark .toolbar select,
+body.dark #companySearch {
+  background: #050505;
+  color: #ffffff;
+  border-color: #222;
+}
+
+/* Problem rows */
+body.dark .list-row {
+  background: #050505;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.05);
+}
+
+/* Titles & links */
+body.dark .list-title {
+  color: #ffffff;
+}
+body.dark .list-meta {
+  color: var(--muted);
+}
+
+/* Difficulty chips */
+body.dark .diff-chip {
+  background: #0b0b0b;
+  border-color: rgba(255,255,255,0.08);
+}
+
+body.dark .diff-easy { color:#22c55e }
+body.dark .diff-medium { color:#f59e0b }
+body.dark .diff-hard { color:#ef4444 }
+
+/* Acceptance pill */
+body.dark .acceptance {
+  background: #0b0b0b;
+  border-color: rgba(255,255,255,0.08);
+  color: #e5e7eb;
+}
+
+/* Solve link */
+body.dark .solve-link {
+  color: #60a5fa;
+}
+body.dark .solve-link:hover {
+  color: #93c5fd;
+  text-decoration: underline;
+}
+
+/* Notes, empty, loading */
+body.dark .note,
+body.dark .empty,
+body.dark .loading {
+  color: var(--muted);
+}
+
+/* Smooth transitions */
+.company-item,
+.list-row,
+.diff-chip,
+.acceptance,
+.solve-link {
+  transition: background-color .25s ease,
+              color .25s ease,
+              box-shadow .25s ease,
+              border-color .25s ease;
+}
+
   </style>
 </head>
 <body>
@@ -168,6 +307,7 @@
   <div id="footer" aria-hidden="true"></div>
 
   <!-- partial loader scripts (header/footer) -->
+  <script src="../js/theme.js"></script>
   <script src="../js/loadPartials.js" defer></script>
   <script src="../js/components.js" defer></script>
 

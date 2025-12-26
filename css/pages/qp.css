@@ -165,3 +165,148 @@
     min-width: 200px;
   }
 }
+
+/* =========================================
+   QP FULL PAGE — DARK MODE (BLUE + RED)
+========================================= */
+
+body.dark {
+  background: #000;
+  color: #e5e7eb;
+}
+
+/* ===== HEADER ===== */
+body.dark #header {
+  background: #000;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+/* ===== SIDEBAR ===== */
+body.dark .sidebar-container {
+  background:
+    linear-gradient(180deg, #020617, #000);
+  box-shadow: 6px 0 24px rgba(0,0,0,.9);
+}
+
+body.dark .qp-sidebar {
+  color: #e5e7eb;
+}
+
+body.dark .qp-sidebar h3 {
+  color: #9ca3af;
+}
+
+/* sidebar items */
+body.dark .qp-sidebar li {
+  color: #cbd5f5;
+}
+
+body.dark .qp-sidebar li:hover {
+  background: rgba(59,130,246,0.12);
+}
+
+body.dark .qp-sidebar li.active {
+  background: rgba(59,130,246,0.22);
+  color: #f9fafb;
+}
+
+body.dark .qp-sidebar li.active::before {
+  background: linear-gradient(180deg, #3b82f6, #ef4444);
+}
+
+/* ===== CONTENT WRAPPER ===== */
+body.dark .content-wrapper {
+  background:
+    radial-gradient(900px 500px at 15% -10%, rgba(59,130,246,0.15), transparent 45%),
+    radial-gradient(700px 400px at 90% 10%, rgba(239,68,68,0.12), transparent 45%),
+    #000;
+}
+
+/* ===== PAGE HEADER ===== */
+body.dark .qp-page-header h1 {
+  color: #f9fafb;
+  text-shadow:
+    0 0 22px rgba(59,130,246,0.25),
+    0 0 30px rgba(239,68,68,0.15);
+}
+
+body.dark .qp-page-header p {
+  color: #9ca3af;
+}
+
+/* ===== DEPARTMENT BLOCK ===== */
+body.dark .qp-department {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.04), rgba(0,0,0,0.95));
+  border-left-color: transparent;
+  box-shadow:
+    0 20px 50px rgba(0,0,0,.85);
+}
+
+body.dark .qp-department.active {
+  border-left-color: #3b82f6;
+}
+
+/* ===== TABLE ===== */
+body.dark table {
+  background: #020617;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+body.dark th,
+body.dark td {
+  border-color: rgba(255,255,255,0.08);
+  color: #e5e7eb;
+}
+
+body.dark th {
+  background: linear-gradient(135deg, #1e293b, #020617);
+  color: #93c5fd;
+}
+
+body.dark tr:hover td {
+  background: rgba(59,130,246,0.08);
+}
+
+/* ===== YEAR LINKS ===== */
+body.dark .year-link {
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.14);
+  color: #93c5fd;
+}
+
+body.dark .year-link:hover {
+  background: linear-gradient(135deg, #3b82f6, #ef4444);
+  color: #fff;
+  box-shadow: 0 0 18px rgba(59,130,246,0.4);
+}
+
+/* ===== FAQ ===== */
+body.dark .faq-section h2 {
+  color: #f9fafb;
+}
+
+body.dark .faq-item {
+  background: rgba(255,255,255,0.04);
+  border-color: rgba(255,255,255,0.12);
+}
+
+body.dark .faq-question {
+  color: #e5e7eb;
+}
+
+body.dark .faq-item.active {
+  box-shadow: 0 0 0 1px rgba(59,130,246,0.4);
+}
+
+body.dark .faq-answer p {
+  color: #9ca3af;
+}
+
+/* ===== MOBILE SIDEBAR BUTTON ===== */
+body.dark .sidebar-toggle {
+  background: linear-gradient(135deg, #3b82f6, #ef4444);
+  box-shadow:
+    0 8px 22px rgba(59,130,246,0.5);
+}

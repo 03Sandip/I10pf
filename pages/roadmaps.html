@@ -169,6 +169,89 @@
     #footer{
       margin-top:80px;
     }
+
+    /* =====================================
+   ROADMAPS PAGE — AMOLED DARK MODE
+===================================== */
+
+body.dark {
+  --bg:#000000;
+  --card:#0b0b0b;
+  --muted:#9ca3af;
+  --text:#ffffff;
+
+  /* 🔵🔴 Brand accents */
+  --accent-blue:#3b82f6;
+  --accent-red:#ef4444;
+
+  --shadow:0 0 0 1px rgba(255,255,255,0.06);
+}
+
+/* Page background */
+body.dark {
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* Title */
+body.dark .page-title h1 {
+  background: linear-gradient(90deg, #3b82f6, #ef4444);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+body.dark .page-title p {
+  color: var(--muted);
+}
+
+/* Cards */
+body.dark .roadmap-card {
+  background: var(--card);
+  box-shadow: var(--shadow);
+}
+
+/* Accent bar (top) */
+body.dark .roadmap-card::before {
+  background: linear-gradient(90deg, #3b82f6, #ef4444);
+}
+
+/* Hover lift */
+body.dark .roadmap-card:hover {
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.12),
+    0 18px 48px rgba(0,0,0,.9);
+}
+
+/* Icon glow */
+body.dark .roadmap-card:hover .roadmap-icon {
+  filter: drop-shadow(0 0 8px rgba(59,130,246,.6));
+}
+
+/* Heading */
+body.dark .roadmap-card h3 {
+  color: #ffffff;
+}
+
+body.dark .roadmap-card:hover h3 {
+  color: #60a5fa;
+}
+
+/* Description */
+body.dark .roadmap-card p {
+  color: var(--muted);
+}
+
+/* Smooth transitions */
+.roadmap-card,
+.roadmap-card h3,
+.roadmap-icon {
+  transition:
+    background-color .25s ease,
+    color .25s ease,
+    box-shadow .35s ease,
+    transform .35s ease;
+}
+
   </style>
 </head>
 
@@ -234,6 +317,7 @@
 
 <!-- Scripts -->
 <script src="js/server.js"></script>
+<script src="../js/theme.js"></script>
 <script src="../js/loadPartials.js" defer></script>
 
 </body>

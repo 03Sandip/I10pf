@@ -715,6 +715,81 @@ body{
   }
 }
 
+/* ====================================
+   TESTIMONIALS — DARK MODE OVERRIDES
+==================================== */
+
+body.dark .gn-testimonials {
+  background:
+    radial-gradient(900px 500px at 15% -10%, rgba(59,130,246,0.18), transparent 45%),
+    radial-gradient(700px 400px at 90% 10%, rgba(239,68,68,0.14), transparent 45%),
+    #000;
+}
+
+/* Section heading */
+body.dark .gn-testimonials h2 {
+  color: #ffffff;
+  text-shadow:
+    0 0 18px rgba(59,130,246,0.35),
+    0 0 26px rgba(239,68,68,0.22);
+}
+
+/* Glow container — cooler, controlled */
+body.dark .gn-glow-wrap::before {
+  background: linear-gradient(
+    120deg,
+    rgba(59,130,246,0.45),
+    rgba(99,102,241,0.35),
+    rgba(239,68,68,0.35)
+  );
+  filter: blur(90px);
+}
+
+/* Card */
+body.dark .gn-testimonial-card {
+  background: #0b0b0b;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow:
+    0 22px 60px rgba(0,0,0,0.9);
+}
+
+/* Stars — blue gradient (no yellow) */
+body.dark .gn-stars {
+  background: linear-gradient(90deg, #3b82f6, #ef4444);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 3px;
+}
+
+/* Review text */
+body.dark .gn-review {
+  color: #ffffff;
+}
+
+/* Name */
+body.dark .gn-name-row strong {
+  color: #ffffff;
+}
+
+/* Role */
+body.dark .gn-role {
+  color: #9ca3af;
+}
+
+/* LinkedIn icon */
+body.dark .gn-linkedin-icon img {
+  filter: brightness(1.2) contrast(1.1);
+}
+
+/* Subtle hover polish */
+body.dark .gn-testimonial-card:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 30px 80px rgba(0,0,0,0.95),
+    0 0 32px rgba(59,130,246,0.3);
+}
+
+
 
 /* ------------------------------------
    QUOTE SLIDER CSS
@@ -922,4 +997,61 @@ body.dark .code-window {
   transition: background-color .25s ease,
               color .25s ease,
               border-color .25s ease;
+}
+
+/* ===================================
+   DARK MODE — FORCE PURE WHITE TEXT
+   (FINAL OVERRIDE – SAFE)
+=================================== */
+
+body.dark {
+  color: #ffffff !important;
+}
+
+/* Headings */
+body.dark h1,
+body.dark h2,
+body.dark h3,
+body.dark h4,
+body.dark h5,
+body.dark h6 {
+  color: #ffffff !important;
+}
+
+/* Body text */
+body.dark p,
+body.dark span,
+body.dark div,
+body.dark li,
+body.dark td,
+body.dark th,
+body.dark label {
+  color: #ffffff;
+}
+
+/* Muted / secondary text (slightly softer white) */
+body.dark .meta,
+body.dark .muted,
+body.dark .label,
+body.dark .card-meta,
+body.dark .org-card-meta,
+body.dark .qp-card-meta,
+body.dark .gn-role,
+body.dark small {
+  color: #e5e7eb;
+}
+
+/* Quotes & testimonials */
+body.dark .quote,
+body.dark .gn-review {
+  color: #ffffff;
+}
+
+/* Buttons text */
+body.dark .btn,
+body.dark .hero-btn,
+body.dark .start-btn,
+body.dark .org-btn-download,
+body.dark .qp-btn-download {
+  color: #ffffff;
 }
