@@ -1,6 +1,9 @@
 (function () {
   let cart = [];
 
+  // ==============================
+  // HELPERS
+  // ==============================
   function formatPrice(num) {
     return Number(num || 0).toFixed(2);
   }
@@ -18,11 +21,14 @@
     localStorage.setItem("gonotes_cart", JSON.stringify(cart));
   }
 
-  // used by buynow.html
+  // 🔑 used by buynow.html (cart checkout snapshot)
   function saveCheckoutItems(items) {
     localStorage.setItem("gonotes_checkout", JSON.stringify(items || []));
   }
 
+  // ==============================
+  // RENDER CART
+  // ==============================
   function renderCart() {
     const cartEmptyEl = document.getElementById("cartEmpty");
     const cartWrapEl = document.getElementById("cartWrap");
@@ -92,6 +98,9 @@
     itemsCountEl.textContent = itemsCount;
   }
 
+  // ==============================
+  // EVENTS
+  // ==============================
   function wireEvents() {
     document.getElementById("goShopBtn")?.addEventListener("click", () => {
       window.location.href = "shop.html";
@@ -104,18 +113,32 @@
     document.getElementById("clearCartBtn")?.addEventListener("click", () => {
       if (!cart.length) return;
       if (!confirm("Clear all items from cart?")) return;
+
       cart = [];
       saveCartToStorage();
       renderCart();
     });
 
+    // 🔥 CART → CHECKOUT (VERY IMPORTANT FIX)
     document.getElementById("checkoutBtn")?.addEventListener("click", () => {
-      if (!cart.length) return alert("Your cart is empty.");
+      if (!cart.length) {
+        alert("Your cart is empty.");
+        return;
+      }
+
+      // ❌ Kill individual Buy Now flow
+      localStorage.removeItem("gonotes_buynow");
+
+      // ✅ Save cart snapshot for checkout
       saveCheckoutItems(cart);
+
       window.location.href = "buynow.html";
     });
   }
 
+  // ==============================
+  // INIT
+  // ==============================
   document.addEventListener("DOMContentLoaded", () => {
     cart = loadCartFromStorage();
     wireEvents();

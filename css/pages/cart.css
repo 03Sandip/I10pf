@@ -167,3 +167,141 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* =====================================
+   DARK MODE — CART (AMOLED + BLUE / RED)
+   Active when body has .dark
+===================================== */
+
+body.dark {
+  background:#000000;
+}
+
+/* ================= PAGE ================= */
+
+body.dark .cart-page {
+  background:#000000;
+}
+
+body.dark .cart-hero h2 {
+  color:#ffffff;
+}
+
+body.dark .cart-subtitle {
+  color:#9ca3af;
+}
+
+/* ================= EMPTY CART ================= */
+
+body.dark .cart-empty {
+  background:#050505;
+  border:1px dashed #1f2937;
+}
+
+body.dark .cart-empty p {
+  color:#9ca3af;
+}
+
+/* ================= CART ITEMS ================= */
+
+body.dark .cart-items {
+  background:#0b0b0b;
+  border:1px solid #1f2937;
+}
+
+body.dark .cart-item-row {
+  border-bottom:1px solid #1f2937;
+}
+
+body.dark .cart-item-title {
+  color:#e5e7eb;
+}
+
+body.dark .cart-item-price {
+  color:#9ca3af;
+}
+
+/* quantity input */
+body.dark .cart-item-qty {
+  background:#050505;
+  color:#ffffff;
+  border:1px solid #262626;
+}
+
+body.dark .cart-item-qty:focus {
+  border-color:#2563eb;
+  box-shadow:0 0 0 2px rgba(37,99,235,0.25);
+}
+
+/* ================= REMOVE (DANGER) ================= */
+
+body.dark .cart-remove-btn {
+  background:#2a0f12;
+  border-color:#7f1d1d;
+  color:#fca5a5;
+}
+
+body.dark .cart-remove-btn:hover {
+  background:#3f1417;
+}
+
+/* ================= SUMMARY ================= */
+
+body.dark .cart-summary {
+  background:#0b0b0b;
+  border:1px solid #1f2937;
+}
+
+body.dark .cart-summary h3 {
+  color:#ffffff;
+}
+
+body.dark .summary-row {
+  color:#d1d5db;
+}
+
+/* ================= BUTTONS ================= */
+
+body.dark .btn.primary {
+  background:linear-gradient(135deg,#2563eb,#1e40af);
+  color:#ffffff;
+}
+
+body.dark .btn.primary:hover {
+  opacity:0.92;
+}
+
+body.dark .btn.secondary {
+  background:#111827;
+  color:#e5e7eb;
+}
+
+body.dark .btn.secondary:hover {
+  background:#1f2937;
+}
+
+body.dark .btn.danger {
+  background:#2a0f12;
+  border:1px solid #7f1d1d;
+  color:#fca5a5;
+}
+
+body.dark .btn.danger:hover {
+  background:#3f1417;
+}
+
+/* ================= SMOOTH TRANSITIONS ================= */
+
+.cart-items,
+.cart-summary,
+.cart-empty,
+.cart-item-row,
+.cart-item-qty,
+.cart-remove-btn,
+.btn {
+  transition:
+    background-color .25s ease,
+    color .25s ease,
+    border-color .25s ease,
+    box-shadow .25s ease;
+}
