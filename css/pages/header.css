@@ -458,3 +458,37 @@ html.dark .theme-toggle-btn::after {
   );
   pointer-events: none;
 }
+
+/* ===================================
+   USER DROPDOWN — DARK MODE FIX
+=================================== */
+
+body.dark .user-dropdown {
+  background: #0b0b0b;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.9);
+}
+
+body.dark .user-dropdown-header {
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+body.dark .user-name {
+  color: #ffffff;
+}
+
+body.dark .user-email {
+  color: #9ca3af;
+}
+
+body.dark .user-dropdown-item {
+  color: #e5e7eb;
+}
+
+body.dark .user-dropdown-item:hover {
+  background: rgba(255,255,255,0.06);
+}
+
+body.dark .user-logout-btn {
+  color: #ef4444;
+}

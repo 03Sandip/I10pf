@@ -26,151 +26,318 @@
 
 
   <style>
-    :root{
-      --accent:#4f46e5;
-      --border:#e5e7eb;
-      --muted:#6b7280;
-      --bg:#f9fafb;
-      --card:#ffffff;
-    }
+ :root{
+  --blue-main:#2563eb;
+  --blue-soft:#3b82f6;
+  --blue-light:#93c5fd;
 
-    body{ background:var(--bg); }
+  --border:#e5e7eb;
+  --muted:#6b7280;
+  --bg:#f9fafb;
+  --card:#ffffff;
+}
 
-    .pyq-container{
-      max-width:1100px;
-      margin:32px auto;
-      padding:0 16px 80px;
-    }
+/* ================= BASE ================= */
+body{
+  background:var(--bg);
+  color:#111827;
+}
 
-    /* ================= DEPARTMENT BAR ================= */
-    .dept-bar{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-      margin-bottom:18px;
-    }
+.pyq-container{
+  max-width:1100px;
+  margin:32px auto;
+  padding:0 16px 80px;
+}
 
-    .dept-tab{
-      padding:8px 18px;
-      border-radius:999px;
-      font-size:14px;
-      border:1px solid var(--border);
-      background:#fff;
-      cursor:pointer;
-    }
+/* ================= DEPARTMENT BAR ================= */
+.dept-bar{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:18px;
+}
 
-    .dept-tab.active{
-      background:var(--accent);
-      color:#fff;
-      border-color:var(--accent);
-    }
+.dept-tab{
+  padding:8px 18px;
+  border-radius:999px;
+  font-size:14px;
+  border:1px solid var(--border);
+  background:#ffffff;
+  cursor:pointer;
+  color:#111827;
+}
 
-    /* ================= FILTER BAR ================= */
-    .filter-bar{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-      margin-bottom:24px;
-      background:#fff;
-      padding:14px;
-      border-radius:14px;
-      border:1px solid var(--border);
-    }
+.dept-tab.active{
+  background:var(--blue-main);
+  color:#ffffff;
+  border-color:var(--blue-main);
+}
 
-    select{
-      padding:8px 12px;
-      border-radius:10px;
-      border:1px solid var(--border);
-    }
+/* ================= FILTER BAR (LIGHT MODE) ================= */
+.filter-bar{
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
+  margin-bottom:28px;
+  background:#ffffff;
+  padding:16px 18px;
+  border-radius:18px;
+  border:1px solid var(--border);
+  box-shadow:0 8px 20px rgba(0,0,0,.06);
+}
 
-    /* ================= QUESTION CARD ================= */
-    .question-card{
-      background:var(--card);
-      border:1px solid var(--border);
-      border-radius:14px;
-      padding:18px 20px;
-      margin-bottom:20px;
-    }
+.filter-bar select{
+  appearance:none;
+  background:#f9fafb;
+  color:#111827;
+  padding:8px 16px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  font-size:14px;
+  cursor:pointer;
+}
 
-    .q-header{
-      display:flex;
-      justify-content:space-between;
-      font-size:13px;
-      color:var(--muted);
-      margin-bottom:10px;
-    }
+.filter-bar select:hover{
+  border-color:var(--blue-main);
+}
 
-    .q-type{
-      padding:3px 10px;
-      border-radius:999px;
-      font-size:12px;
-      font-weight:600;
-      background:#eef2ff;
-      color:#3730a3;
-    }
+.filter-bar select:focus{
+  outline:none;
+  border-color:var(--blue-main);
+  box-shadow:0 0 0 2px rgba(37,99,235,.25);
+}
 
-    .q-text{
-      font-size:15px;
-      line-height:1.6;
-      margin-bottom:10px;
-    }
+.filter-bar select option{
+  background:#ffffff;
+  color:#111827;
+}
 
-    .q-image{
-      display:flex;
-      justify-content:center;
-      margin:12px 0 16px;
-    }
+/* ================= QUESTION CARD ================= */
+.question-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:18px 20px;
+  margin-bottom:20px;
+}
 
-    .q-image img{
-      max-width:250px;
-      width:100%;
-      border-radius:6px;
-      border:1px solid var(--border);
-      background:#fff;
-      padding:4px;
-    }
+/* ================= QUESTION HEADER ================= */
+.q-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:10px;
+}
 
-    .option{
-      padding:8px 10px;
-      border-radius:8px;
-      background:#f3f4f6;
-      margin-bottom:6px;
-      cursor:pointer;
-    }
+.q-header span{
+  font-size:15.8px;
+  font-weight:600;
+  letter-spacing:.25px;
+  color:var(--blue-main);
+  text-shadow:0 0 6px rgba(37,99,235,.25);
+}
 
-    .option.selected{
-      background:#dbeafe;
-      border:1px solid #3b82f6;
-    }
+.q-set{
+  margin-left:6px;
+  font-size:15.5px;
+  font-weight:700;
+  color:var(--blue-soft);
+  text-shadow:0 0 7px rgba(37,99,235,.35);
+}
 
-    .nat-input{
-      padding:8px 12px;
-      border-radius:8px;
-      border:1px solid var(--border);
-      width:140px;
-    }
+.q-type{
+  padding:3px 10px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:600;
+  background:#eff6ff;
+  color:var(--blue-main);
+}
 
-    .btn{
-      background:var(--accent);
-      color:#fff;
-      border:none;
-      padding:6px 14px;
-      border-radius:10px;
-      cursor:pointer;
-      margin-top:10px;
-    }
+/* ================= QUESTION TEXT ================= */
+.q-text{
+  font-size:15px;
+  line-height:1.6;
+  margin-bottom:10px;
+  white-space:pre-line;
+  color:#111827;
+}
 
-    
+/* ================= OPTIONS ================= */
+.option{
+  padding:8px 10px;
+  border-radius:8px;
+  background:#f3f4f6;
+  margin-bottom:6px;
+  cursor:pointer;
+}
 
-    .answer{
-      margin-top:12px;
-      padding:10px 12px;
-      border-radius:10px;
-      display:none;
-    }
+.option.selected{
+  background:#eff6ff;
+  border:1px solid var(--blue-main);
+}
 
-    .answer.correct{ background:#ecfdf5; color:#065f46; }
-    .answer.wrong{ background:#fef2f2; color:#7f1d1d; }
+.option.correct{
+  background:#dcfce7;
+  border:1px solid #22c55e;
+  color:#065f46;
+}
+
+.option.wrong{
+  background:#fee2e2;
+  border:1px solid #ef4444;
+  color:#7f1d1d;
+}
+
+.option.disabled{
+  pointer-events:none;
+  opacity:.9;
+}
+
+/* ================= NAT ================= */
+.nat-input{
+  padding:8px 12px;
+  border-radius:8px;
+  border:1px solid var(--border);
+  width:140px;
+}
+
+/* ================= BUTTON ================= */
+.btn{
+  background:var(--blue-main);
+  color:#ffffff;
+  border:none;
+  padding:6px 14px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+.btn:hover{
+  background:var(--blue-soft);
+}
+
+/* ================= ANSWER ================= */
+.answer{
+  margin-top:12px;
+  padding:10px 12px;
+  border-radius:10px;
+  display:none;
+}
+
+.answer.correct{ background:#ecfdf5; color:#065f46; }
+.answer.wrong{ background:#fef2f2; color:#7f1d1d; }
+
+/* =====================================
+   DARK MODE (ONLY WHEN body.dark EXISTS)
+===================================== */
+body.dark{
+  --bg:#000000;
+  --card:#0b0b0b;
+  --border:#1f2933;
+  color:#ffffff;
+}
+
+body.dark .question-card{
+  background:#0b0b0b;
+  border:1px solid #1f2933;
+}
+
+/* dark filter bar */
+body.dark .filter-bar{
+  background:#050505;
+  border:1px solid #1f2933;
+  box-shadow:0 0 26px rgba(0,0,0,.75);
+}
+
+body.dark .filter-bar select{
+  background:#050505;
+  color:#f9fafb;
+  border:1px solid #1f2933;
+}
+
+body.dark .filter-bar select option{
+  background:#050505;
+}
+
+/* dark meta */
+body.dark .q-header span{
+  color:var(--blue-light);
+  text-shadow:0 0 9px rgba(96,165,250,.65);
+}
+
+body.dark .q-set{
+  color:#60a5fa;
+  text-shadow:0 0 10px rgba(96,165,250,.75);
+}
+
+body.dark .q-type{
+  background:#0f172a;
+  color:#93c5fd;
+}
+
+body.dark .q-text{
+  color:#f9fafb;
+}
+
+body.dark .option{
+  background:#050505;
+  color:#e5e7eb;
+  border:1px solid #1f2933;
+}
+
+body.dark .option:hover{
+  background:#0f172a;
+}
+
+body.dark .option.selected{
+  border-color:var(--blue-soft);
+}
+
+body.dark .nat-input{
+  background:#050505;
+  color:#ffffff;
+  border:1px solid #222;
+}
+
+body.dark .btn{
+  background:linear-gradient(135deg,#2563eb,#1e40af);
+}
+
+/* ================= SMOOTH FEEL ================= */
+.question-card,
+.option,
+.dept-tab,
+select,
+.btn{
+  transition:
+    background-color .25s ease,
+    color .25s ease,
+    border-color .25s ease,
+    transform .2s ease;
+}
+/* ================= FIX: DARK MODE SELECT DROPDOWN ================= */
+
+/* Closed select text */
+body.dark .filter-bar select{
+  background:#050505;
+  color:#f9fafb;                 /* visible text */
+}
+
+/* Open dropdown options */
+body.dark .filter-bar select option{
+  background:#0b0b0b;
+  color:#f9fafb;                 /* FORCE visible text */
+}
+
+/* Hover / selected option */
+body.dark .filter-bar select option:hover,
+body.dark .filter-bar select option:checked{
+  background:#1e40af;
+  color:#ffffff;
+}
+
+
+
   </style>
 </head>
 
@@ -200,6 +367,7 @@
   <div id="pyqList"></div>
 </main>
 
+<script src="../js/theme.js"></script>
 <script src="../js/loadPartials.js"></script>
 <!-- ✅ MUST COME FIRST -->
 <script src="../js/server.js"></script>

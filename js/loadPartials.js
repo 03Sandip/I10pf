@@ -1,9 +1,10 @@
 // js/loadPartials.js
-// Robust partial loader + asset-path fixer + header auth handling (PRODUCTION SAFE)
+// Robust partial loader + asset-path fixer + clean header init (DARK + AUTH)
 
-// ------------------------
-// Utility helpers
-// ------------------------
+/* =========================
+   Utility helpers
+   ========================= */
+
 function isRelativeAsset(url) {
   if (!url) return false;
   const t = String(url).trim();
@@ -16,7 +17,7 @@ function isRelativeAsset(url) {
   );
 }
 
-// ✅ Only prefix real ASSETS, never page navigation
+// Only prefix real ASSETS, never page navigation
 function shouldPrefixPath(url) {
   return (
     isRelativeAsset(url) &&
@@ -28,14 +29,11 @@ function shouldPrefixPath(url) {
 }
 
 function computeAssetPrefix() {
-  // Allow override if needed
   if (typeof window.__SITE_BASE__ === "string" && window.__SITE_BASE__) {
     return window.__SITE_BASE__.endsWith("/")
       ? window.__SITE_BASE__
       : window.__SITE_BASE__ + "/";
   }
-
-  // If inside /pages/, assets live one level up
   return window.location.pathname.includes("/pages/") ? "../" : "";
 }
 
@@ -47,9 +45,10 @@ function injectStylesheetHref(href) {
   document.head.appendChild(link);
 }
 
-// ------------------------
-// Script loaders
-// ------------------------
+/* =========================
+   Script loaders
+   ========================= */
+
 function loadScriptsSequentially(urls) {
   return urls.reduce((p, url) => {
     return p.then(
@@ -74,9 +73,10 @@ function executeInlineScript(jsText) {
   document.head.appendChild(s);
 }
 
-// ------------------------
-// Partial loader
-// ------------------------
+/* =========================
+   Partial loader
+   ========================= */
+
 async function loadPartial(targetId, fileName) {
   const container = document.getElementById(targetId);
   if (!container) return;
@@ -84,7 +84,6 @@ async function loadPartial(targetId, fileName) {
   const inPagesFolder = window.location.pathname.includes("/pages/");
   const partialsBase = inPagesFolder ? "../partials/" : "partials/";
   const partialPath = partialsBase + fileName;
-
   const assetPrefix = computeAssetPrefix();
 
   try {
@@ -98,15 +97,11 @@ async function loadPartial(targetId, fileName) {
     const scriptsToHandle = [];
 
     Array.from(parsed.body.childNodes).forEach((node) => {
-
-      // ------------------------
-      // Stylesheets (LINK + STYLE) ✅ FIX
-      // ------------------------
+      // Stylesheets
       if (node.nodeType === 1) {
         const tag = node.tagName.toLowerCase();
 
-        // <link rel="stylesheet">
-        if (tag === "link" && (node.getAttribute("rel") || "").toLowerCase() === "stylesheet") {
+        if (tag === "link" && node.rel === "stylesheet") {
           const href = node.getAttribute("href");
           if (href) {
             injectStylesheetHref(
@@ -116,7 +111,6 @@ async function loadPartial(targetId, fileName) {
           return;
         }
 
-        // ✅ <style> blocks (REQUIRED for footer card)
         if (tag === "style") {
           const style = document.createElement("style");
           style.textContent = node.textContent || "";
@@ -125,19 +119,14 @@ async function loadPartial(targetId, fileName) {
         }
       }
 
-      // ------------------------
       // Scripts
-      // ------------------------
       if (node.nodeType === 1 && node.tagName.toLowerCase() === "script") {
         scriptsToHandle.push(node);
         return;
       }
 
-      // ------------------------
-      // Asset fixing
-      // ------------------------
+      // Assets
       if (node.nodeType === 1) {
-        // Images / logos
         node.querySelectorAll("img").forEach((img) => {
           const dataLogo = img.getAttribute("data-logo");
           if (dataLogo) {
@@ -146,33 +135,25 @@ async function loadPartial(targetId, fileName) {
               : dataLogo;
             return;
           }
-
-          const s = img.getAttribute("src");
-          if (s && shouldPrefixPath(s)) {
-            img.src = assetPrefix + s;
+          const src = img.getAttribute("src");
+          if (src && shouldPrefixPath(src)) {
+            img.src = assetPrefix + src;
           }
         });
 
-        // ✅ Anchor links — DO NOT break navigation
         node.querySelectorAll("a").forEach((a) => {
           const h = a.getAttribute("href");
           if (!h) return;
-
           if (h.startsWith("/") || h.startsWith("#") || h.startsWith("http")) {
             a.href = h;
-            return;
           }
-
-          a.href = h;
         });
       }
 
       container.appendChild(node);
     });
 
-    // ------------------------
     // Execute scripts
-    // ------------------------
     const external = [];
     const inline = [];
 
@@ -187,31 +168,120 @@ async function loadPartial(targetId, fileName) {
 
     if (external.length) await loadScriptsSequentially(external);
     inline.forEach(executeInlineScript);
-
-    // ------------------------
-    // data-init hooks
-    // ------------------------
-    container.querySelectorAll("[data-init]").forEach((el) => {
-      const fn = el.getAttribute("data-init");
-      if (fn && typeof window[fn] === "function") {
-        window[fn](el);
-      }
-    });
-// ✅ Dark mode toggle init (IMPORTANT)
-if (fileName === "header.html" && typeof initThemeToggle === "function") {
-  initThemeToggle();
-}
   } catch (e) {
     console.error("[loadPartials] error:", e);
   }
 }
 
-// ------------------------
-// Bulk load partials
-// ------------------------
-window.addEventListener("DOMContentLoaded", () => {
+/* =========================
+   HEADER INIT (DARK + AUTH)
+   ========================= */
+
+function initHeaderUI() {
+  initTheme();
+  setupAuthAndHeaderUI();
+}
+
+/* 🌙 Dark Mode — FINAL FIX */
+function initTheme() {
+  const html = document.documentElement;
+  const body = document.body;
+  const toggle = document.getElementById("themeToggle");
+  if (!toggle) return;
+
+  // Apply saved theme
+  const isDark = localStorage.getItem("theme") === "dark";
+
+  html.classList.toggle("dark", isDark);
+  body.classList.toggle("dark", isDark);
+
+  toggle.onclick = () => {
+    const nowDark = !body.classList.contains("dark");
+
+    html.classList.toggle("dark", nowDark);
+    body.classList.toggle("dark", nowDark);
+
+    localStorage.setItem("theme", nowDark ? "dark" : "light");
+  };
+}
+
+/* =========================
+   AUTH + HEADER UI
+   ========================= */
+
+function setupAuthAndHeaderUI() {
+  const token = localStorage.getItem("gonotes_token");
+  let user = null;
+
+  try {
+    user = JSON.parse(localStorage.getItem("gonotes_user") || "{}");
+  } catch {}
+
+  const isInPages = window.location.pathname.includes("/pages/");
+
+  const loginLink = document.getElementById("loginLink");
+  const myNotesLink = document.getElementById("myNotesLink");
+  const userMenu = document.getElementById("userMenu");
+  const userMenuToggle = document.getElementById("userMenuToggle");
+  const userDropdown = document.getElementById("userDropdown");
+  const userInitial = document.getElementById("userInitial");
+  const userNameDisplay = document.getElementById("userNameDisplay");
+  const userEmailDisplay = document.getElementById("userEmailDisplay");
+  const logoutBtn = document.getElementById("logoutBtn");
+
+  if (token && user && user.email) {
+    loginLink && (loginLink.style.display = "none");
+    myNotesLink && (myNotesLink.style.display = "inline-flex");
+    userMenu && (userMenu.style.display = "inline-flex");
+
+    const name = user.name || user.email;
+
+    userInitial && (userInitial.textContent = name.charAt(0).toUpperCase());
+    userNameDisplay && (userNameDisplay.textContent = name);
+    userEmailDisplay && (userEmailDisplay.textContent = user.email);
+
+    if (userMenuToggle && userDropdown && userMenu) {
+      userMenuToggle.onclick = (e) => {
+        e.stopPropagation();
+        userDropdown.style.display =
+          userDropdown.style.display === "block" ? "none" : "block";
+      };
+
+      document.addEventListener("click", (e) => {
+        if (!userMenu.contains(e.target)) {
+          userDropdown.style.display = "none";
+        }
+      });
+    }
+
+    logoutBtn &&
+      (logoutBtn.onclick = () => {
+        localStorage.removeItem("gonotes_token");
+        localStorage.removeItem("gonotes_user");
+        window.location.href = isInPages
+          ? "./login.html"
+          : "/pages/login.html";
+      });
+  } else {
+    loginLink && (loginLink.style.display = "inline-flex");
+    myNotesLink && (myNotesLink.style.display = "none");
+    userMenu && (userMenu.style.display = "none");
+  }
+}
+
+/* =========================
+   Bulk load partials
+   ========================= */
+
+window.addEventListener("DOMContentLoaded", async () => {
+  // Load HEADER first
+  await loadPartial("header", "header.html");
+
+  // Init header logic AFTER header exists
+  initHeaderUI();
+
+  // Load remaining partials
   [
-    ["header", "header.html"],
     ["hero", "hero.html"],
     ["benefits", "benefits.html"],
     ["other_product", "other_product.html"],
@@ -227,99 +297,3 @@ window.addEventListener("DOMContentLoaded", () => {
     ["footer", "footer.html"],
   ].forEach(([id, file]) => loadPartial(id, file));
 });
-
-// ------------------------
-// AUTH + HEADER UI (UNCHANGED)
-// ------------------------
-function setupAuthAndHeaderUI() {
-  const token = localStorage.getItem("gonotes_token");
-  let user = null;
-
-  try {
-    user = JSON.parse(localStorage.getItem("gonotes_user") || "{}");
-  } catch {
-    user = null;
-  }
-
-  const currentPage = window.location.pathname.toLowerCase();
-  const isInPages = currentPage.includes("/pages/");
-
-  const protectedPages = [
-    "my-notes.html",
-    "checkout.html",
-    "orders.html",
-    "payment.html",
-  ];
-
-  const isProtected = protectedPages.some((p) =>
-    currentPage.includes(p)
-  );
-
-  if (!token && isProtected) {
-    window.location.href = isInPages
-      ? "./login.html"
-      : "/pages/login.html";
-    return;
-  }
-
-  const loginLink = document.getElementById("loginLink");
-  const myNotesLink = document.getElementById("myNotesLink");
-  const userMenu = document.getElementById("userMenu");
-  const userMenuToggle = document.getElementById("userMenuToggle");
-  const userDropdown = document.getElementById("userDropdown");
-  const userInitial = document.getElementById("userInitial");
-  const userNameDisplay = document.getElementById("userNameDisplay");
-  const userEmailDisplay = document.getElementById("userEmailDisplay");
-  const logoutBtn = document.getElementById("logoutBtn");
-
-  const myNotesItemMobile =
-    document.getElementById("myNotesItemMobile");
-  const loginItemMobile =
-    document.getElementById("loginItemMobile");
-
-  if (token && user) {
-    if (loginLink) loginLink.style.display = "none";
-    if (loginItemMobile) loginItemMobile.style.display = "none";
-
-    if (myNotesLink) myNotesLink.style.display = "inline-flex";
-    if (myNotesItemMobile) myNotesItemMobile.style.display = "block";
-    if (userMenu) userMenu.style.display = "inline-flex";
-
-    const name = user.name || user.email || "User";
-    const email = user.email || "";
-    const initial = name.charAt(0).toUpperCase();
-
-    if (userInitial) userInitial.textContent = initial;
-    if (userNameDisplay) userNameDisplay.textContent = name;
-    if (userEmailDisplay) userEmailDisplay.textContent = email;
-
-    if (userMenuToggle && userDropdown) {
-      userMenuToggle.onclick = (e) => {
-        e.stopPropagation();
-        userDropdown.style.display =
-          userDropdown.style.display === "block" ? "none" : "block";
-      };
-
-      document.addEventListener("click", () => {
-        userDropdown.style.display = "none";
-      });
-    }
-
-    if (logoutBtn) {
-      logoutBtn.onclick = () => {
-        localStorage.removeItem("gonotes_token");
-        localStorage.removeItem("gonotes_user");
-        window.location.href = isInPages
-          ? "./login.html"
-          : "/pages/login.html";
-      };
-    }
-  } else {
-    if (loginLink) loginLink.style.display = "inline-flex";
-    if (loginItemMobile) loginItemMobile.style.display = "block";
-
-    if (myNotesLink) myNotesLink.style.display = "none";
-    if (myNotesItemMobile) myNotesItemMobile.style.display = "none";
-    if (userMenu) userMenu.style.display = "none";
-  }
-}

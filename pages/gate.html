@@ -172,6 +172,127 @@
     }
 
     .no-items{ padding:20px; color:var(--muted); }
+
+    /* =====================================
+   GATE NOTES — AMOLED DARK MODE
+===================================== */
+
+body.dark {
+  --bg:#000000;
+  --card:#0b0b0b;
+  --accent:#2563eb;        /* 🔵 blue */
+  --accent-red:#ef4444;    /* 🔴 red */
+  --muted:#9ca3af;
+  --pill:#111827;
+  --shadow:0 0 0 1px rgba(255,255,255,0.06);
+}
+
+/* page bg */
+body.dark {
+  background:#000;
+  color:#ffffff;
+}
+
+/* container text */
+body.dark h1,
+body.dark h2,
+body.dark h3 {
+  color:#ffffff;
+}
+
+body.dark p,
+body.dark .lead {
+  color:#d1d5db;
+}
+
+/* ================= FILTERS ================= */
+
+body.dark .select,
+body.dark .search,
+body.dark .btn {
+  background:#050505;
+  color:#ffffff;
+  border:1px solid #222;
+  box-shadow:none;
+}
+
+body.dark .search::placeholder {
+  color:#6b7280;
+}
+
+body.dark .btn:hover {
+  background:#111827;
+}
+
+/* ================= CARDS ================= */
+
+body.dark .card {
+  background:#0b0b0b;
+  box-shadow:0 0 0 1px rgba(255,255,255,0.06);
+}
+
+body.dark .card:hover {
+  transform:translateY(-6px);
+}
+
+/* meta pill */
+body.dark .meta {
+  background:#0f172a;
+  color:#93c5fd;
+}
+
+/* card text */
+body.dark .desc {
+  color:#d1d5db;
+}
+
+/* ================= BUTTON ================= */
+
+body.dark .read-btn {
+  background:linear-gradient(
+    135deg,
+    var(--accent),
+    var(--accent-red)
+  );
+  color:#ffffff;
+}
+
+body.dark .read-btn:hover {
+  opacity:0.9;
+}
+
+/* coming soon */
+body.dark .coming {
+  color:#fca5a5;
+}
+
+/* ================= DISCLAIMER ================= */
+
+body.dark .disclaimer {
+  background:#050505;
+  color:#cbd5f5;
+  border:1px solid #1e293b;
+}
+
+/* ================= NO ITEMS ================= */
+
+body.dark .no-items {
+  color:#9ca3af;
+}
+
+/* ================= TRANSITIONS ================= */
+
+.card,
+.read-btn,
+.select,
+.search {
+  transition:
+    background-color .25s ease,
+    color .25s ease,
+    border-color .25s ease,
+    transform .25s ease;
+}
+
   </style>
 </head>
 
@@ -213,6 +334,7 @@
   <!-- Footer Partial -->
   <div id="footer"></div>
 
+  <script src="../js/theme.js" defer></script>
   <!-- LOAD PARTIALS -->
   <script src="../js/loadPartials.js" defer></script>
 

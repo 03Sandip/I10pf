@@ -1,39 +1,50 @@
 (function () {
 
-  /* =====================================================
-     API BASE (FROM server.js)
-  ===================================================== */
   if (!window.SERVER_URL) {
-    console.error("SERVER_URL not defined. Did you load server.js?");
+    console.error("SERVER_URL not defined.");
     return;
   }
 
   const API = `${window.SERVER_URL}/api`;
 
   const list = document.getElementById("pyqList");
-
   const deptTabs = document.getElementById("deptTabs");
-  const subSel   = document.getElementById("filterSubject");
+  const subSel = document.getElementById("filterSubject");
   const topicSel = document.getElementById("filterTopic");
-  const yearSel  = document.getElementById("filterYear");
-  const typeSel  = document.getElementById("filterType");
+  const yearSel = document.getElementById("filterYear");
+  const typeSel = document.getElementById("filterType");
 
   let activeDepartment = "";
   let questions = [];
 
-  /* =====================================================
-     LOAD DEPARTMENTS
-  ===================================================== */
-  async function loadDepartments() {
-    const depts = await fetch(`${API}/questions/departments`)
-      .then(r => r.json());
+  // ✅ READ DEPARTMENT FROM URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const deptFromUrl = urlParams.get("department");
 
+  /* ================= MATH RENDER ================= */
+  function renderMath(text) {
+    if (!text) return "";
+    return text.replace(/\^(\d+)/g, "<sup>$1</sup>");
+  }
+
+  /* ================= LOAD DEPARTMENTS ================= */
+  async function loadDepartments() {
+    const depts = await fetch(`${API}/questions/departments`).then(r => r.json());
     deptTabs.innerHTML = "";
 
     depts.forEach((d, i) => {
       const tab = document.createElement("div");
-      tab.className = "dept-tab" + (i === 0 ? " active" : "");
+      tab.className = "dept-tab";
       tab.textContent = d;
+
+      // ✅ AUTO-SELECT FROM URL OR FIRST ITEM
+      if (
+        (deptFromUrl && d === deptFromUrl) ||
+        (!deptFromUrl && i === 0)
+      ) {
+        tab.classList.add("active");
+        activeDepartment = d;
+      }
 
       tab.onclick = () => {
         document.querySelectorAll(".dept-tab")
@@ -42,25 +53,28 @@
         tab.classList.add("active");
         activeDepartment = d;
 
+        // 🔁 Update URL (no reload)
+        const newUrl =
+          `${location.pathname}?department=${encodeURIComponent(d)}`;
+        window.history.pushState({}, "", newUrl);
+
         resetFilters();
         loadSubjects();
         fetchQuestions();
       };
 
       deptTabs.appendChild(tab);
-      if (i === 0) activeDepartment = d;
     });
 
     loadSubjects();
+    fetchQuestions();
   }
 
-  /* =====================================================
-     LOAD SUBJECTS (DEPARTMENT-WISE)
-  ===================================================== */
+  /* ================= LOAD SUBJECTS ================= */
   async function loadSubjects() {
-    subSel.innerHTML   = `<option value="">All Subjects</option>`;
+    subSel.innerHTML = `<option value="">All Subjects</option>`;
     topicSel.innerHTML = `<option value="">All Topics</option>`;
-    yearSel.innerHTML  = `<option value="">All Years</option>`;
+    yearSel.innerHTML = `<option value="">All Years</option>`;
 
     if (!activeDepartment) return;
 
@@ -73,22 +87,19 @@
     });
   }
 
-  /* =====================================================
-     SUBJECT → TOPICS + YEARS
-  ===================================================== */
   subSel.onchange = async () => {
     topicSel.innerHTML = `<option value="">All Topics</option>`;
-    yearSel.innerHTML  = `<option value="">All Years</option>`;
+    yearSel.innerHTML = `<option value="">All Years</option>`;
 
     if (!subSel.value || !activeDepartment) return;
 
     const [topics, years] = await Promise.all([
       fetch(
-        `${API}/questions/topics?department=${encodeURIComponent(activeDepartment)}&subject=${encodeURIComponent(subSel.value)}`
+        `${API}/questions/topics?department=${activeDepartment}&subject=${subSel.value}`
       ).then(r => r.json()),
 
       fetch(
-        `${API}/questions/years?department=${encodeURIComponent(activeDepartment)}&subject=${encodeURIComponent(subSel.value)}`
+        `${API}/questions/years?department=${activeDepartment}&subject=${subSel.value}`
       ).then(r => r.json())
     ]);
 
@@ -101,29 +112,31 @@
     );
   };
 
-  /* =====================================================
-     FETCH QUESTIONS
-  ===================================================== */
+  /* ================= FETCH QUESTIONS ================= */
   async function fetchQuestions() {
-    const params = new URLSearchParams();
-    params.append("department", activeDepartment);
+    if (!activeDepartment) return;
 
-    if (subSel.value)   params.append("subject", subSel.value);
+    const params = new URLSearchParams({
+      department: activeDepartment
+    });
+
+    if (subSel.value) params.append("subject", subSel.value);
     if (topicSel.value) params.append("topic", topicSel.value);
-    if (yearSel.value)  params.append("year", yearSel.value);
-    if (typeSel.value)  params.append("type", typeSel.value);
+    if (yearSel.value) params.append("year", yearSel.value);
+    if (typeSel.value) params.append("type", typeSel.value);
 
-    const res = await fetch(`${API}/questions?${params.toString()}`);
-    questions = await res.json();
+    questions = await fetch(
+      `${API}/questions?${params.toString()}`
+    ).then(r => r.json());
+
     render();
   }
 
-  [subSel, topicSel, yearSel, typeSel]
-    .forEach(el => el.addEventListener("change", fetchQuestions));
+  [subSel, topicSel, yearSel, typeSel].forEach(el =>
+    el.addEventListener("change", fetchQuestions)
+  );
 
-  /* =====================================================
-     RENDER QUESTIONS
-  ===================================================== */
+  /* ================= RENDER ================= */
   function render() {
     list.innerHTML = "";
 
@@ -138,52 +151,31 @@
 
       card.innerHTML = `
         <div class="q-header">
-          <span>Q.${i + 1} • ${q.subject} • ${q.year}</span>
+          <span>
+            Q.${i + 1}
+            • ${q.subject}
+            ${q.topic ? ` • ${q.topic}` : ""}
+            • ${q.year}
+            ${q.set ? `<span class="q-set">${q.set}</span>` : ""}
+          </span>
           <span class="q-type">${q.type}</span>
         </div>
 
-        <div class="q-text">${q.questionText}</div>
-
-        ${q.image ? `
-          <div class="q-image">
-            <img src="${q.image}" loading="lazy">
-          </div>` : ""}
+        <div class="q-text">${renderMath(q.questionText)}</div>
 
         ${
           q.options?.length
             ? q.options.map(o => `
-                <div class="option" data-val="${o.label}">
-                  ${o.label}. ${o.text}
-                </div>`).join("")
+              <div class="option" data-val="${o.label}">
+                ${o.label}. ${renderMath(o.text)}
+              </div>
+            `).join("")
             : `<input class="nat-input" placeholder="Your answer">`
         }
 
         <button class="btn check-btn">Check Answer</button>
-
         <div class="answer"></div>
-
-        <button class="solution-btn" style="display:none;">
-          📖 View Solution
-        </button>
-
-        <div class="solution-box" style="display:none;">
-          ${
-            q.solution
-              ? `<div style="margin-bottom:6px;">${q.solution}</div>`
-              : `<div style="color:#6b7280;">Solution explanation not available.</div>`
-          }
-
-          ${
-            q.solutionLink && q.solutionLink.trim()
-              ? `<a href="${q.solutionLink}" target="_blank"
-                   style="display:inline-block;margin-top:6px;color:#2563eb;">
-                   🔗 Open Full Solution
-                 </a>`
-              : `<div style="margin-top:6px;color:#9ca3af;">
-                   🔒 Solution link not provided
-                 </div>`
-          }
-        </div>
+        <div class="solution-area" style="display:none;"></div>
       `;
 
       setupAnswer(card, q);
@@ -191,68 +183,72 @@
     });
   }
 
-  /* =====================================================
-     ANSWER + SOLUTION LOGIC
-  ===================================================== */
+  /* ================= ANSWER LOGIC ================= */
   function setupAnswer(card, q) {
     let selected = [];
+    const options = card.querySelectorAll(".option");
+    const btn = card.querySelector(".check-btn");
+    const ans = card.querySelector(".answer");
+    const solArea = card.querySelector(".solution-area");
 
-    card.querySelectorAll(".option").forEach(opt => {
+    options.forEach(opt => {
       opt.onclick = () => {
         if (q.type === "MSQ") {
           opt.classList.toggle("selected");
           selected = [...card.querySelectorAll(".selected")]
             .map(o => o.dataset.val);
         } else {
-          card.querySelectorAll(".option")
-            .forEach(o => o.classList.remove("selected"));
+          options.forEach(o => o.classList.remove("selected"));
           opt.classList.add("selected");
           selected = [opt.dataset.val];
         }
       };
     });
 
-    const btn = card.querySelector(".check-btn");
-    const ans = card.querySelector(".answer");
-    const solBtn = card.querySelector(".solution-btn");
-    const solBox = card.querySelector(".solution-box");
-
     btn.onclick = () => {
+      btn.disabled = true;
+
       const user = q.type === "NAT"
         ? card.querySelector(".nat-input").value.trim()
         : selected;
 
-      const correct =
+      const correctAnswers = Array.isArray(q.correctAnswer)
+        ? q.correctAnswer
+        : [q.correctAnswer];
+
+      options.forEach(o => {
+        o.classList.add("disabled");
+        const val = o.dataset.val;
+
+        if (correctAnswers.includes(val)) o.classList.add("correct");
+        if (selected.includes(val) && !correctAnswers.includes(val))
+          o.classList.add("wrong");
+      });
+
+      const isCorrect =
         q.type === "NAT"
           ? Number(user) === Number(q.correctAnswer)
-          : Array.isArray(q.correctAnswer)
-            ? user.sort().join() === q.correctAnswer.sort().join()
-            : user[0] === q.correctAnswer;
+          : selected.sort().join() === correctAnswers.sort().join();
 
       ans.style.display = "block";
-      ans.className = "answer " + (correct ? "correct" : "wrong");
+      ans.className = "answer " + (isCorrect ? "correct" : "wrong");
       ans.innerHTML = `
-        ${correct ? "✅ Correct" : "❌ Wrong"}<br>
-        Correct Answer: <b>${
-          Array.isArray(q.correctAnswer)
-            ? q.correctAnswer.join(", ")
-            : q.correctAnswer
-        }</b>
+        ${isCorrect ? "✅ Correct" : "❌ Wrong"}<br>
+        Correct Answer:
+        <b>${renderMath(correctAnswers.join(", "))}</b>
       `;
 
-      solBtn.style.display = "inline-block";
-    };
-
-    solBtn.onclick = () => {
-      const open = solBox.style.display === "block";
-      solBox.style.display = open ? "none" : "block";
-      solBtn.textContent = open ? "📖 View Solution" : "❌ Hide Solution";
+      solArea.style.display = "block";
+      solArea.innerHTML = q.solutionLink
+        ? `<a href="${q.solutionLink}" target="_blank" class="btn">
+            📖 Click here for detail solution by GateOverflow
+           </a>`
+        : `<div style="color:#7f1d1d;font-weight:600;">
+            ❌ Sorry, solution is unavailable
+           </div>`;
     };
   }
 
-  /* =====================================================
-     RESET FILTERS
-  ===================================================== */
   function resetFilters() {
     subSel.value = "";
     topicSel.value = "";
@@ -260,10 +256,7 @@
     typeSel.value = "";
   }
 
-  /* =====================================================
-     INIT
-  ===================================================== */
+  // 🚀 START
   loadDepartments();
-  fetchQuestions();
 
 })();

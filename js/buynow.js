@@ -1,4 +1,4 @@
-// buynow.js — FINAL FIX (Cart + Buy Now unified)
+// buynow.js — FINAL FIX (Cart + Buy Now unified + Modern Login Modal)
 
 if (!window.SERVER_URL) {
   alert("SERVER_URL missing — load js/server.js first");
@@ -28,7 +28,7 @@ function formatPrice(n) {
 // LOAD ITEMS (🔥 FIXED)
 // ==============================
 function loadItemsForCheckout() {
-  // 1️⃣ If coming from CART → use full cart
+  // 1️⃣ From CART
   try {
     const cartRaw = localStorage.getItem("gonotes_cart");
     if (cartRaw) {
@@ -39,7 +39,7 @@ function loadItemsForCheckout() {
     }
   } catch {}
 
-  // 2️⃣ Fallback: Buy Now (single item → array)
+  // 2️⃣ Buy Now fallback
   try {
     const raw = localStorage.getItem("gonotes_buynow");
     if (raw) {
@@ -54,7 +54,7 @@ function loadItemsForCheckout() {
 }
 
 // ==============================
-// RENDER SUMMARY (🔥 FIXED)
+// RENDER SUMMARY
 // ==============================
 function renderOrderSummary() {
   const itemsEl = document.getElementById("orderItems");
@@ -96,7 +96,7 @@ function renderOrderSummary() {
 }
 
 // ==============================
-// APPLY COUPON (UNCHANGED)
+// APPLY COUPON
 // ==============================
 async function applyCoupon() {
   const input = document.getElementById("couponInput");
@@ -146,7 +146,28 @@ async function applyCoupon() {
 }
 
 // ==============================
-// PAYMENT (🔥 USE FULL CART)
+// SHOW LOGIN MODAL (✨ NEW)
+// ==============================
+function showLoginRequiredModal() {
+  const modal = document.getElementById("loginRequiredModal");
+  const btn = document.getElementById("loginModalBtn");
+
+  if (!modal || !btn) {
+    // fallback safety
+    alert("Please login first to continue");
+    window.location.href = "/pages/login.html";
+    return;
+  }
+
+  modal.style.display = "flex";
+
+  btn.onclick = () => {
+    window.location.href = "/pages/login.html";
+  };
+}
+
+// ==============================
+// PAYMENT
 // ==============================
 async function startPayment() {
   if (!cartItems.length) {
@@ -156,7 +177,7 @@ async function startPayment() {
 
   const token = localStorage.getItem("gonotes_token");
   if (!token) {
-    window.location.href = "/pages/login.html";
+    showLoginRequiredModal();
     return;
   }
 
@@ -189,7 +210,7 @@ async function startPayment() {
         },
         body: JSON.stringify({
           ...response,
-          cart: cartItems, // 🔥 FULL CART
+          cart: cartItems,
           appliedCouponCode: appliedCoupon?.code || null,
         }),
       });
