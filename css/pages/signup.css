@@ -126,3 +126,115 @@ body {
     font-size: 22px;
   }
 }
+
+/* =====================================
+   DARK MODE — SIGNUP (AMOLED + BLUE/RED)
+   Active when body has .dark
+===================================== */
+
+body.dark {
+  background:#000000;
+}
+
+/* Page wrapper */
+body.dark .signup-page {
+  background:#000000;
+}
+
+/* Card */
+body.dark .signup-container {
+  background:#0b0b0b;
+  border:1px solid #1f2937;
+  box-shadow:0 0 0 1px rgba(255,255,255,0.04);
+}
+
+/* ================= TEXT ================= */
+
+body.dark .signup-title {
+  color:#ffffff;
+}
+
+body.dark .signup-subtitle {
+  color:#9ca3af;
+}
+
+body.dark .signup-footer {
+  color:#9ca3af;
+}
+
+/* ================= INPUTS ================= */
+
+body.dark .input-label {
+  color:#e5e7eb;
+}
+
+body.dark .input-field {
+  background:#050505;
+  color:#ffffff;
+  border:1px solid #262626;
+}
+
+body.dark .input-field::placeholder {
+  color:#6b7280;
+}
+
+body.dark .input-field:focus {
+  border-color:#2563eb; /* 🔵 blue focus */
+  box-shadow:0 0 0 2px rgba(37,99,235,0.25);
+}
+
+/* ================= PASSWORD TOGGLE ================= */
+
+body.dark .toggle-password-btn {
+  color:#60a5fa;
+}
+
+body.dark .toggle-password-btn:hover {
+  color:#93c5fd;
+}
+
+/* ================= BUTTON ================= */
+
+body.dark .signup-btn {
+  background:linear-gradient(135deg,#2563eb,#1e40af);
+  color:#ffffff;
+  border:none;
+}
+
+body.dark .signup-btn:hover {
+  opacity:0.92;
+}
+
+/* ================= LINKS ================= */
+
+body.dark .signup-link {
+  color:#93c5fd;
+}
+
+body.dark .signup-link:hover {
+  color:#bfdbfe;
+}
+
+/* ================= ERROR STATE (RED) ================= */
+
+body.dark .input-field.error {
+  border-color:#ef4444; /* 🔴 red */
+}
+
+body.dark .error-text {
+  color:#fca5a5;
+}
+
+/* ================= SMOOTH FEEL ================= */
+
+.signup-container,
+.input-field,
+.signup-btn,
+.signup-link,
+.toggle-password-btn {
+  transition:
+    background-color .25s ease,
+    color .25s ease,
+    border-color .25s ease,
+    box-shadow .25s ease;
+}

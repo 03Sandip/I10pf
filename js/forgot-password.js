@@ -1,6 +1,7 @@
 // Adjust these URLs to match your backend routes
-const CHECK_EMAIL_URL = "http://localhost:5000/api/auth/check-email";  // STEP 1
-const RESET_PASSWORD_URL = "http://localhost:5000/api/auth/reset-password"; // STEP 2
+// 🔗 Backend URLs (from server.js)
+const CHECK_EMAIL_URL = `${window.SERVER_URL}/api/auth/check-email`;
+const RESET_PASSWORD_URL = `${window.SERVER_URL}/api/auth/reset-password`;
 
 const emailForm = document.getElementById("emailForm");
 const resetForm = document.getElementById("resetForm");
