@@ -1,61 +1,148 @@
 <section class="ourproduct">
   <div class="container ourproduct-inner">
 
-    <style>
-      .ourproduct-info h3 {
-        font-size: 30px;
-      }
-
-      .ourproduct-info p {
-        font-size: 22px;
-      }
-    </style>
-
+    <!-- Optional spotlight / visual card -->
     <div class="ourproduct-card" id="spotlightCard"></div>
 
+    <!-- Content -->
     <div class="ourproduct-info">
-      <h3>Quick Access</h3>
-      <p>Work Smarter not Harder 💡</p>
 
-      <div class="product-grid">
+      <!-- Toggle Header -->
+      <button class="ourproduct-toggle"
+              aria-expanded="false"
+              aria-controls="quickAccessGrid">
+        <h2 class="section-heading">Quick Access</h2>
+        <span class="toggle-icon">+</span>
+      </button>
 
-        <a href="./pages/shop.html" class="product-item">
-          <img src="./images/pencil.png" alt="Notes (MAKUT)">
-          <span>Notes (MAKUT)</span>
-        </a>
+      <p class="section-subheading">Work smarter, not harder 💡</p>
 
-        <a href="./pages/syllabus.html" class="product-item">
-          <img src="./images/checklist.png" alt="Syllabus (MAKUT)">
-          <span>Syllabus (MAKUT)</span>
-        </a>
+      <!-- Expandable Content -->
+      <div class="ourproduct-content" id="quickAccessGrid">
 
-        <a href="./pages/org.html" class="product-item">
-          <img src="./images/book.png" alt="Organizer (Free)">
-          <span>Organizer (Free) (MAKUT)</span>
-        </a>
+        <div class="product-grid">
+          <a href="/pages/shop.html" class="product-item">
+            <img src="/images/pencil.png" alt="Notes (MAKUT)">
+            <span>Notes (MAKUT)</span>
+          </a>
 
-        <a href="./pages/qp.html" class="product-item">
-          <img src="./images/exam.png" alt="Question Papers (Free)">
-          <span>Question Papers (Free) (MAKUT)</span>
-        </a>
+          <a href="/pages/syllabus.html" class="product-item">
+            <img src="/images/checklist.png" alt="Syllabus (MAKUT)">
+            <span>Syllabus (MAKUT)</span>
+          </a>
 
-        <a href="./pages/project.html" class="product-item">
-          <img src="./images/project.png" alt="Final Year Projects">
-          <span>Final Year Projects</span>
-        </a>
+          <a href="/pages/org.html" class="product-item">
+            <img src="/images/book.png" alt="Organizer (Free)">
+            <span>Organizer (Free)</span>
+          </a>
 
-        <a href="./pages/gate.html" class="product-item">
-          <img src="./images/assignment.png" alt="Gate Notes (Free)">
-          <span>Gate Notes (Free)</span>
-        </a>
+          <a href="/pages/qp.html" class="product-item">
+            <img src="/images/exam.png" alt="Question Papers (Free)">
+            <span>Question Papers (Free)</span>
+          </a>
 
-        <a href="./pages/gatesdept.html" class="product-item">
-          <img src="./images/exam1.png" alt="GATE PYQS">
-          <span>GATE PYQS</span>
-        </a>
+          <a href="/pages/project.html" class="product-item">
+            <img src="/images/project.png" alt="Final Year Projects">
+            <span>Final Year Projects</span>
+          </a>
 
+          <a href="/pages/gate.html" class="product-item">
+            <img src="/images/assignment.png" alt="GATE Notes (Free)">
+            <span>GATE Notes (Free)</span>
+          </a>
+
+          <a href="/pages/gatesdept.html" class="product-item">
+            <img src="/images/exam1.png" alt="GATE PYQs">
+            <span>GATE PYQs</span>
+          </a>
+        </div>
       </div>
     </div>
-
   </div>
+
+  <!-- ================= CSS ================= -->
+  <style>
+    .ourproduct {
+      padding: 56px 0;
+    }
+
+    .ourproduct-inner {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 40px;
+    }
+
+    .ourproduct-toggle {
+      all: unset;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .toggle-icon {
+      font-size: 28px;
+      font-weight: 600;
+      transition: transform 0.25s ease;
+    }
+
+    /* Desktop: always open */
+    @media (min-width: 901px) {
+      .ourproduct-toggle {
+        pointer-events: none;
+      }
+      .toggle-icon {
+        display: none;
+      }
+    }
+
+    /* Mobile accordion */
+    @media (max-width: 900px) {
+      .ourproduct-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .ourproduct-card {
+        display: none;
+      }
+
+      .ourproduct-content {
+        display: grid;
+        grid-template-rows: 0fr;
+        overflow: hidden;
+        opacity: 0;
+        transition: grid-template-rows 0.35s ease, opacity 0.25s ease;
+      }
+
+      .ourproduct.open .ourproduct-content {
+        grid-template-rows: 1fr;
+        opacity: 1;
+        margin-top: 12px;
+      }
+
+      .ourproduct.open .toggle-icon {
+        transform: rotate(45deg); /* + → × */
+      }
+    }
+
+    /* Dark mode safe */
+    body.dark .toggle-icon {
+      color: #fff;
+    }
+  </style>
+
+  <!-- ================= JS ================= -->
+  <script>
+    document.addEventListener("click", (e) => {
+      const toggle = e.target.closest(".ourproduct-toggle");
+      if (!toggle) return;
+
+      const section = toggle.closest(".ourproduct");
+      const expanded = toggle.getAttribute("aria-expanded") === "true";
+
+      toggle.setAttribute("aria-expanded", String(!expanded));
+      section.classList.toggle("open", !expanded);
+    });
+  </script>
 </section>

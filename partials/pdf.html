@@ -5,33 +5,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Tools</title>
 
-    <!-- Google AdSense -->
+  <!-- Google AdSense -->
   <script async
     src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5527929468197396"
-    crossorigin="anonymous">
-  </script>
-  <!-- link to your main stylesheet (must include the typing animation CSS) -->
+    crossorigin="anonymous"></script>
+
   <link rel="stylesheet" href="styles.css">
+
   <style>
-    /* ----- Inline styles for the StartCoding product-style buttons ----- */
     .startcoding-right {
       display: flex;
       align-items: center;
       justify-content: center;
-      padding-left: 24px;
+      padding-left: 0; /* ✅ FIX */
     }
 
     .startcoding-right .product-grid {
       display: flex;
       gap: 18px;
-      flex-direction: column;
-      align-items: stretch;
+      flex-wrap: wrap;
+      justify-content: center;
     }
 
-    /* Make them horizontal on wider screens */
     @media (min-width: 760px) {
       .startcoding-right .product-grid {
-        flex-direction: row;
+        flex-wrap: nowrap;
       }
     }
 
@@ -52,24 +50,12 @@
     .startcoding-card img {
       width: 46px;
       height: 46px;
-      object-fit: contain;
-      display: block;
     }
 
     .startcoding-card .card-label {
       font-size: 16px;
       font-weight: 700;
-      line-height: 1.1;
       color: #111827;
-      display: block;
-    }
-
-    .startcoding-card .card-sub {
-      display: block;
-      font-size: 13px;
-      color: #6b7280;
-      margin-top: 2px;
-      font-weight: 500;
     }
 
     .startcoding-card:hover {
@@ -77,167 +63,64 @@
       box-shadow: 0 14px 36px rgba(18,22,35,0.12);
     }
 
-    /* Secondary styling variation (optional) */
     .startcoding-card--accent {
       background: linear-gradient(180deg, #f8fafc, #ffffff);
       border: 1px solid rgba(59,130,246,0.08);
     }
+
+    /* ✅ CENTER ROW */
+    .startcoding-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   </style>
 </head>
+
 <body>
 
-  <!-- start coding section (uses classes defined in styles.css) -->
-  <section class="container">
-    <h1 class="section-title">Tools</h1>
+<section>
 
-    <!-- MOTIVATIONAL QUOTE (moved ABOVE the row) -->
-    <div class="startcoding-quote">
-      “Every expert was once a beginner — start small, stay consistent.”
-    </div>
+  <h2 class="section-heading">Tools</h2>
+
+  <p class="section-subheading">
+    “Every expert was once a beginner — start small, stay consistent.”
+  </p>
+
+  <!-- 🔒 WIDTH + CENTER LOCK -->
+  <div class="section-content">
 
     <div class="startcoding-row">
 
-     
-
-      <!-- RIGHT BUTTONS (Start + Company-wise) -->
-      <div class="startcoding-right" role="navigation" aria-label="PDF'S Tools">
+      <div class="startcoding-right" role="navigation" aria-label="PDF Tools">
         <div class="product-grid">
-          <!-- Start Coding Card -->
-          <a href="./pages/pdf.html" class="product-item startcoding-card startcoding-card--accent" role="button" aria-label="PDF'S Tools">
-            <img src="./images/pdf.png" alt="PDF'S Tools">
-            <div>
-              <span class="card-label">PDF'S Tools</span>
-            </div>
+
+          <a href="./pages/pdf.html" class="product-item startcoding-card startcoding-card--accent">
+            <img src="./images/pdf.png" alt="">
+            <span class="card-label">PDF Tools</span>
           </a>
 
-          <!-- Company-wise Problems Card -->
-          <a href="./pages/pyq.html" class="product-item startcoding-card" role="button" aria-label="Comming Soon">
-            <img src="./images/cs.png" alt="Company-wise problems icon">
-            <div>
-              <span class="card-label">Comming Soon</span>
-            </div>
+          <a href="./pages/pyq.html" class="product-item startcoding-card">
+            <img src="./images/cs.png" alt="">
+            <span class="card-label">Coming Soon</span>
           </a>
 
-          <a href="" class="product-item startcoding-card" role="button" aria-label="Comming Soon">
-            <img src="./images/cs.png" alt="Comming Soon">
-            <div>
-              <span class="card-label">Comming Soon</span>
-            </div>
+          <a href="#" class="product-item startcoding-card">
+            <img src="./images/cs.png" alt="">
+            <span class="card-label">Coming Soon</span>
           </a>
 
-          <a href="" class="product-item startcoding-card" role="button" aria-label="Comming Soon">
-            <img src="./images/cs.png" alt="Comming Soon">
-            <div>
-              <span class="card-label">Comming Soon</span>
-            </div>
+          <a href="#" class="product-item startcoding-card">
+            <img src="./images/cs.png" alt="">
+            <span class="card-label">Coming Soon</span>
           </a>
+
         </div>
       </div>
 
     </div>
-  </section>
-
-  <!-- Improved rotation script: fade, hover-pause, reliable restart -->
-<script>
-(function () {
-  try {
-    const codeSnippets = [
-`// Greeting
-function greet(name) {
-  return "Hello, " + name + "!";
-}
-console.log(greet("Dev"));`,
-
-`// Squares
-const nums = [1,2,3,4];
-console.log(nums.map(n => n*n));`,
-
-`// Async example
-async function load() {
-  const data = await fetch("https://jsonplaceholder.typicode.com/todos/1")
-                      .then(r => r.json());
-  console.log(data);
-}
-load();`,
-
-`// Class example
-class User {
-  constructor(n){ this.name = n; }
-}
-console.log(new User("John"));`
-    ];
-
-    const rotator = document.getElementById('codeRotator');
-    if (!rotator) return;
-
-    let index = 0;
-    const switchInterval = 3500; // FASTER rotation
-
-    // HTML escaping
-    const esc = s => String(s)
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;");
-
-    // syntax highlighting
-    function highlight(line){
-      let t = esc(line);
-      t = t.replace(/(".*?"|'.*?')/g, m => `<span class="str">${m}</span>`);
-      t = t.replace(/\b(const|let|var|function|return|async|await|class|new)\b/g,
-                    `<span class="kw">$1</span>`);
-      t = t.replace(/\b(\d+)\b/g, `<span class="num">$1</span>`);
-      t = t.replace(/\bfunction\s+([a-zA-Z_$][\w$]*)/g,
-                    'function <span class="fn">$1</span>');
-      t = t.replace(/\bclass\s+([a-zA-Z_$][\w$]*)/g,
-                    'class <span class="fn">$1</span>');
-      return t;
-    }
-
-    function build(snippet){
-      const wrapper = document.createElement('div');
-      wrapper.className = "code-snippet";
-
-      const lines = snippet.split("\n");
-
-      lines.forEach((raw,i)=>{
-        const indent = raw.match(/^\s*/)[0];
-        const clean = raw.replace(/^\s*/,'');
-
-        const indentHtml = indent.replace(/ /g,'&nbsp;');
-
-        const span = document.createElement("span");
-        span.className = "code-line";
-        span.style.setProperty("--delay", (i * 0.25) + "s"); // FASTER typing
-        span.innerHTML = indentHtml + highlight(clean);
-
-        const lineWrap = document.createElement("div");
-        lineWrap.appendChild(span);
-        wrapper.appendChild(lineWrap);
-      });
-      return wrapper;
-    }
-
-    function show(i){
-      rotator.querySelectorAll(".code-snippet").forEach(x => x.remove());
-
-      const el = build(codeSnippets[i]);
-      rotator.appendChild(el);
-
-      void el.offsetWidth;
-      requestAnimationFrame(() => el.classList.add("active"));
-    }
-
-    show(index);
-    setInterval(()=> {
-      index = (index + 1) % codeSnippets.length;
-      show(index);
-    }, switchInterval);
-
-  } catch (e){
-    console.error("Rotator failed:", e);
-  }
-})();
-</script>
+  </div>
+</section>
 
 </body>
 </html>

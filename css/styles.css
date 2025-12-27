@@ -485,6 +485,10 @@ body{
   will-change: opacity, transform;
 }
 
+.startcoding-row {
+  justify-content: center;
+}
+
 /* active snippet visible */
 .code-snippet.active {
   opacity: 1;
@@ -1054,4 +1058,50 @@ body.dark .start-btn,
 body.dark .org-btn-download,
 body.dark .qp-btn-download {
   color: #ffffff;
+}
+/* =========================================
+   🔒 GLOBAL SECTION HEADING SYSTEM (FINAL)
+========================================= */
+
+.section-heading {
+  max-width: var(--container);
+  margin: 72px auto 12px;
+  padding: 0 20px;
+
+  text-align: center;
+  font-family: "Georgia", "Times New Roman", serif;
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  color: #1f1b18;
+}
+
+.section-subheading {
+  max-width: var(--container);
+  margin: 0 auto 28px;
+  padding: 0 20px;
+
+  text-align: center;
+  font-family: "Georgia", "Times New Roman", serif;
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+/* content always aligns with heading */
+.section-content {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+/* =========================================
+   🌙 DARK MODE — SECTION HEADINGS
+========================================= */
+
+body.dark .section-heading {
+  color: #ffffff;
+}
+
+body.dark .section-subheading {
+  color: #e5e7eb;
 }
