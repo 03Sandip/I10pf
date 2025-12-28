@@ -208,7 +208,7 @@ async function startPayment() {
   }
 
   const rzp = new Razorpay({
-    key: "rzp_test_RnRIwRM8IIcfaf",
+    key: "rzp_live_Rx5dLfOW4QM590",
     amount: orderData.order.amount,
     currency: "INR",
     name: "GoNotes",

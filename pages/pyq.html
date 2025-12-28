@@ -4,6 +4,11 @@
   <meta charset="UTF-8" />
   <title>GATE PYQs – GoNotes</title>
 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+
   <link rel="stylesheet" href="../css/styles.css" />
   <link rel="stylesheet" href="../css/pages/header.css" />
 
@@ -362,6 +367,47 @@ body.dark .option.wrong{
   color:#fca5a5;
 }
 
+/* ================= PAGINATION (ADDED ONLY) ================= */
+.pagination{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin-top:32px;
+  flex-wrap:wrap;
+}
+
+.page-btn{
+  padding:6px 14px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:#ffffff;
+  cursor:pointer;
+  font-size:14px;
+}
+
+.page-btn.active{
+  background:var(--blue-main);
+  color:#ffffff;
+  border-color:var(--blue-main);
+}
+
+.page-btn:hover{
+  background:#eff6ff;
+}
+
+/* dark mode */
+body.dark .page-btn{
+  background:#050505;
+  color:#e5e7eb;
+  border:1px solid #1f2933;
+}
+
+body.dark .page-btn.active{
+  background:#2563eb;
+  color:#ffffff;
+}
+
+
   </style>
 </head>
 
@@ -389,6 +435,9 @@ body.dark .option.wrong{
   </div>
 
   <div id="pyqList"></div>
+  <!-- PAGINATION (ADDED – DO NOT REMOVE ANYTHING ELSE) -->
+<div id="pagination" class="pagination"></div>
+
 </main>
 
 <script src="../js/theme.js"></script>

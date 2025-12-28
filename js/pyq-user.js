@@ -9,6 +9,8 @@
 
   const list = document.getElementById("pyqList");
   const deptTabs = document.getElementById("deptTabs");
+  const pagination = document.getElementById("pagination");
+
   const subSel = document.getElementById("filterSubject");
   const topicSel = document.getElementById("filterTopic");
   const yearSel = document.getElementById("filterYear");
@@ -17,19 +19,11 @@
   let activeDepartment = "";
   let questions = [];
 
-  // PAGINATION
   let currentPage = 1;
   const QUESTIONS_PER_PAGE = 12;
 
-  // READ DEPARTMENT FROM URL
   const urlParams = new URLSearchParams(window.location.search);
   const deptFromUrl = urlParams.get("department");
-
-  /* ================= MATH RENDER (FULL SUPPORT) ================= */
-  function renderMath(text) {
-    if (!text) return "";
-    return text.replace(/\^([a-zA-Z0-9]+)/g, "<sup>$1</sup>");
-  }
 
   /* ================= LOAD DEPARTMENTS ================= */
   async function loadDepartments() {
@@ -41,10 +35,7 @@
       tab.className = "dept-tab";
       tab.textContent = d;
 
-      if (
-        (deptFromUrl && d === deptFromUrl) ||
-        (!deptFromUrl && i === 0)
-      ) {
+      if ((deptFromUrl && d === deptFromUrl) || (!deptFromUrl && i === 0)) {
         tab.classList.add("active");
         activeDepartment = d;
       }
@@ -55,6 +46,7 @@
 
         tab.classList.add("active");
         activeDepartment = d;
+        currentPage = 1;
 
         const newUrl =
           `${location.pathname}?department=${encodeURIComponent(d)}`;
@@ -132,22 +124,22 @@
     render();
   }
 
-  [subSel, topicSel, yearSel, typeSel].forEach(el =>
-    el.addEventListener("change", fetchQuestions)
-  );
+  [subSel, topicSel, yearSel, typeSel]
+    .forEach(el => el.addEventListener("change", fetchQuestions));
 
-  /* ================= RENDER QUESTIONS ================= */
+  /* ================= RENDER (KATEX SAFE) ================= */
   function render() {
     list.innerHTML = "";
+    pagination.innerHTML = "";
 
     if (!questions.length) {
       list.innerHTML = "<p>No questions found.</p>";
       return;
     }
 
+    const totalPages = Math.ceil(questions.length / QUESTIONS_PER_PAGE);
     const start = (currentPage - 1) * QUESTIONS_PER_PAGE;
-    const end = start + QUESTIONS_PER_PAGE;
-    const pageQuestions = questions.slice(start, end);
+    const pageQuestions = questions.slice(start, start + QUESTIONS_PER_PAGE);
 
     pageQuestions.forEach((q, i) => {
       const card = document.createElement("div");
@@ -158,26 +150,26 @@
           <span>
             Q.${start + i + 1}
             • ${q.subject}
-            ${q.topic ? ` • ${q.topic}` : ""}
+            ${(q.topic && q.topic.trim()) ? ` • ${q.topic}` : ""}
             • ${q.year}
             ${q.set ? `<span class="q-set">${q.set}</span>` : ""}
           </span>
           <span class="q-type">${q.type}</span>
         </div>
 
-        <div class="q-text">${renderMath(q.questionText)}</div>
+        <!-- IMPORTANT: DO NOT TOUCH LaTeX -->
+        <div class="q-text">${q.questionText}</div>
 
         ${q.image ? `
           <div class="q-image">
-            <img src="${q.image}" alt="Question Image">
-          </div>
-        ` : ""}
+            <img src="${q.image}">
+          </div>` : ""}
 
         ${
           q.options?.length
             ? q.options.map(o => `
               <div class="option" data-val="${o.label}">
-                ${o.label}. ${renderMath(o.text)}
+                ${o.label}. ${o.text}
               </div>
             `).join("")
             : `<input class="nat-input" placeholder="Your answer">`
@@ -192,10 +184,34 @@
       list.appendChild(card);
     });
 
-    renderPagination();
+    /* ================= PAGINATION ================= */
+    for (let p = 1; p <= totalPages; p++) {
+      const btn = document.createElement("button");
+      btn.className = "page-btn" + (p === currentPage ? " active" : "");
+      btn.textContent = p;
+
+      btn.onclick = () => {
+        currentPage = p;
+        render();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      };
+
+      pagination.appendChild(btn);
+    }
+
+    /* ================= KATEX AUTO-RENDER ================= */
+    if (window.renderMathInElement) {
+      renderMathInElement(list, {
+        delimiters: [
+          { left: "$$", right: "$$", display: true },
+          { left: "$", right: "$", display: false }
+        ],
+        throwOnError: false
+      });
+    }
   }
 
-  /* ================= ANSWER LOGIC (FINAL FIXED) ================= */
+  /* ================= ANSWER LOGIC ================= */
   function setupAnswer(card, q) {
     let selected = [];
     const options = card.querySelectorAll(".option");
@@ -220,46 +236,44 @@
     btn.onclick = () => {
       btn.disabled = true;
 
-      const user = q.type === "NAT"
-        ? card.querySelector(".nat-input").value.trim()
-        : selected;
-
-      // ✅ NORMALIZE CORRECT ANSWERS (KEY FIX)
-      const correctAnswers = Array.isArray(q.correctAnswer)
-        ? q.correctAnswer
-        : typeof q.correctAnswer === "string"
-          ? q.correctAnswer.split(",").map(a => a.trim())
-          : [q.correctAnswer];
-
-      options.forEach(o => {
-        o.classList.add("disabled");
-        const val = o.dataset.val;
-        if (correctAnswers.includes(val)) o.classList.add("correct");
-        if (selected.includes(val) && !correctAnswers.includes(val))
-          o.classList.add("wrong");
-      });
-
-      let isCorrect;
+      let isCorrect = false;
+      let displayAnswer = "";
 
       if (q.type === "NAT") {
-        isCorrect = Number(user) === Number(q.correctAnswer);
-      }
-      else if (q.type === "MSQ") {
+        const user = Number(card.querySelector(".nat-input").value);
+
+        if (
+          typeof q.correctAnswer === "object" &&
+          q.correctAnswer !== null &&
+          "min" in q.correctAnswer &&
+          "max" in q.correctAnswer
+        ) {
+          isCorrect =
+            user >= q.correctAnswer.min &&
+            user <= q.correctAnswer.max;
+
+          displayAnswer =
+            `${q.correctAnswer.min} to ${q.correctAnswer.max}`;
+        } else {
+          isCorrect = user === Number(q.correctAnswer);
+          displayAnswer = q.correctAnswer;
+        }
+      } else if (q.type === "MSQ") {
         isCorrect =
-          selected.length === correctAnswers.length &&
-          selected.every(v => correctAnswers.includes(v));
-      }
-      else {
-        // MCQ
-        isCorrect = selected[0] === correctAnswers[0];
+          selected.length === q.correctAnswer.length &&
+          selected.every(v => q.correctAnswer.includes(v));
+
+        displayAnswer = q.correctAnswer.join(", ");
+      } else {
+        isCorrect = selected[0] === q.correctAnswer;
+        displayAnswer = q.correctAnswer;
       }
 
       ans.style.display = "block";
       ans.className = "answer " + (isCorrect ? "correct" : "wrong");
       ans.innerHTML = `
         ${isCorrect ? "✅ Correct" : "❌ Wrong"}<br>
-        Correct Answer:
-        <b>${renderMath(correctAnswers.join(", "))}</b>
+        Correct Answer: <b>${displayAnswer}</b>
       `;
 
       solArea.style.display = "block";
@@ -267,9 +281,7 @@
         ? `<a href="${q.solutionLink}" target="_blank" class="btn">
             📖 Click here for detail solution by GateOverflow
            </a>`
-        : `<div style="color:#7f1d1d;font-weight:600;">
-            ❌ Sorry, solution is unavailable
-           </div>`;
+        : "";
     };
   }
 
@@ -280,7 +292,6 @@
     typeSel.value = "";
   }
 
-  // START
   loadDepartments();
 
 })();
