@@ -17,14 +17,18 @@
   let activeDepartment = "";
   let questions = [];
 
-  // ✅ READ DEPARTMENT FROM URL
+  // PAGINATION
+  let currentPage = 1;
+  const QUESTIONS_PER_PAGE = 12;
+
+  // READ DEPARTMENT FROM URL
   const urlParams = new URLSearchParams(window.location.search);
   const deptFromUrl = urlParams.get("department");
 
-  /* ================= MATH RENDER ================= */
+  /* ================= MATH RENDER (FULL SUPPORT) ================= */
   function renderMath(text) {
     if (!text) return "";
-    return text.replace(/\^(\d+)/g, "<sup>$1</sup>");
+    return text.replace(/\^([a-zA-Z0-9]+)/g, "<sup>$1</sup>");
   }
 
   /* ================= LOAD DEPARTMENTS ================= */
@@ -37,7 +41,6 @@
       tab.className = "dept-tab";
       tab.textContent = d;
 
-      // ✅ AUTO-SELECT FROM URL OR FIRST ITEM
       if (
         (deptFromUrl && d === deptFromUrl) ||
         (!deptFromUrl && i === 0)
@@ -53,7 +56,6 @@
         tab.classList.add("active");
         activeDepartment = d;
 
-        // 🔁 Update URL (no reload)
         const newUrl =
           `${location.pathname}?department=${encodeURIComponent(d)}`;
         window.history.pushState({}, "", newUrl);
@@ -97,7 +99,6 @@
       fetch(
         `${API}/questions/topics?department=${activeDepartment}&subject=${subSel.value}`
       ).then(r => r.json()),
-
       fetch(
         `${API}/questions/years?department=${activeDepartment}&subject=${subSel.value}`
       ).then(r => r.json())
@@ -116,9 +117,7 @@
   async function fetchQuestions() {
     if (!activeDepartment) return;
 
-    const params = new URLSearchParams({
-      department: activeDepartment
-    });
+    const params = new URLSearchParams({ department: activeDepartment });
 
     if (subSel.value) params.append("subject", subSel.value);
     if (topicSel.value) params.append("topic", topicSel.value);
@@ -129,6 +128,7 @@
       `${API}/questions?${params.toString()}`
     ).then(r => r.json());
 
+    currentPage = 1;
     render();
   }
 
@@ -136,7 +136,7 @@
     el.addEventListener("change", fetchQuestions)
   );
 
-  /* ================= RENDER ================= */
+  /* ================= RENDER QUESTIONS ================= */
   function render() {
     list.innerHTML = "";
 
@@ -145,14 +145,18 @@
       return;
     }
 
-    questions.forEach((q, i) => {
+    const start = (currentPage - 1) * QUESTIONS_PER_PAGE;
+    const end = start + QUESTIONS_PER_PAGE;
+    const pageQuestions = questions.slice(start, end);
+
+    pageQuestions.forEach((q, i) => {
       const card = document.createElement("div");
       card.className = "question-card";
 
       card.innerHTML = `
         <div class="q-header">
           <span>
-            Q.${i + 1}
+            Q.${start + i + 1}
             • ${q.subject}
             ${q.topic ? ` • ${q.topic}` : ""}
             • ${q.year}
@@ -162,6 +166,12 @@
         </div>
 
         <div class="q-text">${renderMath(q.questionText)}</div>
+
+        ${q.image ? `
+          <div class="q-image">
+            <img src="${q.image}" alt="Question Image">
+          </div>
+        ` : ""}
 
         ${
           q.options?.length
@@ -181,9 +191,11 @@
       setupAnswer(card, q);
       list.appendChild(card);
     });
+
+    renderPagination();
   }
 
-  /* ================= ANSWER LOGIC ================= */
+  /* ================= ANSWER LOGIC (FINAL FIXED) ================= */
   function setupAnswer(card, q) {
     let selected = [];
     const options = card.querySelectorAll(".option");
@@ -212,23 +224,35 @@
         ? card.querySelector(".nat-input").value.trim()
         : selected;
 
+      // ✅ NORMALIZE CORRECT ANSWERS (KEY FIX)
       const correctAnswers = Array.isArray(q.correctAnswer)
         ? q.correctAnswer
-        : [q.correctAnswer];
+        : typeof q.correctAnswer === "string"
+          ? q.correctAnswer.split(",").map(a => a.trim())
+          : [q.correctAnswer];
 
       options.forEach(o => {
         o.classList.add("disabled");
         const val = o.dataset.val;
-
         if (correctAnswers.includes(val)) o.classList.add("correct");
         if (selected.includes(val) && !correctAnswers.includes(val))
           o.classList.add("wrong");
       });
 
-      const isCorrect =
-        q.type === "NAT"
-          ? Number(user) === Number(q.correctAnswer)
-          : selected.sort().join() === correctAnswers.sort().join();
+      let isCorrect;
+
+      if (q.type === "NAT") {
+        isCorrect = Number(user) === Number(q.correctAnswer);
+      }
+      else if (q.type === "MSQ") {
+        isCorrect =
+          selected.length === correctAnswers.length &&
+          selected.every(v => correctAnswers.includes(v));
+      }
+      else {
+        // MCQ
+        isCorrect = selected[0] === correctAnswers[0];
+      }
 
       ans.style.display = "block";
       ans.className = "answer " + (isCorrect ? "correct" : "wrong");
@@ -256,7 +280,7 @@
     typeSel.value = "";
   }
 
-  // 🚀 START
+  // START
   loadDepartments();
 
 })();

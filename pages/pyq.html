@@ -13,17 +13,15 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-EYNBE29XE1');
 </script>
 
-   <!-- ✅ CANONICAL -->
+  <!-- ✅ CANONICAL -->
   <link rel="canonical" href="https://gonotes.shop/pages/pyq.html" />
 
   <!-- Meta description -->
   <meta name="description"
         content="Practice GATE previous year questions with filters by department, subject, topic, year and question type. Interactive PYQs with solutions on GoNotes." />
-
 
   <style>
  :root{
@@ -163,6 +161,19 @@ body{
   color:#111827;
 }
 
+/* ================= QUESTION IMAGE (NEW – ADDED ONLY) ================= */
+.q-image{
+  margin:12px 0 10px;
+  text-align:center;
+}
+
+.q-image img{
+  max-width:100%;
+  height:auto;
+  border-radius:10px;
+  border:1px solid var(--border);
+}
+
 /* ================= OPTIONS ================= */
 .option{
   padding:8px 10px;
@@ -279,6 +290,10 @@ body.dark .q-text{
   color:#f9fafb;
 }
 
+body.dark .q-image img{
+  border-color:#1f2933;
+}
+
 body.dark .option{
   background:#050505;
   color:#e5e7eb;
@@ -315,28 +330,37 @@ select,
     border-color .25s ease,
     transform .2s ease;
 }
-/* ================= FIX: DARK MODE SELECT DROPDOWN ================= */
 
-/* Closed select text */
+/* ================= FIX: DARK MODE SELECT DROPDOWN ================= */
 body.dark .filter-bar select{
   background:#050505;
-  color:#f9fafb;                 /* visible text */
+  color:#f9fafb;
 }
 
-/* Open dropdown options */
 body.dark .filter-bar select option{
   background:#0b0b0b;
-  color:#f9fafb;                 /* FORCE visible text */
+  color:#f9fafb;
 }
 
-/* Hover / selected option */
 body.dark .filter-bar select option:hover,
 body.dark .filter-bar select option:checked{
   background:#1e40af;
   color:#ffffff;
 }
 
+/* ================= DARK MODE FIX: CORRECT / WRONG ================= */
 
+body.dark .option.correct{
+  background:#052e16;            /* dark green */
+  border:1px solid #22c55e;
+  color:#86efac;
+}
+
+body.dark .option.wrong{
+  background:#450a0a;            /* dark red */
+  border:1px solid #ef4444;
+  color:#fca5a5;
+}
 
   </style>
 </head>
