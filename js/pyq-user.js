@@ -127,7 +127,6 @@
     const start = (currentPage - 1) * QUESTIONS_PER_PAGE;
     const pageQuestions = questions.slice(start, start + QUESTIONS_PER_PAGE);
 
-    /* ===== QUESTIONS ===== */
     pageQuestions.forEach((q, i) => {
       const card = document.createElement("div");
       card.className = "question-card";
@@ -196,7 +195,7 @@
     }
   }
 
-  /* ================= ANSWER LOGIC ================= */
+  /* ================= ANSWER LOGIC (FIXED) ================= */
   function setupAnswer(card, q) {
     let selected = [];
     let locked = false;
@@ -225,14 +224,8 @@
       locked = true;
       btn.disabled = true;
 
-      let correct = [];
-      if (Array.isArray(q.correctAnswer)) {
-        correct = q.correctAnswer;
-      } else if (typeof q.correctAnswer === "string") {
-        correct = q.correctAnswer.split(",").map(s => s.trim());
-      }
-
       let isCorrect = false;
+      let correctText = "";
 
       /* ===== NAT ===== */
       if (q.type === "NAT") {
@@ -240,18 +233,21 @@
 
         if (typeof q.correctAnswer === "object") {
           isCorrect = user >= q.correctAnswer.min && user <= q.correctAnswer.max;
-          ans.innerHTML = `Correct Answer: ${q.correctAnswer.min} to ${q.correctAnswer.max}`;
+          correctText = `${q.correctAnswer.min} to ${q.correctAnswer.max}`;
         } else {
           isCorrect = user === Number(q.correctAnswer);
-          ans.innerHTML = `Correct Answer: ${q.correctAnswer}`;
+          correctText = q.correctAnswer;
         }
       }
 
       /* ===== MSQ ===== */
       else if (q.type === "MSQ") {
+        const correct = q.correctAnswer;
         isCorrect =
           selected.length === correct.length &&
           selected.every(v => correct.includes(v));
+
+        correctText = correct.join(", ");
 
         options.forEach(opt => {
           const v = opt.dataset.val;
@@ -264,6 +260,7 @@
       /* ===== MCQ ===== */
       else {
         isCorrect = selected[0] === q.correctAnswer;
+        correctText = q.correctAnswer;
 
         options.forEach(opt => {
           const v = opt.dataset.val;
@@ -277,7 +274,7 @@
       ans.className = "answer " + (isCorrect ? "correct" : "wrong");
       ans.innerHTML = `
         ${isCorrect ? "✅ Correct" : "❌ Wrong"}<br>
-        Correct Answer: <b>${correct.join(", ") || q.correctAnswer}</b>
+        Correct Answer: <b>${correctText}</b>
       `;
     };
   }
