@@ -25,6 +25,21 @@
   const urlParams = new URLSearchParams(window.location.search);
   const deptFromUrl = urlParams.get("department");
 
+  /* ================= FORMAT ANSWER ================= */
+  function formatCorrectAnswer(q) {
+    const a = q.correctAnswer;
+
+    if (q.type === "NAT") {
+      if (typeof a === "object" && a && "min" in a && "max" in a) {
+        return `${a.min} to ${a.max}`;
+      }
+      return String(a);
+    }
+
+    if (Array.isArray(a)) return a.join(", ");
+    return String(a);
+  }
+
   /* ================= LOAD DEPARTMENTS ================= */
   async function loadDepartments() {
     const depts = await fetch(`${API}/questions/departments`).then(r => r.json());
@@ -47,8 +62,7 @@
         activeDepartment = d;
         currentPage = 1;
 
-        const newUrl = `${location.pathname}?department=${encodeURIComponent(d)}`;
-        window.history.pushState({}, "", newUrl);
+        history.pushState({}, "", `${location.pathname}?department=${encodeURIComponent(d)}`);
 
         resetFilters();
         loadSubjects();
@@ -104,7 +118,7 @@
     if (yearSel.value) params.append("year", yearSel.value);
     if (typeSel.value) params.append("type", typeSel.value);
 
-    questions = await fetch(`${API}/questions?${params.toString()}`).then(r => r.json());
+    questions = await fetch(`${API}/questions?${params}`).then(r => r.json());
     currentPage = 1;
     render();
   }
@@ -133,42 +147,38 @@
 
       card.innerHTML = `
         <div class="q-header">
-          <span>
-            Q.${start + i + 1}
-            • ${q.subject}
-            ${q.topic ? ` • ${q.topic}` : ""}
-            • ${q.year}
-            ${q.set ? `<span class="q-set">${q.set}</span>` : ""}
-          </span>
+          <span>Q.${start + i + 1} • ${q.subject} • ${q.year}</span>
           <span class="q-type">${q.type}</span>
         </div>
 
         <div class="q-text">${q.questionText}</div>
 
-        ${q.image ? `
-          <div class="q-image">
-            <img src="${q.image}">
-          </div>` : ""}
+        ${q.image ? `<div class="q-image"><img src="${q.image}"></div>` : ""}
 
         ${
           q.options?.length
             ? q.options.map(o => `
-              <div class="option" data-val="${o.label}">
-                ${o.label}. ${o.text}
-              </div>
-            `).join("")
+                <div class="option" data-val="${o.label}">
+                  ${o.label}. ${o.text}
+                </div>`).join("")
             : `<input class="nat-input" placeholder="Your answer">`
         }
 
         <button class="btn check-btn">Check Answer</button>
         <div class="answer"></div>
+
+        <div class="solution-link" style="display:none;margin-top:10px">
+          ${q.solutionLink ? `
+            <a href="${q.solutionLink}" target="_blank" style="color:#2563eb;font-weight:600">
+              👉 Click here for detailed solution (GateOverflow)
+            </a>` : ""}
+        </div>
       `;
 
       setupAnswer(card, q);
       list.appendChild(card);
     });
 
-    /* ===== PAGINATION ===== */
     for (let p = 1; p <= totalPages; p++) {
       const btn = document.createElement("button");
       btn.className = "page-btn" + (p === currentPage ? " active" : "");
@@ -182,20 +192,9 @@
 
       pagination.appendChild(btn);
     }
-
-    /* ===== KATEX ===== */
-    if (window.renderMathInElement) {
-      renderMathInElement(list, {
-        delimiters: [
-          { left: "$$", right: "$$", display: true },
-          { left: "$", right: "$", display: false }
-        ],
-        throwOnError: false
-      });
-    }
   }
 
-  /* ================= ANSWER LOGIC (FIXED) ================= */
+  /* ================= ANSWER LOGIC (COLOR FIXED) ================= */
   function setupAnswer(card, q) {
     let selected = [];
     let locked = false;
@@ -203,6 +202,7 @@
     const options = card.querySelectorAll(".option");
     const btn = card.querySelector(".check-btn");
     const ans = card.querySelector(".answer");
+    const sol = card.querySelector(".solution-link");
 
     options.forEach(opt => {
       opt.onclick = () => {
@@ -225,29 +225,26 @@
       btn.disabled = true;
 
       let isCorrect = false;
-      let correctText = "";
 
       /* ===== NAT ===== */
       if (q.type === "NAT") {
         const user = Number(card.querySelector(".nat-input").value);
+        const a = q.correctAnswer;
 
-        if (typeof q.correctAnswer === "object") {
-          isCorrect = user >= q.correctAnswer.min && user <= q.correctAnswer.max;
-          correctText = `${q.correctAnswer.min} to ${q.correctAnswer.max}`;
+        if (typeof a === "object" && a && "min" in a && "max" in a) {
+          isCorrect = user >= a.min && user <= a.max;
         } else {
-          isCorrect = user === Number(q.correctAnswer);
-          correctText = q.correctAnswer;
+          isCorrect = user === Number(a);
         }
       }
 
       /* ===== MSQ ===== */
       else if (q.type === "MSQ") {
         const correct = q.correctAnswer;
+
         isCorrect =
           selected.length === correct.length &&
           selected.every(v => correct.includes(v));
-
-        correctText = correct.join(", ");
 
         options.forEach(opt => {
           const v = opt.dataset.val;
@@ -260,7 +257,6 @@
       /* ===== MCQ ===== */
       else {
         isCorrect = selected[0] === q.correctAnswer;
-        correctText = q.correctAnswer;
 
         options.forEach(opt => {
           const v = opt.dataset.val;
@@ -274,8 +270,10 @@
       ans.className = "answer " + (isCorrect ? "correct" : "wrong");
       ans.innerHTML = `
         ${isCorrect ? "✅ Correct" : "❌ Wrong"}<br>
-        Correct Answer: <b>${correctText}</b>
+        Correct Answer: <b>${formatCorrectAnswer(q)}</b>
       `;
+
+      if (sol && sol.innerHTML.trim()) sol.style.display = "block";
     };
   }
 
