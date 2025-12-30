@@ -16,6 +16,8 @@
   const yearSel = document.getElementById("filterYear");
   const typeSel = document.getElementById("filterType");
 
+  const setSel = document.getElementById("filterSet"); // ✅ ADDED
+
   let activeDepartment = "";
   let questions = [];
 
@@ -92,7 +94,6 @@
       subSel.innerHTML += `<option value="${s}">${s}</option>`;
     });
 
-    /* ✅ ADDED — load years even without subject */
     const years = await fetch(
       `${API}/questions/years?department=${encodeURIComponent(activeDepartment)}`
     ).then(r => r.json());
@@ -106,7 +107,6 @@
     topicSel.innerHTML = `<option value="">All Topics</option>`;
     yearSel.innerHTML = `<option value="">All Years</option>`;
 
-    /* ✅ ADDED — subject cleared → reload all years */
     if (!subSel.value) {
       const years = await fetch(
         `${API}/questions/years?department=${encodeURIComponent(activeDepartment)}`
@@ -127,6 +127,26 @@
     years.forEach(y => yearSel.innerHTML += `<option value="${y}">${y}</option>`);
   };
 
+  /* ================= LOAD SETS ON YEAR CHANGE ================= */
+  yearSel.addEventListener("change", async () => {
+    setSel.innerHTML = `<option value="">All Sets</option>`;
+    setSel.style.display = "none";
+
+    if (!yearSel.value || !activeDepartment) return;
+
+    const sets = await fetch(
+      `${API}/questions/sets?department=${encodeURIComponent(activeDepartment)}&year=${yearSel.value}`
+    ).then(r => r.json());
+
+    if (!sets.length) return;
+
+    sets.forEach(s => {
+      setSel.innerHTML += `<option value="${s}">${s}</option>`;
+    });
+
+    setSel.style.display = "inline-block";
+  });
+
   /* ================= FETCH QUESTIONS ================= */
   async function fetchQuestions() {
     if (!activeDepartment) return;
@@ -135,6 +155,11 @@
     if (subSel.value) params.append("subject", subSel.value);
     if (topicSel.value) params.append("topic", topicSel.value);
     if (yearSel.value) params.append("year", yearSel.value);
+    if (setSel.value) {
+  params.append("set", setSel.value);
+}
+
+// ✅ ADDED
     if (typeSel.value) params.append("type", typeSel.value);
 
     questions = await fetch(`${API}/questions?${params}`).then(r => r.json());
@@ -142,7 +167,7 @@
     render();
   }
 
-  [subSel, topicSel, yearSel, typeSel].forEach(el =>
+  [subSel, topicSel, yearSel, setSel, typeSel].forEach(el =>
     el.addEventListener("change", fetchQuestions)
   );
 
@@ -309,6 +334,9 @@
     topicSel.value = "";
     yearSel.value = "";
     typeSel.value = "";
+
+    setSel.value = "";
+    setSel.style.display = "none";
   }
 
   loadDepartments();
