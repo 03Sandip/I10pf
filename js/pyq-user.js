@@ -91,13 +91,32 @@
     subjects.forEach(s => {
       subSel.innerHTML += `<option value="${s}">${s}</option>`;
     });
+
+    /* ✅ ADDED — load years even without subject */
+    const years = await fetch(
+      `${API}/questions/years?department=${encodeURIComponent(activeDepartment)}`
+    ).then(r => r.json());
+
+    years.forEach(y => {
+      yearSel.innerHTML += `<option value="${y}">${y}</option>`;
+    });
   }
 
   subSel.onchange = async () => {
     topicSel.innerHTML = `<option value="">All Topics</option>`;
     yearSel.innerHTML = `<option value="">All Years</option>`;
 
-    if (!subSel.value || !activeDepartment) return;
+    /* ✅ ADDED — subject cleared → reload all years */
+    if (!subSel.value) {
+      const years = await fetch(
+        `${API}/questions/years?department=${encodeURIComponent(activeDepartment)}`
+      ).then(r => r.json());
+
+      years.forEach(y => yearSel.innerHTML += `<option value="${y}">${y}</option>`);
+      return;
+    }
+
+    if (!activeDepartment) return;
 
     const [topics, years] = await Promise.all([
       fetch(`${API}/questions/topics?department=${activeDepartment}&subject=${subSel.value}`).then(r => r.json()),
@@ -193,7 +212,6 @@
       pagination.appendChild(btn);
     }
 
-    // ✅ KaTeX re-render
     if (window.renderMathInElement) {
       renderMathInElement(list, {
         delimiters: [
@@ -205,7 +223,7 @@
     }
   }
 
-  /* ================= ANSWER LOGIC (FINAL & STABLE) ================= */
+  /* ================= ANSWER LOGIC ================= */
   function setupAnswer(card, q) {
     let selected = [];
     let locked = false;
@@ -237,7 +255,6 @@
 
       let isCorrect = false;
 
-      /* ===== NAT ===== */
       if (q.type === "NAT") {
         const user = Number(card.querySelector(".nat-input").value);
         const a = q.correctAnswer;
@@ -247,10 +264,7 @@
         } else {
           isCorrect = user === Number(a);
         }
-      }
-
-      /* ===== MSQ ===== */
-      else if (q.type === "MSQ") {
+      } else if (q.type === "MSQ") {
         const correct = q.correctAnswer;
         isCorrect =
           selected.length === correct.length &&
@@ -262,10 +276,7 @@
           else if (selected.includes(v)) opt.classList.add("wrong");
           opt.classList.add("disabled");
         });
-      }
-
-      /* ===== MCQ ===== */
-      else {
+      } else {
         isCorrect = selected[0] === q.correctAnswer;
 
         options.forEach(opt => {
@@ -283,7 +294,6 @@
         Correct Answer: <b>${formatCorrectAnswer(q)}</b>
       `;
 
-      // ✅ show solution ONLY after check
       if (sol && sol.innerHTML.trim()) sol.style.display = "block";
     };
   }

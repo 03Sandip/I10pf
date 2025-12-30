@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>GATE PYQs – GoNotes</title>
+  <link rel="icon" type="image/png" sizes="512x512" href="/images/tab.png">
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
@@ -407,6 +408,42 @@ body.dark .page-btn.active{
   color:#ffffff;
 }
 
+/* ================= FAQ (ADDED ONLY) ================= */
+.faq-section{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:24px;
+}
+
+.faq-item{
+  margin-bottom:12px;
+}
+
+.faq-q{
+  width:100%;
+  text-align:left;
+  padding:12px 16px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:#f9fafb;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.faq-a{
+  display:none;
+  padding:12px 16px;
+  line-height:1.6;
+  color:#374151;
+}
+
+body.dark .faq-q{
+  background:#0b0b0b;
+  color:#f9fafb;
+}
+
+
 
   </style>
 </head>
@@ -437,6 +474,43 @@ body.dark .page-btn.active{
   <div id="pyqList"></div>
   <!-- PAGINATION (ADDED – DO NOT REMOVE ANYTHING ELSE) -->
 <div id="pagination" class="pagination"></div>
+
+
+<!-- ================= FAQ SECTION (ADDED ONLY) ================= -->
+<section class="faq-section" style="margin-top:60px">
+  <h2>❓ Frequently Asked Questions</h2>
+
+  <div class="faq-item">
+    <button class="faq-q">What are GATE PYQs?</button>
+    <div class="faq-a">
+      GATE Previous Year Questions (PYQs) are actual questions asked in past GATE exams.
+      Practicing them helps understand exam pattern and important topics.
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-q">Can I filter questions by year only?</button>
+    <div class="faq-a">
+      Yes. You can select a year directly without choosing subject or topic.
+      All questions from that year will be shown.
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-q">Are MSQ and NAT questions supported?</button>
+    <div class="faq-a">
+      Yes. MCQ, MSQ, and NAT type questions are fully supported with correct evaluation.
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-q">Do questions include solutions?</button>
+    <div class="faq-a">
+      Yes. Solution links (GateOverflow) appear after checking the answer if available.
+    </div>
+  </div>
+</section>
+
 
 </main>
 
