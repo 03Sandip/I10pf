@@ -25,7 +25,7 @@
   const urlParams = new URLSearchParams(window.location.search);
   const deptFromUrl = urlParams.get("department");
 
-  /* ================= FORMAT ANSWER ================= */
+  /* ================= FORMAT CORRECT ANSWER ================= */
   function formatCorrectAnswer(q) {
     const a = q.correctAnswer;
 
@@ -192,9 +192,20 @@
 
       pagination.appendChild(btn);
     }
+
+    // ✅ KaTeX re-render
+    if (window.renderMathInElement) {
+      renderMathInElement(list, {
+        delimiters: [
+          { left: "$$", right: "$$", display: true },
+          { left: "$", right: "$", display: false }
+        ],
+        throwOnError: false
+      });
+    }
   }
 
-  /* ================= ANSWER LOGIC (COLOR FIXED) ================= */
+  /* ================= ANSWER LOGIC (FINAL & STABLE) ================= */
   function setupAnswer(card, q) {
     let selected = [];
     let locked = false;
@@ -241,7 +252,6 @@
       /* ===== MSQ ===== */
       else if (q.type === "MSQ") {
         const correct = q.correctAnswer;
-
         isCorrect =
           selected.length === correct.length &&
           selected.every(v => correct.includes(v));
@@ -273,6 +283,7 @@
         Correct Answer: <b>${formatCorrectAnswer(q)}</b>
       `;
 
+      // ✅ show solution ONLY after check
       if (sol && sol.innerHTML.trim()) sol.style.display = "block";
     };
   }
