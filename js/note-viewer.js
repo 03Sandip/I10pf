@@ -1,4 +1,4 @@
-// js/note-viewer.js
+
 
 // ---------------- BASIC GUARDS (best-effort only) ----------------
 

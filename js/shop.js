@@ -114,6 +114,7 @@
       discountPercent,
       coverImage: n.hasImage? `${NOTES_BASE}/${id}/pic?v=${Date.now()}`: "",
       previewLink: n.previewLink || "",
+      
     };
   }
 
@@ -196,6 +197,7 @@
   // =====================================================
   function renderNoteCard(note) {
     const tpl = noteCardTemplate.content.cloneNode(true);
+    tpl.querySelector(".note-card").dataset.id = note.id;
 
     tpl.querySelector(".card-title").textContent = note.title;
     tpl.querySelector(".card-subtitle").textContent =
@@ -279,53 +281,56 @@
   // =====================================================
   // BUY NOW
   // =====================================================
-  document.addEventListener("click", (e) => {
-    const btn = e.target.closest(".buy-now");
-    if (!btn) return;
+ document.addEventListener("click", (e) => {
+  const btn = e.target.closest(".buy-now");
+  if (!btn) return;
 
-    const card = btn.closest(".note-card");
-    const title = card.querySelector(".card-title").textContent;
-    const price = Number(
-      (card.querySelector(".discounted-price")?.textContent ||
-        card.querySelector(".original-price").textContent).replace(/[^\d.]/g, "")
-    );
+  const card = btn.closest(".note-card");
+  const noteId = card.dataset.id; // ✅ IMPORTANT
+  const title = card.querySelector(".card-title").textContent;
+  const price = Number(
+    (card.querySelector(".discounted-price")?.textContent ||
+      card.querySelector(".original-price").textContent
+    ).replace(/[^\d.]/g, "")
+  );
 
-    localStorage.setItem(
-      "gonotes_buynow",
-      JSON.stringify({ title, price, qty: 1 })
-    );
+  localStorage.setItem(
+    "gonotes_buynow",
+    JSON.stringify({
+      id: noteId,   // ✅ ADD THIS
+      title,
+      price,
+      qty: 1,
+    })
+  );
 
-    window.location.href = "/pages/buynow.html";
-  });
+  window.location.href = "/pages/buynow.html";
+});
+
 
   // =====================================================
   // ADD TO CART
   // =====================================================
-  document.addEventListener("click", (e) => {
-    const btn = e.target.closest(".add-to-cart");
-    if (!btn) return;
+ document.addEventListener("click", (e) => {
+  const btn = e.target.closest(".add-to-cart");
+  if (!btn) return;
 
-    const card = btn.closest(".note-card");
-    const title = card.querySelector(".card-title").textContent;
-    const price = Number(
-      (card.querySelector(".discounted-price")?.textContent ||
-        card.querySelector(".original-price").textContent).replace(/[^\d.]/g, "")
-    );
+  const card = btn.closest(".note-card");
+  const noteId = card.dataset.id; // ✅ FIX
+  const title = card.querySelector(".card-title").textContent;
+  const price = Number(
+    (card.querySelector(".discounted-price")?.textContent ||
+      card.querySelector(".original-price").textContent).replace(/[^\d.]/g, "")
+  );
 
-    let cart = JSON.parse(localStorage.getItem("gonotes_cart")) || [];
-    const found = cart.find((i) => i.title === title);
+  let cart = JSON.parse(localStorage.getItem("gonotes_cart")) || [];
+  const found = cart.find((i) => i.id === noteId);
 
-    if (found) found.qty += 1;
-    else cart.push({ title, price, qty: 1 });
+  if (found) found.qty += 1;
+  else cart.push({ id: noteId, title, price, qty: 1 });
 
-    localStorage.setItem("gonotes_cart", JSON.stringify(cart));
-    updateCartCount();
+  localStorage.setItem("gonotes_cart", JSON.stringify(cart));
+  updateCartCount();
+});
 
-    btn.textContent = "Added ✓";
-    btn.disabled = true;
-    setTimeout(() => {
-      btn.textContent = "Add to cart";
-      btn.disabled = false;
-    }, 900);
-  });
 })();

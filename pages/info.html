@@ -3,83 +3,133 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Gonotes — About · Privacy · Contact</title>
+  <title>GoNotes — About · Privacy · Contact</title>
+
   <link rel="icon" type="image/png" sizes="512x512" href="/images/tab.png">
 
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-EYNBE29XE1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <meta name="description"
+        content="About GoNotes — an independent study platform built and managed by students. Privacy policy and contact information." />
 
-  gtag('config', 'G-EYNBE29XE1');
-</script>
-
-  <meta name="description" content="About Gonotes — student notes marketplace. Privacy policy and contact details." />
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-EYNBE29XE1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-EYNBE29XE1');
+  </script>
 
   <!-- Google AdSense -->
   <script async
     src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5527929468197396"
     crossorigin="anonymous"></script>
 
-  <!-- styles -->
   <link rel="stylesheet" href="../css/styles.css" />
   <link rel="stylesheet" href="../css/pages/header.css" />
 
+  <!-- ========== THEME COLORS (NO TOGGLE HERE) ========== -->
   <style>
-    .info-container{max-width:980px;margin:28px auto;padding:18px}
+    /* ---------- LIGHT MODE (DEFAULT) ---------- */
+    :root{
+      --bg:#fbf8f3;
+      --card:#ffffff;
+      --text:#1f1b18;
+      --muted:#6f6a63;
+      --border:#e7ded3;
+      --accent:#6b4f3a;
+    }
+
+    /* ---------- DARK MODE (CONTROLLED BY HEADER TOGGLE) ---------- */
+    body.dark{
+      --bg:#0b1224;
+      --card:#0f172a;
+      --text:#e5e7eb;
+      --muted:#9ca3af;
+      --border:#1f2937;
+      --accent:#a78bfa;
+    }
+
+    body{
+      background:var(--bg);
+      color:var(--text);
+      transition:background .25s,color .25s;
+    }
+
+    /* ---------- LAYOUT ---------- */
+    .info-container{max-width:980px;margin:32px auto;padding:18px}
 
     .info-nav{
       display:flex;
       gap:10px;
       flex-wrap:wrap;
-      margin-bottom:22px
+      margin-bottom:26px
     }
+
     .info-nav a{
       padding:8px 16px;
       border-radius:999px;
-      background:#fff;
+      background:var(--card);
       color:var(--accent);
+      border:1px solid var(--border);
       text-decoration:none;
       font-weight:500;
-      border:1px solid #ece7e1;
-      transition:all .25s ease;
+      transition:.25s;
     }
-    .info-nav a:hover{background:#f5f2ee}
+
     .info-nav a[aria-current="true"]{
       background:var(--accent);
       color:#fff;
-      border-color:var(--accent);
     }
 
     .info-section{
-      background:#fff;
-      border:1px solid #ece7e1;
-      border-radius:10px;
-      padding:22px;
-      box-shadow:0 8px 24px rgba(16,24,40,0.04)
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:28px;
+      box-shadow:0 10px 40px rgba(0,0,0,.12);
+      line-height:1.7;
     }
 
-    .small-muted{font-size:13px;color:var(--muted)}
+    .info-section h2{margin-bottom:12px}
+    .info-section h3{margin-top:24px}
 
+    .small-muted{font-size:14px;color:var(--muted)}
+
+    .policy-list{padding-left:18px;margin:14px 0}
+    .policy-list li{margin-bottom:6px}
+
+    /* ---------- CONTACT ---------- */
     .contact-grid{
       display:grid;
       grid-template-columns:1fr 320px;
-      gap:18px
-    }
-    .contact-card{
-      background:#fbf9f7;
-      padding:14px;
-      border-radius:8px
+      gap:20px
     }
 
-    .form-row{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
-    .form-row input,.form-row textarea{
+    .contact-card{
+      background:rgba(0,0,0,.03);
+      padding:16px;
+      border-radius:12px
+    }
+
+    body.dark .contact-card{
+      background:rgba(255,255,255,.04);
+    }
+
+    .form-row{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      margin-bottom:12px
+    }
+
+    input, textarea{
       padding:10px;
       border-radius:8px;
-      border:1px solid #e7ded3
+      border:1px solid var(--border);
+      background:var(--card);
+      color:var(--text);
     }
+
     .btn-primary{
       padding:10px 14px;
       border-radius:8px;
@@ -94,181 +144,116 @@
     }
   </style>
 </head>
+
 <body>
 
-  <!-- header -->
-  <div id="header"></div>
+<!-- Header -->
+<div id="header"></div>
 
-  <main class="info-container">
+<main class="info-container">
 
-    <nav class="info-nav">
-      <a href="#about" id="link-about">About</a>
-      <a href="#privacy" id="link-privacy">Privacy Policy</a>
-      <a href="#contact" id="link-contact">Contact</a>
-    </nav>
+<nav class="info-nav">
+  <a href="#about" id="link-about">About</a>
+  <a href="#privacy" id="link-privacy">Privacy Policy</a>
+  <a href="#contact" id="link-contact">Contact</a>
+</nav>
 
-    <!-- ABOUT -->
-    <section id="about" class="info-section" hidden>
-      <h2>About Gonotes</h2>
-      <p class="small-muted">A marketplace built for students, by students.</p>
+<!-- ABOUT -->
+<section id="about" class="info-section" hidden>
+  <h2>About GoNotes</h2>
+  <p class="small-muted">An independent education platform built by students.</p>
 
-      <p>
-        <strong>Gonotes</strong> is a student-focused marketplace designed to help learners
-        access high-quality academic and technical resources in one place.
-      </p>
+  <p>
+    <strong>GoNotes</strong> is an independent study platform built and managed by students
+    to help learners access academic notes, coding preparation material, interview
+    resources, and previous year question papers.
+  </p>
+</section>
 
-      <p>
-        We provide semester-wise notes, GATE preparation material, coding resources,
-        and learning content curated for clarity and effectiveness.
-      </p>
+<!-- PRIVACY -->
+<section id="privacy" class="info-section" hidden>
+  <h2>Privacy Policy for GoNotes</h2>
+  <p class="small-muted">Effective Date: December 12, 2025</p>
 
-      <p>
-        In the future, Gonotes will expand with more free resources,
-        final-year project guides, and advanced educational content.
-      </p>
+  <h3>Information We Collect</h3>
+  <ul class="policy-list small-muted">
+    <li>Email address</li>
+    <li>Phone number</li>
+  </ul>
 
-      <p class="small-muted">
-        Built with ❤️ by Sandip<br />
-        <a href="https://www.linkedin.com/in/sandip-paul-053a21259/" target="_blank"
-           style="display:inline-flex;align-items:center;gap:6px;">
-          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg"
-               alt="LinkedIn"
-               width="16"
-               height="16"
-               style="filter:invert(30%)" />
-          Connect on LinkedIn
-        </a>
-      </p>
-    </section>
+  <h3>Payments & Security</h3>
+  <ul class="policy-list small-muted">
+    <li>Payments are processed securely via Razorpay</li>
+    <li>No card or banking details are stored</li>
+    <li>Industry-standard security practices are followed</li>
+  </ul>
 
-    <!-- PRIVACY -->
-    <section id="privacy" class="info-section" hidden>
-      <h2>Privacy Policy for Gonotes</h2>
-      <p class="small-muted">Effective Date: December 12, 2025</p>
+  <h3>Platform Independence</h3>
+  <p class="small-muted">
+    GoNotes is an independent study platform built and managed by students
+    and is not affiliated with any e-learning platform.
+  </p>
+</section>
 
-      <p>
-        This Privacy Policy explains how <strong>Gonotes</strong> ("we", "our", or "us")
-        collects, uses, and protects information when you use
-        <a href="https://gonotes.shop" target="_blank">https://gonotes.shop</a>.
-      </p>
+<!-- CONTACT -->
+<section id="contact" class="info-section" hidden>
+  <h2>Contact Us</h2>
 
-      <h3>1. Information We Collect</h3>
-      <p>
-        When you create an account on Gonotes, we may collect:
-      </p>
-      <ul class="small-muted">
-        <li>Email address</li>
-        <li>Phone number</li>
-      </ul>
-
-      <h3>2. Payments & Security</h3>
-      <p>
-        Payments on Gonotes are processed securely using
-        <strong>Razorpay</strong>.
-      </p>
-      <ul class="small-muted">
-        <li>We do not store card or banking details</li>
-        <li>All transactions are handled by Razorpay</li>
-        <li>Industry-standard security practices are followed</li>
-      </ul>
-
-      <h3>3. Analytics & Cookies</h3>
-      <ul class="small-muted">
-        <li>Anonymized IP address</li>
-        <li>Browser and device information</li>
-        <li>Pages visited and usage statistics</li>
-      </ul>
-
-      <h3>4. Your Choices</h3>
-      <ul class="small-muted">
-        <li>Disable cookies in your browser</li>
-        <li>
-          Google Analytics Opt-out:
-          <a href="https://tools.google.com/dlpage/gaoptout" target="_blank">
-            https://tools.google.com/dlpage/gaoptout
-          </a>
-        </li>
-      </ul>
-
-      <p class="small-muted">
-        For questions, contact us at
-        <a href="mailto:gonotes01@gmail.com">gonotes01@gmail.com</a>.
-      </p>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact" class="info-section" hidden>
-      <h2>Contact Us</h2>
-
-      <div class="contact-grid">
-        <div class="contact-card">
-          <p><strong>Email:</strong> <a href="mailto:gonotes01@gmail.com">gonotes01@gmail.com</a></p>
-          <p><strong>Phone:</strong> +91 8101588046</p>
-        </div>
-
-        <aside class="contact-card">
-          <form>
-            <div class="form-row">
-              <label>Name</label>
-              <input required>
-            </div>
-            <div class="form-row">
-              <label>Email</label>
-              <input type="email" required>
-            </div>
-            <div class="form-row">
-              <label>Message</label>
-              <textarea rows="4" required></textarea>
-            </div>
-            <button class="btn-primary">Send</button>
-          </form>
-        </aside>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- footer -->
-  <footer class="site-footer">
-    <div class="container footer-grid">
-      <div>
-        <h4>Gonotes</h4>
-        <p>Your trusted marketplace for student notes.</p>
-      </div>
-      <div class="footer-links">
-        <a href="#about">About</a>
-        <a href="#privacy">Privacy</a>
-        <a href="#contact">Contact</a>
-      </div>
+  <div class="contact-grid">
+    <div class="contact-card">
+      <p><strong>Email:</strong> <a href="mailto:gonotes01@gmail.com">gonotes01@gmail.com</a></p>
+      <p><strong>Phone:</strong> +91 8101588046</p>
     </div>
-  </footer>
 
-  <!-- scripts -->
-  <script src="../js/loadPartials.js"></script>
-  <script src="../js/components.js"></script>
+    <aside class="contact-card">
+      <form>
+        <div class="form-row">
+          <label>Name</label>
+          <input required>
+        </div>
+        <div class="form-row">
+          <label>Email</label>
+          <input type="email" required>
+        </div>
+        <div class="form-row">
+          <label>Message</label>
+          <textarea rows="4" required></textarea>
+        </div>
+        <button class="btn-primary">Send</button>
+      </form>
+    </aside>
+  </div>
+</section>
 
-  <script>
-    (function () {
-      const sections = ["about", "privacy", "contact"];
+</main>
 
-      function showSection(id) {
-        if (!sections.includes(id)) id = "about";
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <p class="small-muted">
+      GoNotes is an independent study platform built and managed by students.
+    </p>
+  </div>
+</footer>
 
-        sections.forEach(s => {
-          document.getElementById(s).hidden = s !== id;
-          const link = document.getElementById("link-" + s);
-          s === id
-            ? link.setAttribute("aria-current", "true")
-            : link.removeAttribute("aria-current");
-        });
-      }
+<script src="../js/theme.js"></script>
+<script src="../js/loadPartials.js"></script>
+<script src="../js/components.js"></script>
 
-      showSection(location.hash.replace("#", ""));
-      window.addEventListener("hashchange", () => {
-        showSection(location.hash.replace("#", ""));
-      });
-    })();
-  </script>
+<script>
+(function(){
+  const sections=["about","privacy","contact"];
+  function show(id){
+    if(!sections.includes(id)) id="about";
+    sections.forEach(s=>{
+      document.getElementById(s).hidden=s!==id;
+      const l=document.getElementById("link-"+s);
+      s===id?l.setAttribute("aria-current","true"):l.removeAttribute("aria-current");
+    });
+  }
+  show(location.hash.replace("#",""));
+  addEventListener("hashchange",()=>show(location.hash.replace("#","")));
+})();
+</script>
 
 </body>
 </html>

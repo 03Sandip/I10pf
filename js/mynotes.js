@@ -110,7 +110,7 @@ async function loadMyNotes() {
   emptyMsg.style.display = "none";
 
   try {
-    const res = await fetch(API_BASE + "/notes/my-notes", {
+    const res = await fetch(API_BASE + "/notes/mynotes", {
       headers: { Authorization: "Bearer " + token },
     });
 
