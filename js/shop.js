@@ -112,7 +112,7 @@
       price,
       originalPrice,
       discountPercent,
-      coverImage: n.hasImage ? `${NOTES_BASE}/${id}/pic` : "",
+      coverImage: n.hasImage? `${NOTES_BASE}/${id}/pic?v=${Date.now()}`: "",
       previewLink: n.previewLink || "",
     };
   }

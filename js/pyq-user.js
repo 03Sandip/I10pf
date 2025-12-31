@@ -194,8 +194,9 @@
   <span>
     Q.${start + i + 1}
     • ${q.subject}
+    • ${q.topic}
     • ${q.year}
-    ${q.set ? `<span class="q-set">• ${q.set}</span>` : ""}
+    • ${q.set ?`<span class="q-set">${q.set}</span>` : ""}
   </span>
   <span class="q-type">${q.type}</span>
 </div>
