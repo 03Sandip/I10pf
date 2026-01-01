@@ -7,28 +7,24 @@
   <link rel="icon" type="image/png" sizes="512x512" href="/images/tab.png">
 
   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-EYNBE29XE1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-EYNBE29XE1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-EYNBE29XE1');
+  </script>
 
-  gtag('config', 'G-EYNBE29XE1');
-</script>
   <!-- ✅ CANONICAL -->
   <link rel="canonical" href="https://gonotes.shop/pages/mynotes.html" />
 
-    <!-- Google AdSense -->
+  <!-- Google AdSense -->
   <script async
     src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5527929468197396"
     crossorigin="anonymous">
   </script>
 
-  <!-- Optional page stylesheet
-  <link rel="stylesheet" href="../css/pages/mynotes.css" /> -->
-
   <style>
-    /* Simple fallback styling if CSS file not ready */
     body {
       font-family: Arial, sans-serif;
       background: #f5f5f5;
@@ -112,8 +108,7 @@
     }
 
     .btn {
-      flex: 1;
-      padding: 8px 10px;
+      padding: 8px 14px;
       font-size: 13px;
       border-radius: 999px;
       border: none;
@@ -145,9 +140,11 @@
       margin-top: 14px;
       display: flex;
       justify-content: flex-end;
+      gap: 10px;
     }
   </style>
 </head>
+
 <body>
   <div class="container">
     <h2>My Notes</h2>
@@ -155,21 +152,40 @@
       All notes you’ve purchased are listed here. Click “Read Note” to open the PDF.
     </p>
 
+    <!-- ✅ UPDATED ACTION BUTTONS -->
     <div class="top-actions">
       <button class="btn btn-secondary" onclick="window.location.href='shop.html'">
         Back to Shop
       </button>
+
+      <button class="btn btn-primary" onclick="openMyReceipts()">
+        My Receipts
+      </button>
     </div>
 
     <div id="notesContainer" class="notes-grid"></div>
+
     <p id="emptyMsg" class="empty-msg" style="display:none;">
       You haven’t purchased any notes yet.
     </p>
   </div>
 
-  <!-- JS: config first, then page logic -->
+  <!-- JS -->
   <script src="../js/server.js"></script>
   <script src="../js/mynotes.js"></script>
   <script src="../js/note-viewer.js"></script>
+
+  <!-- ✅ RECEIPTS NAVIGATION -->
+  <script>
+    function openMyReceipts() {
+      const token = localStorage.getItem("gonotes_token");
+      if (!token) {
+        alert("Please login to view your receipts");
+        window.location.href = "login.html";
+        return;
+      }
+      window.location.href = "my-receipts.html";
+    }
+  </script>
 </body>
 </html>

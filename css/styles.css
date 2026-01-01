@@ -1105,3 +1105,92 @@ body.dark .section-heading {
 body.dark .section-subheading {
   color: #e5e7eb;
 }
+/* =========================================
+   ✅ MY RECEIPTS – LAYOUT & READABILITY FIX
+========================================= */
+
+/* Center content better */
+.page-title {
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Wider, airy card */
+.table-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 28px;
+}
+
+/* Table layout improvements */
+.table-wrapper table {
+  table-layout: fixed; /* 🔑 important */
+}
+
+/* Column widths */
+.table-wrapper th:nth-child(1),
+.table-wrapper td:nth-child(1) {
+  width: 28%;
+}
+
+.table-wrapper th:nth-child(2),
+.table-wrapper td:nth-child(2) {
+  width: 26%;
+}
+
+.table-wrapper th:nth-child(3),
+.table-wrapper td:nth-child(3) {
+  width: 16%;
+}
+
+.table-wrapper th:nth-child(4),
+.table-wrapper td:nth-child(4) {
+  width: 10%;
+}
+
+.table-wrapper th:nth-child(5),
+.table-wrapper td:nth-child(5) {
+  width: 10%;
+}
+
+.table-wrapper th:nth-child(6),
+.table-wrapper td:nth-child(6) {
+  width: 10%;
+  text-align: right;
+}
+
+/* Long IDs wrap nicely */
+.table-wrapper td {
+  word-break: break-word;
+  line-height: 1.45;
+}
+
+/* Improve header clarity */
+.table-wrapper th {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Better row spacing */
+.table-wrapper td,
+.table-wrapper th {
+  padding: 16px 14px;
+}
+
+/* Receipt button alignment */
+.table-wrapper .btn {
+  min-width: 96px;
+  text-align: center;
+}
+
+/* Subtle row separation */
+.table-wrapper tr:not(:last-child) td {
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+
+/* Hover polish */
+body:not(.dark) .table-wrapper tr:hover {
+  background: rgba(0,0,0,0.02);
+}

@@ -297,7 +297,8 @@
   localStorage.setItem(
     "gonotes_buynow",
     JSON.stringify({
-      id: noteId,   // ✅ ADD THIS
+      // id: noteId, // ✅ ADD THIS
+      noteId: noteId,  // ✅ ADD THIS
       title,
       price,
       qty: 1,
@@ -324,7 +325,8 @@
   );
 
   let cart = JSON.parse(localStorage.getItem("gonotes_cart")) || [];
-  const found = cart.find((i) => i.id === noteId);
+  // const found = cart.find((i) => i.id === noteId);
+  const found = cart.find((i) => i.noteId === noteId);
 
   if (found) found.qty += 1;
   else cart.push({ id: noteId, title, price, qty: 1 });

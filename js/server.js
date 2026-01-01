@@ -6,7 +6,7 @@
 
   // 👇 Backend root URL
   const SERVER_URL = "https://api.gonotes.shop";
-  // const SERVER_URL = "http://localhost:5000";
+//  const SERVER_URL = "http://localhost:5000";
   
   // Example production: "https://api.mygonotes.com"
 

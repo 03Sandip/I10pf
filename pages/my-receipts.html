@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>My Receipts</title>
+
+  <!-- GLOBAL THEME -->
+  <link rel="stylesheet" href="/css/styles.css" />
+  <link rel="stylesheet" href="/css/pages/header.css" />
+  <link rel="stylesheet" href="/css/pages/shop.css" />
+</head>
+
+<body class="dark">
+
+  <!-- ===============================
+       HEADER PARTIAL (CALLED HERE)
+  =============================== -->
+  <div id="header" aria-hidden="true"></div>
+
+  <!-- ===============================
+       PAGE CONTENT
+  =============================== -->
+  <main class="container">
+    <h2 class="page-title">My Receipts</h2>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Payment ID</th>
+            <th>Items</th>
+            <th>Amount</th>
+            <th>Date</th>
+            <th>Receipt</th>
+          </tr>
+        </thead>
+        <tbody id="receiptsBody">
+          <tr>
+            <td colspan="6" class="loading">Loading receipts...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- ===============================
+       SCRIPTS
+  =============================== -->
+
+  <!-- SERVER CONFIG -->
+  <script src="../js/server.js"></script>
+  <script src="/js/theme.js"></script>
+  <script src="/js/loadPartials.js" defer></script>
+
+  <script>
+    /* ==================================
+       LOAD HEADER PARTIAL
+    ================================== */
+    (async function loadHeader() {
+      try {
+        const res = await fetch("../partials/header.html");
+        const html = await res.text();
+        document.getElementById("header").innerHTML = html;
+        document.getElementById("header").setAttribute("aria-hidden", "false");
+      } catch (err) {
+        console.error("Header load failed:", err);
+      }
+    })();
+
+    /* ==================================
+       CONFIG
+    ================================== */
+    if (!window.SERVER_URL) {
+      alert("SERVER_URL missing — load server.js first");
+      throw new Error("SERVER_URL missing");
+    }
+
+    const API_BASE = window.SERVER_URL.replace(/\/+$/, "") + "/api";
+
+    /* ==================================
+       LOAD RECEIPTS
+    ================================== */
+    (async function loadReceipts() {
+      const token = localStorage.getItem("gonotes_token");
+      const tbody = document.getElementById("receiptsBody");
+
+      if (!token) {
+        alert("Session expired. Please login again.");
+        window.location.href = "/pages/login.html";
+        return;
+      }
+
+      try {
+        const res = await fetch(API_BASE + "/payment/my", {
+          headers: { Authorization: "Bearer " + token }
+        });
+
+        const data = await res.json();
+
+        if (!data.success || !data.payments?.length) {
+          tbody.innerHTML =
+            `<tr><td colspan="6" class="loading">No receipts found</td></tr>`;
+          return;
+        }
+
+        tbody.innerHTML = "";
+
+        data.payments.forEach(p => {
+          const items =
+            p.items?.map(i => i?.noteId?.title).filter(Boolean).join(", ") || "-";
+
+          const date = new Date(p.createdAt).toLocaleDateString();
+
+          tbody.innerHTML += `
+            <tr>
+              <td>${p.razorpayOrderId || "-"}</td>
+              <td>${p.razorpayPaymentId || "-"}</td>
+              <td>${items}</td>
+              <td class="amount">₹${p.amount}</td>
+              <td>${date}</td>
+              <td>
+                <button class="btn" onclick="downloadReceipt('${p._id}')">
+                  Download
+                </button>
+              </td>
+            </tr>
+          `;
+        });
+
+      } catch (err) {
+        console.error("Receipt load error:", err);
+        tbody.innerHTML =
+          `<tr><td colspan="6" class="loading">Failed to load receipts</td></tr>`;
+      }
+    })();
+
+    /* ==================================
+       DOWNLOAD RECEIPT
+    ================================== */
+    function downloadReceipt(paymentId) {
+      const token = localStorage.getItem("gonotes_token");
+
+      if (!token) {
+        alert("Session expired. Please login again.");
+        window.location.href = "/pages/login.html";
+        return;
+      }
+
+      window.open(
+        API_BASE + "/receipt/" + paymentId + "?token=" + encodeURIComponent(token),
+        "_blank"
+      );
+    }
+  </script>
+
+</body>
+</html>
