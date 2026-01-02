@@ -221,7 +221,7 @@
         <div class="solution-link" style="display:none;margin-top:10px">
           ${q.solutionLink ? `
             <a href="${q.solutionLink}" target="_blank" style="color:#2563eb;font-weight:600">
-              👉 Click here for detailed solution (GateOverflow)
+              👉 Click here for detailed solution 
             </a>` : ""}
         </div>
       `;
